@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="log4j" />
+        <module name="jdk" />
+        <module name="stdout" />
+        <module name="core" />
+        <module name="slf4j" />
+        <module name="log4j2" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="core" target="11" />
+      <module name="jdk" target="11" />
+      <module name="log4j" target="11" />
+      <module name="log4j2" target="11" />
+      <module name="parrent" target="11" />
+      <module name="simple" target="11" />
+      <module name="slf4j" target="11" />
+      <module name="stdout" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="core" options="-endorseddirs G:\DevOps\java\logger\core\target/endorsed" />
+      <module name="jdk" options="-endorseddirs G:\DevOps\java\logger\jdk\target/endorsed" />
+      <module name="log4j" options="-endorseddirs G:\DevOps\java\logger\log4j\target/endorsed" />
+      <module name="log4j2" options="-endorseddirs G:\DevOps\java\logger\log4j2\target/endorsed" />
+      <module name="simple" options="-endorseddirs G:\DevOps\java\logger\simple\target/endorsed" />
+      <module name="slf4j" options="-endorseddirs G:\DevOps\java\logger\slf4j\target/endorsed" />
+      <module name="stdout" options="-endorseddirs G:\DevOps\java\logger\stdout\target/endorsed" />
+    </option>
+  </component>
+</project>
