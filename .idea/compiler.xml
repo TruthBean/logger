@@ -27,13 +27,13 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="core" options="-endorseddirs G:\DevOps\java\logger\core\target/endorsed" />
-      <module name="jdk" options="-endorseddirs G:\DevOps\java\logger\jdk\target/endorsed" />
-      <module name="log4j" options="-endorseddirs G:\DevOps\java\logger\log4j\target/endorsed" />
-      <module name="log4j2" options="-endorseddirs G:\DevOps\java\logger\log4j2\target/endorsed" />
+      <module name="core" options="-endorseddirs V:\person\logger\core\target/endorsed" />
+      <module name="jdk" options="-endorseddirs V:\person\logger\jdk\target/endorsed" />
+      <module name="log4j" options="-endorseddirs V:\person\logger\log4j\target/endorsed" />
+      <module name="log4j2" options="-endorseddirs V:\person\logger\log4j2\target/endorsed" />
       <module name="simple" options="-endorseddirs G:\DevOps\java\logger\simple\target/endorsed" />
-      <module name="slf4j" options="-endorseddirs G:\DevOps\java\logger\slf4j\target/endorsed" />
-      <module name="stdout" options="-endorseddirs G:\DevOps\java\logger\stdout\target/endorsed" />
+      <module name="slf4j" options="-endorseddirs V:\person\logger\slf4j\target/endorsed" />
+      <module name="stdout" options="-endorseddirs V:\person\logger\stdout\target/endorsed" />
     </option>
   </component>
 </project>
