@@ -38,6 +38,11 @@ public class Log4jImpl implements com.truthbean.Logger {
     }
 
     @Override
+    public boolean isTraceEnabled() {
+        return this.logger.isTraceEnabled();
+    }
+
+    @Override
     public void trace(String message) {
         if (this.logger.isTraceEnabled()) {
             this.logger.log(FQCN, Level.TRACE, message, null);
@@ -81,6 +86,10 @@ public class Log4jImpl implements com.truthbean.Logger {
         }
     }
 
+    @Override
+    public boolean isDebugEnabled() {
+        return this.logger.isDebugEnabled();
+    }
 
     @Override
     public void debug(String message) {
@@ -126,6 +135,10 @@ public class Log4jImpl implements com.truthbean.Logger {
         }
     }
 
+    @Override
+    public boolean isInfoEnabled() {
+        return this.logger.isInfoEnabled();
+    }
 
     @Override
     public void info(String message) {
@@ -171,6 +184,10 @@ public class Log4jImpl implements com.truthbean.Logger {
         }
     }
 
+    @Override
+    public boolean isWarnEnabled() {
+        return this.logger.isEnabledFor(Level.WARN);
+    }
 
     @Override
     public void warn(String message) {
@@ -216,6 +233,10 @@ public class Log4jImpl implements com.truthbean.Logger {
         }
     }
 
+    @Override
+    public boolean isErrorEnabled() {
+        return this.logger.isEnabledFor(Level.ERROR);
+    }
 
     @Override
     public void error(String message) {
@@ -261,6 +282,10 @@ public class Log4jImpl implements com.truthbean.Logger {
         }
     }
 
+    @Override
+    public boolean isFatalEnabled() {
+        return this.logger.isEnabledFor(Level.FATAL);
+    }
 
     @Override
     public void fatal(String message) {

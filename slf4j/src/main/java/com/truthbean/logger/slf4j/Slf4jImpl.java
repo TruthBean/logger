@@ -52,6 +52,11 @@ public class Slf4jImpl implements Logger {
     }
 
     @Override
+    public boolean isTraceEnabled() {
+        return logger.isTraceEnabled();
+    }
+
+    @Override
     public void trace(String message) {
         logger.trace(message);
     }
@@ -79,6 +84,11 @@ public class Slf4jImpl implements Logger {
     @Override
     public void trace(String message, Throwable e, Object... params) {
         logger.trace(message, e, params);
+    }
+
+    @Override
+    public boolean isDebugEnabled() {
+        return logger.isDebugEnabled();
     }
 
     @Override
@@ -112,6 +122,11 @@ public class Slf4jImpl implements Logger {
     }
 
     @Override
+    public boolean isInfoEnabled() {
+        return logger.isInfoEnabled();
+    }
+
+    @Override
     public void info(String message) {
         logger.info(message);
     }
@@ -139,6 +154,11 @@ public class Slf4jImpl implements Logger {
     @Override
     public void info(String message, Throwable e, Object... params) {
         logger.info(message, e, params);
+    }
+
+    @Override
+    public boolean isWarnEnabled() {
+        return logger.isWarnEnabled();
     }
 
     @Override
@@ -172,6 +192,11 @@ public class Slf4jImpl implements Logger {
     }
 
     @Override
+    public boolean isErrorEnabled() {
+        return logger.isErrorEnabled();
+    }
+
+    @Override
     public void error(String message) {
         logger.error(message);
     }
@@ -199,6 +224,11 @@ public class Slf4jImpl implements Logger {
     @Override
     public void error(String message, Throwable e, Object... params) {
         logger.error(message, e, params);
+    }
+
+    @Override
+    public boolean isFatalEnabled() {
+        return logger.isFatalEnabled();
     }
 
     @Override

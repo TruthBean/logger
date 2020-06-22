@@ -55,6 +55,11 @@ public class Log4j2Impl implements Logger {
     }
 
     @Override
+    public boolean isTraceEnabled() {
+        return originLogger.isTraceEnabled();
+    }
+
+    @Override
     public void trace(String message) {
         if (originLogger.isTraceEnabled()) {
             logger.trace(message);
@@ -94,6 +99,11 @@ public class Log4j2Impl implements Logger {
         if (originLogger.isTraceEnabled()) {
             logger.trace(message, e, params);
         }
+    }
+
+    @Override
+    public boolean isDebugEnabled() {
+        return originLogger.isDebugEnabled();
     }
 
     @Override
@@ -139,6 +149,11 @@ public class Log4j2Impl implements Logger {
     }
 
     @Override
+    public boolean isInfoEnabled() {
+        return originLogger.isInfoEnabled();
+    }
+
+    @Override
     public void info(String message) {
         if (originLogger.isInfoEnabled()) {
             logger.info(message);
@@ -178,6 +193,11 @@ public class Log4j2Impl implements Logger {
         if (originLogger.isInfoEnabled()) {
             logger.info(message, e, params);
         }
+    }
+
+    @Override
+    public boolean isWarnEnabled() {
+        return originLogger.isWarnEnabled();
     }
 
     @Override
@@ -223,6 +243,11 @@ public class Log4j2Impl implements Logger {
     }
 
     @Override
+    public boolean isErrorEnabled() {
+        return originLogger.isErrorEnabled();
+    }
+
+    @Override
     public void error(String message) {
         if (originLogger.isErrorEnabled()) {
             logger.error(message);
@@ -262,6 +287,11 @@ public class Log4j2Impl implements Logger {
         if (originLogger.isErrorEnabled()) {
             logger.error(message, e, params);
         }
+    }
+
+    @Override
+    public boolean isFatalEnabled() {
+        return originLogger.isFatalEnabled();
     }
 
     @Override

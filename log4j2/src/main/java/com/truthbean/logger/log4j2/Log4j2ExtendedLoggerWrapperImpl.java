@@ -32,6 +32,11 @@ class Log4j2ExtendedLoggerWrapperImpl implements Logger {
     }
 
     @Override
+    public boolean isTraceEnabled() {
+        return this.logger.isTraceEnabled(MARKER);
+    }
+
+    @Override
     public void trace(String message) {
         if (this.logger.isTraceEnabled(MARKER)) {
             this.logger.logIfEnabled(FQCN, Level.TRACE, MARKER, message);
@@ -71,6 +76,11 @@ class Log4j2ExtendedLoggerWrapperImpl implements Logger {
         if (this.logger.isTraceEnabled(MARKER)) {
             this.logger.logIfEnabled(FQCN, Level.TRACE, MARKER, MessageHelper.format(message, params), e);
         }
+    }
+
+    @Override
+    public boolean isDebugEnabled() {
+        return this.logger.isDebugEnabled(MARKER);
     }
 
     @Override
@@ -116,6 +126,11 @@ class Log4j2ExtendedLoggerWrapperImpl implements Logger {
     }
 
     @Override
+    public boolean isInfoEnabled() {
+        return this.logger.isInfoEnabled(MARKER);
+    }
+
+    @Override
     public void info(String message) {
         if (this.logger.isInfoEnabled(MARKER)) {
             this.logger.logIfEnabled(FQCN, Level.INFO, MARKER, message);
@@ -155,6 +170,11 @@ class Log4j2ExtendedLoggerWrapperImpl implements Logger {
         if (this.logger.isInfoEnabled(MARKER)) {
             this.logger.logIfEnabled(FQCN, Level.INFO, MARKER, MessageHelper.format(message, params), e);
         }
+    }
+
+    @Override
+    public boolean isWarnEnabled() {
+        return this.logger.isWarnEnabled(MARKER);
     }
 
     @Override
@@ -200,6 +220,11 @@ class Log4j2ExtendedLoggerWrapperImpl implements Logger {
     }
 
     @Override
+    public boolean isErrorEnabled() {
+        return this.logger.isErrorEnabled(MARKER);
+    }
+
+    @Override
     public void error(String message) {
         if (this.logger.isErrorEnabled(MARKER)) {
             this.logger.logIfEnabled(FQCN, Level.ERROR, MARKER, message);
@@ -239,6 +264,11 @@ class Log4j2ExtendedLoggerWrapperImpl implements Logger {
         if (this.logger.isErrorEnabled(MARKER)) {
             this.logger.logIfEnabled(FQCN, Level.ERROR, MARKER, MessageHelper.format(message, params), e);
         }
+    }
+
+    @Override
+    public boolean isFatalEnabled() {
+        return this.logger.isFatalEnabled(MARKER);
     }
 
     @Override

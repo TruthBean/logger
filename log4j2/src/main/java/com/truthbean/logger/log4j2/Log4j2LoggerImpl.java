@@ -31,6 +31,11 @@ class Log4j2LoggerImpl implements com.truthbean.Logger {
     }
 
     @Override
+    public boolean isTraceEnabled() {
+        return logger.isTraceEnabled(marker);
+    }
+
+    @Override
     public void trace(String message) {
         if (logger.isTraceEnabled(marker)) {
             this.logger.trace(marker, message);
@@ -70,6 +75,11 @@ class Log4j2LoggerImpl implements com.truthbean.Logger {
         if (logger.isTraceEnabled(marker)) {
             this.logger.trace(marker, () -> MessageHelper.format(message, params), e);
         }
+    }
+
+    @Override
+    public boolean isDebugEnabled() {
+        return logger.isDebugEnabled(marker);
     }
 
     @Override
@@ -115,6 +125,11 @@ class Log4j2LoggerImpl implements com.truthbean.Logger {
     }
 
     @Override
+    public boolean isInfoEnabled() {
+        return logger.isEnabled(Level.INFO, marker);
+    }
+
+    @Override
     public void info(String message) {
         if (logger.isEnabled(Level.INFO, marker)) {
             logger.log(Level.INFO, marker, message);
@@ -154,6 +169,11 @@ class Log4j2LoggerImpl implements com.truthbean.Logger {
         if (logger.isInfoEnabled(marker)) {
             logger.info(marker, MessageHelper.format(message, params), e);
         }
+    }
+
+    @Override
+    public boolean isWarnEnabled() {
+        return logger.isWarnEnabled(marker);
     }
 
     @Override
@@ -199,6 +219,11 @@ class Log4j2LoggerImpl implements com.truthbean.Logger {
     }
 
     @Override
+    public boolean isErrorEnabled() {
+        return logger.isErrorEnabled(marker);
+    }
+
+    @Override
     public void error(String message) {
         if (logger.isErrorEnabled(marker)) {
             logger.error(marker, message);
@@ -238,6 +263,11 @@ class Log4j2LoggerImpl implements com.truthbean.Logger {
         if (logger.isErrorEnabled(marker)) {
             logger.error(marker, MessageHelper.format(message, params), e);
         }
+    }
+
+    @Override
+    public boolean isFatalEnabled() {
+        return logger.isFatalEnabled(marker);
     }
 
     @Override

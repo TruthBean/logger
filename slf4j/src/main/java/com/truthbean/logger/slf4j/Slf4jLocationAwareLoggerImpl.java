@@ -34,6 +34,11 @@ class Slf4jLocationAwareLoggerImpl implements Logger {
     }
 
     @Override
+    public boolean isTraceEnabled() {
+        return this.log.isTraceEnabled(Slf4jImpl.MARKER);
+    }
+
+    @Override
     public void trace(String message) {
         if (this.log.isTraceEnabled(Slf4jImpl.MARKER)) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.TRACE_INT, message, null, null);
@@ -75,6 +80,10 @@ class Slf4jLocationAwareLoggerImpl implements Logger {
         }
     }
 
+    @Override
+    public boolean isDebugEnabled() {
+        return this.log.isDebugEnabled(Slf4jImpl.MARKER);
+    }
 
     @Override
     public void debug(String message) {
@@ -118,6 +127,10 @@ class Slf4jLocationAwareLoggerImpl implements Logger {
         }
     }
 
+    @Override
+    public boolean isInfoEnabled() {
+        return this.log.isInfoEnabled(Slf4jImpl.MARKER);
+    }
 
     @Override
     public void info(String message) {
@@ -161,6 +174,10 @@ class Slf4jLocationAwareLoggerImpl implements Logger {
         }
     }
 
+    @Override
+    public boolean isWarnEnabled() {
+        return this.log.isWarnEnabled(Slf4jImpl.MARKER);
+    }
 
     @Override
     public void warn(String message) {
@@ -204,6 +221,10 @@ class Slf4jLocationAwareLoggerImpl implements Logger {
         }
     }
 
+    @Override
+    public boolean isErrorEnabled() {
+        return this.log.isErrorEnabled(Slf4jImpl.MARKER);
+    }
 
     @Override
     public void error(String message) {
@@ -247,6 +268,10 @@ class Slf4jLocationAwareLoggerImpl implements Logger {
         }
     }
 
+    @Override
+    public boolean isFatalEnabled() {
+        return true;
+    }
 
     @Override
     public void fatal(String message) {

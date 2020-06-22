@@ -27,6 +27,11 @@ class Slf4jLoggerImpl implements Logger {
     }
 
     @Override
+    public boolean isTraceEnabled() {
+        return logger.isTraceEnabled(Slf4jImpl.MARKER);
+    }
+
+    @Override
     public void trace(String message) {
         if (logger.isTraceEnabled(Slf4jImpl.MARKER)) {
             logger.trace(Slf4jImpl.MARKER, message);
@@ -68,6 +73,10 @@ class Slf4jLoggerImpl implements Logger {
         }
     }
 
+    @Override
+    public boolean isDebugEnabled() {
+        return logger.isDebugEnabled(Slf4jImpl.MARKER);
+    }
 
     @Override
     public void debug(String message) {
@@ -111,6 +120,10 @@ class Slf4jLoggerImpl implements Logger {
         }
     }
 
+    @Override
+    public boolean isInfoEnabled() {
+        return logger.isInfoEnabled(Slf4jImpl.MARKER);
+    }
 
     @Override
     public void info(String message) {
@@ -154,6 +167,10 @@ class Slf4jLoggerImpl implements Logger {
         }
     }
 
+    @Override
+    public boolean isWarnEnabled() {
+        return logger.isWarnEnabled(Slf4jImpl.MARKER);
+    }
 
     @Override
     public void warn(String message) {
@@ -197,6 +214,10 @@ class Slf4jLoggerImpl implements Logger {
         }
     }
 
+    @Override
+    public boolean isErrorEnabled() {
+        return logger.isErrorEnabled(Slf4jImpl.MARKER);
+    }
 
     @Override
     public void error(String message) {
@@ -238,6 +259,11 @@ class Slf4jLoggerImpl implements Logger {
         if (logger.isErrorEnabled(Slf4jImpl.MARKER)) {
             logger.error(Slf4jImpl.MARKER, MessageHelper.format(message, params), e);
         }
+    }
+
+    @Override
+    public boolean isFatalEnabled() {
+        return true;
     }
 
     @Override

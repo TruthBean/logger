@@ -27,6 +27,8 @@ public interface Logger {
         return this;
     }
 
+    boolean isTraceEnabled();
+
     void trace(String message);
 
     void trace(Supplier<String> supplier);
@@ -39,6 +41,7 @@ public interface Logger {
 
     void trace(String message, Throwable e, Object... params);
 
+    boolean isDebugEnabled();
 
     void debug(String message);
 
@@ -52,6 +55,7 @@ public interface Logger {
 
     void debug(String message, Throwable e, Object... params);
 
+    boolean isInfoEnabled();
 
     void info(String message);
 
@@ -65,6 +69,7 @@ public interface Logger {
 
     void info(String message, Throwable e, Object... params);
 
+    boolean isWarnEnabled();
 
     void warn(String message);
 
@@ -78,6 +83,7 @@ public interface Logger {
 
     void warn(String message, Throwable e, Object... params);
 
+    boolean isErrorEnabled();
 
     void error(String message);
 
@@ -91,6 +97,7 @@ public interface Logger {
 
     void error(String message, Throwable e, Object... params);
 
+    boolean isFatalEnabled();
 
     void fatal(String message);
 

@@ -35,6 +35,11 @@ public class StdOutImpl implements Logger {
     }
 
     @Override
+    public boolean isTraceEnabled() {
+        return true;
+    }
+
+    @Override
     public void trace(String message) {
         var time = DateTimeHelper.nowStr();
         var threadName = Thread.currentThread().getName();
@@ -81,6 +86,10 @@ public class StdOutImpl implements Logger {
         e.printStackTrace();
     }
 
+    @Override
+    public boolean isDebugEnabled() {
+        return true;
+    }
 
     @Override
     public void debug(String message) {
@@ -129,6 +138,10 @@ public class StdOutImpl implements Logger {
         e.printStackTrace();
     }
 
+    @Override
+    public boolean isInfoEnabled() {
+        return true;
+    }
 
     @Override
     public void info(String message) {
@@ -177,6 +190,10 @@ public class StdOutImpl implements Logger {
         e.printStackTrace();
     }
 
+    @Override
+    public boolean isWarnEnabled() {
+        return true;
+    }
 
     @Override
     public void warn(String message) {
@@ -225,6 +242,10 @@ public class StdOutImpl implements Logger {
         e.printStackTrace();
     }
 
+    @Override
+    public boolean isErrorEnabled() {
+        return true;
+    }
 
     @Override
     public void error(String message) {
@@ -273,6 +294,10 @@ public class StdOutImpl implements Logger {
         e.printStackTrace();
     }
 
+    @Override
+    public boolean isFatalEnabled() {
+        return true;
+    }
 
     @Override
     public void fatal(String message) {

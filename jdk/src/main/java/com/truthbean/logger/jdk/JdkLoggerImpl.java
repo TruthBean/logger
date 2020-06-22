@@ -32,6 +32,11 @@ public class JdkLoggerImpl implements Logger {
     }
 
     @Override
+    public boolean isTraceEnabled() {
+        return logger.isLoggable(JdkLevel.TRACE);
+    }
+
+    @Override
     public void trace(String message) {
         if (!logger.isLoggable(JdkLevel.TRACE)) {
             return;
@@ -102,6 +107,10 @@ public class JdkLoggerImpl implements Logger {
         logger.log(logRecord);
     }
 
+    @Override
+    public boolean isDebugEnabled() {
+        return logger.isLoggable(JdkLevel.DEBUG);
+    }
 
     @Override
     public void debug(String message) {
@@ -174,6 +183,10 @@ public class JdkLoggerImpl implements Logger {
         logger.log(logRecord);
     }
 
+    @Override
+    public boolean isInfoEnabled() {
+        return logger.isLoggable(JdkLevel.INFO);
+    }
 
     @Override
     public void info(String message) {
@@ -246,6 +259,10 @@ public class JdkLoggerImpl implements Logger {
         logger.log(logRecord);
     }
 
+    @Override
+    public boolean isWarnEnabled() {
+        return logger.isLoggable(JdkLevel.WARNING);
+    }
 
     @Override
     public void warn(String message) {
@@ -318,6 +335,10 @@ public class JdkLoggerImpl implements Logger {
         logger.log(logRecord);
     }
 
+    @Override
+    public boolean isErrorEnabled() {
+        return logger.isLoggable(JdkLevel.SEVERE);
+    }
 
     @Override
     public void error(String message) {
@@ -390,6 +411,10 @@ public class JdkLoggerImpl implements Logger {
         logger.log(logRecord);
     }
 
+    @Override
+    public boolean isFatalEnabled() {
+        return logger.isLoggable(JdkLevel.FATAL);
+    }
 
     @Override
     public void fatal(String message) {
