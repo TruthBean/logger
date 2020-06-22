@@ -21,7 +21,7 @@ import java.util.ServiceLoader;
  * Created on 2020-05-08 22:22
  */
 public class LoggerFactory {
-    private LoggerFactory() {
+    public LoggerFactory() {
     }
 
     public static Logger getLogger(Class<?> clazz) {

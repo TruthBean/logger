@@ -11,12 +11,14 @@
         <module name="stdout" />
         <module name="core" />
         <module name="slf4j" />
+        <module name="kotlin" />
         <module name="log4j2" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="core" target="11" />
       <module name="jdk" target="11" />
+      <module name="kotlin" target="11" />
       <module name="log4j" target="11" />
       <module name="log4j2" target="11" />
       <module name="parrent" target="11" />
@@ -27,13 +29,14 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="core" options="-endorseddirs V:\person\logger\core\target/endorsed" />
-      <module name="jdk" options="-endorseddirs V:\person\logger\jdk\target/endorsed" />
-      <module name="log4j" options="-endorseddirs V:\person\logger\log4j\target/endorsed" />
-      <module name="log4j2" options="-endorseddirs V:\person\logger\log4j2\target/endorsed" />
+      <module name="core" options="-endorseddirs D:\develop\java\logger\core\target/endorsed" />
+      <module name="jdk" options="-endorseddirs D:\develop\java\logger\jdk\target/endorsed" />
+      <module name="kotlin" options="-endorseddirs D:\develop\java\logger\kotlin\target/endorsed" />
+      <module name="log4j" options="-endorseddirs D:\develop\java\logger\log4j\target/endorsed" />
+      <module name="log4j2" options="-endorseddirs D:\develop\java\logger\log4j2\target/endorsed" />
       <module name="simple" options="-endorseddirs G:\DevOps\java\logger\simple\target/endorsed" />
-      <module name="slf4j" options="-endorseddirs V:\person\logger\slf4j\target/endorsed" />
-      <module name="stdout" options="-endorseddirs V:\person\logger\stdout\target/endorsed" />
+      <module name="slf4j" options="-endorseddirs D:\develop\java\logger\slf4j\target/endorsed" />
+      <module name="stdout" options="-endorseddirs D:\develop\java\logger\stdout\target/endorsed" />
     </option>
   </component>
 </project>
