@@ -17,11 +17,11 @@ import org.junit.jupiter.api.Test;
  * @since 0.0.1
  * Created on 2020-05-08 22:32
  */
-public class LoggerTest {
+public class LoggerTest extends Logging {
     
     @Test
     void testInfo() {
-        LOGGER.info("msg");
+        logger.info("msg");
         LOGGER.info("msg{},{}", 1, "444");
     }
 

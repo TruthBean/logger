@@ -19,7 +19,7 @@
 
     <packaging>pom</packaging>
 
-    <name>logger adapter</name>
+    <name>logger-adapter-parent</name>
     <description>truthbean logger adapter framework</description>
     <url>http://www.truthbean.com/logger</url>
 

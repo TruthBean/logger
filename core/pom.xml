@@ -12,8 +12,8 @@
 
     <artifactId>core</artifactId>
 
-    <name>logger adapter</name>
-    <description>truthbean logger adapter framework</description>
+    <name>logger-core</name>
+    <description>core of the truthbean logger adapter framework</description>
     <url>http://www.truthbean.com/logger</url>
 
 </project>

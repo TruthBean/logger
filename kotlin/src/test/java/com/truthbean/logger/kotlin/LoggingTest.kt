@@ -9,8 +9,7 @@
  */
 package com.truthbean.logger.kotlin
 
-import com.truthbean.logger.LoggerFactory
-import com.truthbean.logger.kt.getLogger
+import com.truthbean.logger.kt.Logging
 import org.junit.jupiter.api.Test
 
 
@@ -19,8 +18,7 @@ import org.junit.jupiter.api.Test
  * @since 0.0.1
  * Created on 2020-05-08 22:32
  */
-class LoggerTest {
-    private val logger = LoggerFactory().getLogger<LoggerTest>()
+class LoggingTest: Logging {
     private val service = TestService(logger)
 
     @Test

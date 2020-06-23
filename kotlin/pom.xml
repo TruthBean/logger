@@ -11,8 +11,8 @@
 
     <artifactId>kotlin</artifactId>
 
-    <name>logger adapter</name>
-    <description>truthbean logger adapter framework</description>
+    <name>kotlin-adapter</name>
+    <description>kotlin of the truthbean logger adapter framework</description>
     <url>http://www.truthbean.com/logger</url>
 
     <properties>
@@ -36,18 +36,20 @@
             <version>${kotlin.version}</version>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-test-junit</artifactId>
             <version>${kotlin.version}</version>
             <scope>test</scope>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>com.truthbean.logger</groupId>
             <artifactId>stdout</artifactId>
             <version>${project.version}</version>
+            <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -59,7 +61,7 @@
                 <executions>
                     <execution>
                         <id>compile</id>
-                        <phase>compile</phase>
+                        <phase>process-sources</phase>
                         <goals>
                             <goal>compile</goal>
                         </goals>
