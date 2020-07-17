@@ -23,7 +23,7 @@ import java.util.function.Supplier;
  * Created on 2020-02-14 14:11
  */
 public class Slf4jImpl implements Logger {
-    static Marker MARKER = MarkerFactory.getMarker("truthbean");
+    static final Marker MARKER = MarkerFactory.getMarker("truthbean");
     private Logger logger;
     private org.slf4j.Logger rawLogger;
 
@@ -33,7 +33,7 @@ public class Slf4jImpl implements Logger {
         if (rawLogger instanceof LocationAwareLogger) {
             this.logger = new Slf4jLocationAwareLoggerImpl((LocationAwareLogger) rawLogger);
         } else {
-            rawLogger.warn(rawLogger.getClass() + " is not a suitable logger");
+            rawLogger.warn("{} is not a suitable logger", rawLogger.getClass());
             this.logger = new Slf4jLoggerImpl(rawLogger);
         }
         return this;
@@ -45,7 +45,7 @@ public class Slf4jImpl implements Logger {
         if (rawLogger instanceof LocationAwareLogger) {
             this.logger = new Slf4jLocationAwareLoggerImpl((LocationAwareLogger) rawLogger);
         } else {
-            rawLogger.warn(rawLogger.getClass() + " is not a suitable logger");
+            rawLogger.warn("{} is not a suitable logger", rawLogger.getClass());
             this.logger = new Slf4jLoggerImpl(rawLogger);
         }
         return this;

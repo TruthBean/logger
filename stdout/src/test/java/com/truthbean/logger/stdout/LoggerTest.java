@@ -7,9 +7,10 @@
  * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
-package com.truthbean.logger;
+package com.truthbean.logger.stdout;
 
 import com.truthbean.Logger;
+import com.truthbean.logger.LoggerFactory;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -17,9 +18,9 @@ import org.junit.jupiter.api.Test;
  * @since 0.0.1
  * Created on 2020-05-08 22:32
  */
-public class LoggerTest {
+class LoggerTest {
 
-    private TestService service = new TestService(LOGGER);
+    private final TestService service = new TestService(LOGGER);
     
     @Test
     void testInfo() {
