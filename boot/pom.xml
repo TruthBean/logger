@@ -10,10 +10,17 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>logger-core</artifactId>
+    <artifactId>logger-boot</artifactId>
+    <packaging>pom</packaging>
 
-    <name>logger-core</name>
-    <description>core of the truthbean logger adapter framework</description>
+    <name>logger-boot</name>
+    <description>logger boot parent of the truthbean logger framework</description>
     <url>http://www.truthbean.com/logger</url>
+
+    <modules>
+        <module>log4j2</module>
+        <module>slf4j</module>
+    </modules>
+
 
 </project>

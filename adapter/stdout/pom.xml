@@ -3,17 +3,24 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>logger-parent</artifactId>
+        <artifactId>logger-adapter</artifactId>
         <groupId>com.truthbean.logger</groupId>
         <version>0.1.0-SNAPSHOT</version>
         <relativePath>..</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>logger-core</artifactId>
+    <artifactId>stdout-adapter</artifactId>
 
-    <name>logger-core</name>
-    <description>core of the truthbean logger adapter framework</description>
+    <name>stdout-adapter</name>
+    <description>stdout adapter of the truthbean logger framework</description>
     <url>http://www.truthbean.com/logger</url>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.truthbean.logger</groupId>
+            <artifactId>logger-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>
