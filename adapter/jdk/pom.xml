@@ -16,12 +16,4 @@
     <description>jdk adapter of the truthbean logger framework</description>
     <url>http://www.truthbean.com/logger</url>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.truthbean.logger</groupId>
-            <artifactId>logger-core</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
-
 </project>

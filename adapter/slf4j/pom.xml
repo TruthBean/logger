@@ -17,12 +17,6 @@
     <url>http://www.truthbean.com/logger</url>
 
     <dependencies>
-        <dependency>
-            <groupId>com.truthbean.logger</groupId>
-            <artifactId>logger-core</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
         <!-- Logging -->
         <dependency>
             <groupId>org.slf4j</groupId>
