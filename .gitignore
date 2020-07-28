@@ -29,3 +29,12 @@ hs_err_pid*
 **/*.iml
 
 .idea/
+
+# vscode
+.vscode
+
+# eclipse/vscode
+**/.settings
+**/.classpath
+**/.project
+**/.factorypath

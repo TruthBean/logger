@@ -10,7 +10,6 @@
 package com.truthbean.logger;
 
 import com.truthbean.Logger;
-import com.truthbean.logger.LoggerFactory;
 
 /**
  * @author TruthBean/Rogar·Q

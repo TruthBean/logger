@@ -43,7 +43,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " TRACE [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.TRACE, prefix + message);
+        var logRecord = new LogRecord(JdkLevel.TRACE, prefix + message);
         logger.log(logRecord);
     }
 
@@ -54,7 +54,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " TRACE [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.TRACE, prefix + supplier.get());
+        var logRecord = new LogRecord(JdkLevel.TRACE, prefix + supplier.get());
         logger.log(logRecord);
     }
 
@@ -66,7 +66,7 @@ public class JdkLoggerImpl implements Logger {
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " TRACE [" + threadName + "] " + name + " : ";
         var newMessage = MessageHelper.format(message, params);
-        LogRecord logRecord = new LogRecord(JdkLevel.TRACE, prefix + newMessage);
+        var logRecord = new LogRecord(JdkLevel.TRACE, prefix + newMessage);
         logger.log(logRecord);
     }
 
@@ -77,7 +77,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " TRACE [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.TRACE, prefix + message);
+        var logRecord = new LogRecord(JdkLevel.TRACE, prefix + message);
         logRecord.setThrown(e);
         logger.log(logRecord);
     }
@@ -89,7 +89,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " TRACE [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.TRACE, prefix + supplier.get());
+        var logRecord = new LogRecord(JdkLevel.TRACE, prefix + supplier.get());
         logRecord.setThrown(e);
         logger.log(logRecord);
     }
@@ -102,7 +102,7 @@ public class JdkLoggerImpl implements Logger {
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " TRACE [" + threadName + "] " + name + " : ";
         var newMessage = MessageHelper.format(message, params);
-        LogRecord logRecord = new LogRecord(JdkLevel.TRACE, prefix + newMessage);
+        var logRecord = new LogRecord(JdkLevel.TRACE, prefix + newMessage);
         logRecord.setThrown(e);
         logger.log(logRecord);
     }
@@ -119,7 +119,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " DEBUG [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.DEBUG, prefix + message);
+        var logRecord = new LogRecord(JdkLevel.DEBUG, prefix + message);
         logger.log(logRecord);
     }
 
@@ -130,7 +130,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " DEBUG [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.DEBUG, prefix + supplier.get());
+        var logRecord = new LogRecord(JdkLevel.DEBUG, prefix + supplier.get());
         logger.log(logRecord);
     }
 
@@ -142,7 +142,7 @@ public class JdkLoggerImpl implements Logger {
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " DEBUG [" + threadName + "] " + name + " : ";
         var newMessage = MessageHelper.format(message, params);
-        LogRecord logRecord = new LogRecord(JdkLevel.DEBUG, prefix + newMessage);
+        var logRecord = new LogRecord(JdkLevel.DEBUG, prefix + newMessage);
         logger.log(logRecord);
     }
 
@@ -153,7 +153,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " DEBUG [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.DEBUG, prefix + message);
+        var logRecord = new LogRecord(JdkLevel.DEBUG, prefix + message);
         logRecord.setThrown(e);
         logger.log(logRecord);
     }
@@ -165,7 +165,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " DEBUG [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.DEBUG, prefix + supplier.get());
+        var logRecord = new LogRecord(JdkLevel.DEBUG, prefix + supplier.get());
         logRecord.setThrown(e);
         logger.log(logRecord);
     }
@@ -178,7 +178,7 @@ public class JdkLoggerImpl implements Logger {
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " DEBUG [" + threadName + "] " + name + " : ";
         var newMessage = MessageHelper.format(message, params);
-        LogRecord logRecord = new LogRecord(JdkLevel.DEBUG, prefix + newMessage);
+        var logRecord = new LogRecord(JdkLevel.DEBUG, prefix + newMessage);
         logRecord.setThrown(e);
         logger.log(logRecord);
     }
@@ -195,7 +195,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " INFO [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.INFO, prefix + message);
+        var logRecord = new LogRecord(JdkLevel.INFO, prefix + message);
         logger.log(logRecord);
     }
 
@@ -206,7 +206,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " INFO [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.INFO, prefix + supplier.get());
+        var logRecord = new LogRecord(JdkLevel.INFO, prefix + supplier.get());
         logger.log(logRecord);
     }
 
@@ -218,7 +218,7 @@ public class JdkLoggerImpl implements Logger {
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " INFO [" + threadName + "] " + name + " : ";
         var newMessage = MessageHelper.format(message, params);
-        LogRecord logRecord = new LogRecord(JdkLevel.INFO, prefix + newMessage);
+        var logRecord = new LogRecord(JdkLevel.INFO, prefix + newMessage);
         logger.log(logRecord);
     }
 
@@ -229,7 +229,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " INFO [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.INFO, prefix + message);
+        var logRecord = new LogRecord(JdkLevel.INFO, prefix + message);
         logRecord.setThrown(e);
         logger.log(logRecord);
     }
@@ -241,7 +241,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " INFO [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.INFO, prefix + supplier.get());
+        var logRecord = new LogRecord(JdkLevel.INFO, prefix + supplier.get());
         logRecord.setThrown(e);
         logger.log(logRecord);
     }
@@ -254,7 +254,7 @@ public class JdkLoggerImpl implements Logger {
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " INFO [" + threadName + "] " + name + " : ";
         var newMessage = MessageHelper.format(message, params);
-        LogRecord logRecord = new LogRecord(JdkLevel.INFO, prefix + newMessage);
+        var logRecord = new LogRecord(JdkLevel.INFO, prefix + newMessage);
         logRecord.setThrown(e);
         logger.log(logRecord);
     }
@@ -271,7 +271,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " WARN [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.WARNING, prefix + message);
+        var logRecord = new LogRecord(JdkLevel.WARNING, prefix + message);
         logger.log(logRecord);
     }
 
@@ -282,7 +282,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " WARN [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.WARNING, prefix + supplier.get());
+        var logRecord = new LogRecord(JdkLevel.WARNING, prefix + supplier.get());
         logger.log(logRecord);
     }
 
@@ -294,7 +294,7 @@ public class JdkLoggerImpl implements Logger {
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " WARN [" + threadName + "] " + name + " : ";
         var newMessage = MessageHelper.format(message, params);
-        LogRecord logRecord = new LogRecord(JdkLevel.WARNING, prefix + newMessage);
+        var logRecord = new LogRecord(JdkLevel.WARNING, prefix + newMessage);
         logger.log(logRecord);
     }
 
@@ -305,7 +305,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " WARN [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.WARNING, prefix + message);
+        var logRecord = new LogRecord(JdkLevel.WARNING, prefix + message);
         logRecord.setThrown(e);
         logger.log(logRecord);
     }
@@ -317,7 +317,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " WARN [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.WARNING, prefix + supplier.get());
+        var logRecord = new LogRecord(JdkLevel.WARNING, prefix + supplier.get());
         logRecord.setThrown(e);
         logger.log(logRecord);
     }
@@ -330,7 +330,7 @@ public class JdkLoggerImpl implements Logger {
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " WARN [" + threadName + "] " + name + " : ";
         var newMessage = MessageHelper.format(message, params);
-        LogRecord logRecord = new LogRecord(JdkLevel.WARNING, prefix + newMessage);
+        var logRecord = new LogRecord(JdkLevel.WARNING, prefix + newMessage);
         logRecord.setThrown(e);
         logger.log(logRecord);
     }
@@ -347,7 +347,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " ERROR [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.SEVERE, prefix + message);
+        var logRecord = new LogRecord(JdkLevel.SEVERE, prefix + message);
         logger.log(logRecord);
     }
 
@@ -358,7 +358,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " ERROR [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.SEVERE, prefix + supplier.get());
+        var logRecord = new LogRecord(JdkLevel.SEVERE, prefix + supplier.get());
         logger.log(logRecord);
     }
 
@@ -370,7 +370,7 @@ public class JdkLoggerImpl implements Logger {
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " ERROR [" + threadName + "] " + name + " : ";
         var newMessage = MessageHelper.format(message, params);
-        LogRecord logRecord = new LogRecord(JdkLevel.SEVERE, prefix + newMessage);
+        var logRecord = new LogRecord(JdkLevel.SEVERE, prefix + newMessage);
         logger.log(logRecord);
     }
 
@@ -381,7 +381,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " ERROR [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.SEVERE, prefix + message);
+        var logRecord = new LogRecord(JdkLevel.SEVERE, prefix + message);
         logRecord.setThrown(e);
         logger.log(logRecord);
     }
@@ -393,7 +393,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " ERROR [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.SEVERE, prefix + supplier.get());
+        var logRecord = new LogRecord(JdkLevel.SEVERE, prefix + supplier.get());
         logRecord.setThrown(e);
         logger.log(logRecord);
     }
@@ -406,7 +406,7 @@ public class JdkLoggerImpl implements Logger {
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " ERROR [" + threadName + "] " + name + " : ";
         var newMessage = MessageHelper.format(message, params);
-        LogRecord logRecord = new LogRecord(JdkLevel.SEVERE, prefix + newMessage);
+        var logRecord = new LogRecord(JdkLevel.SEVERE, prefix + newMessage);
         logRecord.setThrown(e);
         logger.log(logRecord);
     }
@@ -423,7 +423,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " FATAL [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.FATAL, prefix + message);
+        var logRecord = new LogRecord(JdkLevel.FATAL, prefix + message);
         logger.log(logRecord);
     }
 
@@ -434,7 +434,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " FATAL [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.FATAL, prefix + supplier.get());
+        var logRecord = new LogRecord(JdkLevel.FATAL, prefix + supplier.get());
         logger.log(logRecord);
     }
 
@@ -446,7 +446,7 @@ public class JdkLoggerImpl implements Logger {
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " FATAL [" + threadName + "] " + name + " : ";
         var newMessage = MessageHelper.format(message, params);
-        LogRecord logRecord = new LogRecord(JdkLevel.FATAL, prefix + newMessage);
+        var logRecord = new LogRecord(JdkLevel.FATAL, prefix + newMessage);
         logger.log(logRecord);
     }
 
@@ -457,7 +457,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " FATAL [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.FATAL, prefix + message);
+        var logRecord = new LogRecord(JdkLevel.FATAL, prefix + message);
         logRecord.setThrown(e);
         logger.log(logRecord);
     }
@@ -469,7 +469,7 @@ public class JdkLoggerImpl implements Logger {
         }
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " FATAL [" + threadName + "] " + name + " : ";
-        LogRecord logRecord = new LogRecord(JdkLevel.FATAL, prefix + supplier.get());
+        var logRecord = new LogRecord(JdkLevel.FATAL, prefix + supplier.get());
         logRecord.setThrown(e);
         logger.log(logRecord);
     }
@@ -482,7 +482,7 @@ public class JdkLoggerImpl implements Logger {
         var threadName = Thread.currentThread().getName();
         var prefix = nowStr() + " FATAL [" + threadName + "] " + name + " : ";
         var newMessage = MessageHelper.format(message, params);
-        LogRecord logRecord = new LogRecord(JdkLevel.FATAL, prefix + newMessage);
+        var logRecord = new LogRecord(JdkLevel.FATAL, prefix + newMessage);
         logRecord.setThrown(e);
         logger.log(logRecord);
     }

@@ -268,31 +268,34 @@ class Slf4jLoggerImpl implements Logger {
 
     @Override
     public void fatal(String message) {
-
+        System.err.println(message);
     }
 
     @Override
     public void fatal(Supplier<String> supplier) {
-
+        System.err.println(supplier.get());
     }
 
     @Override
     public void fatal(String message, Object... params) {
-
+        System.err.println(MessageHelper.format(message, params));
     }
 
     @Override
     public void fatal(String message, Throwable e) {
-
+        System.err.println(message);
+        e.printStackTrace();
     }
 
     @Override
     public void fatal(Supplier<String> supplier, Throwable e) {
-
+        System.err.println(supplier.get());
+        e.printStackTrace();
     }
 
     @Override
     public void fatal(String message, Throwable e, Object... params) {
-
+        System.err.println(MessageHelper.format(message, params));
+        e.printStackTrace();
     }
 }

@@ -12,6 +12,7 @@
  * @since 0.1.0
  */
 module com.truthbean.logger.kt {
-    requires transitive com.truthbean.logger;
+    requires java.base;
+    requires transitive com.truthbean.logger.core;
     requires kotlin.stdlib;
 }

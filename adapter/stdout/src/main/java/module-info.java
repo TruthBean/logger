@@ -12,8 +12,9 @@
  * @author TruthBean/Rogar·Q
  * @since 0.1.0
  */
-module com.truthbean.logger.stdout {
-    requires transitive com.truthbean.logger;
+open module com.truthbean.logger.stdout {
+    requires java.base;
+    requires transitive com.truthbean.logger.core;
 
     provides com.truthbean.Logger with
             com.truthbean.logger.stdout.StdOutImpl;

@@ -15,22 +15,28 @@ package com.truthbean.logger.exception;
  * Created on 2020-05-08 21:53
  */
 public class NoLoggerProviderException extends RuntimeException {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 6336490689226858998L;
+
     public NoLoggerProviderException() {
     }
 
-    public NoLoggerProviderException(String message) {
+    public NoLoggerProviderException(final String message) {
         super(message);
     }
 
-    public NoLoggerProviderException(String message, Throwable cause) {
+    public NoLoggerProviderException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
-    public NoLoggerProviderException(Throwable cause) {
+    public NoLoggerProviderException(final Throwable cause) {
         super(cause);
     }
 
-    public NoLoggerProviderException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public NoLoggerProviderException(final String message, final Throwable cause, final boolean enableSuppression,
+            final boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

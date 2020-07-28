@@ -15,7 +15,6 @@ import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 import org.slf4j.spi.LocationAwareLogger;
 
-import java.lang.reflect.Method;
 import java.util.function.Supplier;
 
 /**
@@ -31,9 +30,9 @@ public class Slf4jImpl implements Logger {
     static {
         try {
             Class<?> handlerClass = Class.forName("org.slf4j.bridge.SLF4JBridgeHandler");
-            Method removeHandlersForRootLogger = handlerClass.getMethod("removeHandlersForRootLogger");
+            var removeHandlersForRootLogger = handlerClass.getMethod("removeHandlersForRootLogger");
             removeHandlersForRootLogger.invoke(null);
-            Method install = handlerClass.getMethod("install");
+            var install = handlerClass.getMethod("install");
             install.invoke(null);
         } catch (Throwable ignored) {
         }

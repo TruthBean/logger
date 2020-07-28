@@ -17,6 +17,11 @@ import java.util.logging.Level;
  * Created on 2020-02-13 13:29
  */
 class JdkLevel extends Level {
+    /**
+     * serial version
+     */
+    private static final long serialVersionUID = -4242942266318231264L;
+
     protected JdkLevel(String name, int value) {
         super(name, value);
     }

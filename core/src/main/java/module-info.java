@@ -11,7 +11,9 @@
  * @author TruthBean/Rogar·Q
  * @since 0.1.0
  */
-module com.truthbean.logger {
+module com.truthbean.logger.core {
+    requires java.base;
+
     exports com.truthbean;
     exports com.truthbean.logger;
     exports com.truthbean.logger.util;
