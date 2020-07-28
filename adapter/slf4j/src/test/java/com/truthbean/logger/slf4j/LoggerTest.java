@@ -50,6 +50,14 @@ class LoggerTest {
         service.trace();
     }
 
+    @Test
+    void testFatal() {
+        LOGGER.fatal("fatal");
+        LOGGER.fatal(() -> "hello fatal");
+        LOGGER.fatal(() -> "hello fatal", new RuntimeException());
+        service.fatal();
+    }
+
     @Override
     public String toString() {
         return "888888888888888888888888";

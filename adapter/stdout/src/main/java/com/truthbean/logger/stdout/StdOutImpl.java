@@ -251,14 +251,14 @@ public class StdOutImpl implements Logger {
     public void error(String message) {
         var time = DateTimeHelper.nowStr();
         var threadName = Thread.currentThread().getName();
-        System.out.println(time + " ERROR [" + threadName + "] " + loggerName + " --- " + message);
+        System.err.println(time + " ERROR [" + threadName + "] " + loggerName + " --- " + message);
     }
 
     @Override
     public void error(Supplier<String> supplier) {
         var time = DateTimeHelper.nowStr();
         var threadName = Thread.currentThread().getName();
-        System.out.println(time + " ERROR [" + threadName + "] " + loggerName + " --- " + supplier.get());
+        System.err.println(time + " ERROR [" + threadName + "] " + loggerName + " --- " + supplier.get());
     }
 
     @Override
@@ -266,14 +266,14 @@ public class StdOutImpl implements Logger {
         var time = DateTimeHelper.nowStr();
         var threadName = Thread.currentThread().getName();
         var msg = MessageHelper.format(message, params);
-        System.out.println(time + " ERROR [" + threadName + "] " + loggerName + " --- " + msg);
+        System.err.println(time + " ERROR [" + threadName + "] " + loggerName + " --- " + msg);
     }
 
     @Override
     public void error(String message, Throwable e) {
         var time = DateTimeHelper.nowStr();
         var threadName = Thread.currentThread().getName();
-        System.out.println(time + " ERROR [" + threadName + "] " + loggerName + " --- " + message);
+        System.err.println(time + " ERROR [" + threadName + "] " + loggerName + " --- " + message);
         e.printStackTrace();
     }
 
@@ -281,7 +281,7 @@ public class StdOutImpl implements Logger {
     public void error(Supplier<String> supplier, Throwable e) {
         var time = DateTimeHelper.nowStr();
         var threadName = Thread.currentThread().getName();
-        System.out.println(time + " ERROR [" + threadName + "] " + loggerName + " --- " + supplier.get());
+        System.err.println(time + " ERROR [" + threadName + "] " + loggerName + " --- " + supplier.get());
         e.printStackTrace();
     }
 
@@ -290,7 +290,7 @@ public class StdOutImpl implements Logger {
         var time = DateTimeHelper.nowStr();
         var threadName = Thread.currentThread().getName();
         var msg = MessageHelper.format(message, params);
-        System.out.println(time + " ERROR [" + threadName + "] " + loggerName + " --- " + msg);
+        System.err.println(time + " ERROR [" + threadName + "] " + loggerName + " --- " + msg);
         e.printStackTrace();
     }
 
@@ -303,14 +303,14 @@ public class StdOutImpl implements Logger {
     public void fatal(String message) {
         var time = DateTimeHelper.nowStr();
         var threadName = Thread.currentThread().getName();
-        System.out.println(time + " FATAL [" + threadName + "] " + loggerName + " --- " + message);
+        System.err.println(time + " FATAL [" + threadName + "] " + loggerName + " --- " + message);
     }
 
     @Override
     public void fatal(Supplier<String> supplier) {
         var time = DateTimeHelper.nowStr();
         var threadName = Thread.currentThread().getName();
-        System.out.println(time + " FATAL [" + threadName + "] " + loggerName + " --- " + supplier.get());
+        System.err.println(time + " FATAL [" + threadName + "] " + loggerName + " --- " + supplier.get());
     }
 
     @Override
@@ -318,14 +318,14 @@ public class StdOutImpl implements Logger {
         var time = DateTimeHelper.nowStr();
         var threadName = Thread.currentThread().getName();
         var msg = MessageHelper.format(message, params);
-        System.out.println(time + " FATAL [" + threadName + "] " + loggerName + " --- " + msg);
+        System.err.println(time + " FATAL [" + threadName + "] " + loggerName + " --- " + msg);
     }
 
     @Override
     public void fatal(String message, Throwable e) {
         var time = DateTimeHelper.nowStr();
         var threadName = Thread.currentThread().getName();
-        System.out.println(time + " FATAL [" + threadName + "] " + loggerName + " --- " + message);
+        System.err.println(time + " FATAL [" + threadName + "] " + loggerName + " --- " + message);
         e.printStackTrace();
     }
 
@@ -333,7 +333,7 @@ public class StdOutImpl implements Logger {
     public void fatal(Supplier<String> supplier, Throwable e) {
         var time = DateTimeHelper.nowStr();
         var threadName = Thread.currentThread().getName();
-        System.out.println(time + " FATAL [" + threadName + "] " + loggerName + " --- " + supplier.get());
+        System.err.println(time + " FATAL [" + threadName + "] " + loggerName + " --- " + supplier.get());
         e.printStackTrace();
     }
 
@@ -342,7 +342,7 @@ public class StdOutImpl implements Logger {
         var time = DateTimeHelper.nowStr();
         var threadName = Thread.currentThread().getName();
         var msg = MessageHelper.format(message, params);
-        System.out.println(time + " FATAL [" + threadName + "] " + loggerName + " --- " + msg);
+        System.err.println(time + " FATAL [" + threadName + "] " + loggerName + " --- " + msg);
         e.printStackTrace();
     }
 }
