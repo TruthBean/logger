@@ -15,4 +15,6 @@ module com.truthbean.logger.kt {
     requires java.base;
     requires transitive com.truthbean.logger.core;
     requires kotlin.stdlib;
+
+    exports com.truthbean.logger.kt;
 }

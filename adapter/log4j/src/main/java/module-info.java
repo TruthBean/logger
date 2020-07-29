@@ -12,7 +12,7 @@
  * @author TruthBean/Rogar·Q
  * @since 0.1.0
  */
-open module com.truthbean.logger.log4j {
+module com.truthbean.logger.log4j {
     requires java.base;
     requires transitive com.truthbean.logger.core;
     requires log4j;

@@ -7,7 +7,7 @@
  * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
-package com.truthbean.logger.log4j2;
+package com.truthbean.logger.slf4j.check;
 
 import com.truthbean.Logger;
 import com.truthbean.logger.LoggerFactory;
@@ -48,6 +48,14 @@ class LoggerTest {
         LOGGER.trace(() -> {return "hello trace";});
         LOGGER.trace(() -> "hello trace", new RuntimeException());
         service.trace();
+    }
+
+    @Test
+    void testFatal() {
+        LOGGER.fatal("fatal");
+        LOGGER.fatal(() -> "hello fatal");
+        LOGGER.fatal(() -> "hello fatal", new RuntimeException());
+        service.fatal();
     }
 
     @Override

@@ -12,10 +12,9 @@
  * @author TruthBean/Rogar·Q
  * @since 0.1.0
  */
-module com.truthbean.logger.stdout {
+open module com.truthbean.logger.log4j2.test {
     requires java.base;
-    requires transitive com.truthbean.logger.core;
+    requires com.truthbean.logger.log4j2;
 
-    provides com.truthbean.Logger with
-            com.truthbean.logger.stdout.StdOutImpl;
+    requires transitive org.junit.jupiter.api;
 }
