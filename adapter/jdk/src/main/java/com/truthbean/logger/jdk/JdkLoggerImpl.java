@@ -41,10 +41,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.TRACE)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " TRACE [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.TRACE, prefix + message);
-        logger.log(logRecord);
+        log(JdkLevel.TRACE, null, message);
     }
 
     @Override
@@ -52,10 +49,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.TRACE)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " TRACE [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.TRACE, prefix + supplier.get());
-        logger.log(logRecord);
+        log(JdkLevel.TRACE, null, supplier.get());
     }
 
     @Override
@@ -63,11 +57,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.TRACE)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " TRACE [" + threadName + "] " + name + " : ";
-        var newMessage = MessageHelper.format(message, params);
-        var logRecord = new LogRecord(JdkLevel.TRACE, prefix + newMessage);
-        logger.log(logRecord);
+        log(JdkLevel.TRACE, null, message, params);
     }
 
     @Override
@@ -75,11 +65,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.TRACE)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " TRACE [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.TRACE, prefix + message);
-        logRecord.setThrown(e);
-        logger.log(logRecord);
+        log(JdkLevel.TRACE, e, message);
     }
 
     @Override
@@ -87,11 +73,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.TRACE)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " TRACE [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.TRACE, prefix + supplier.get());
-        logRecord.setThrown(e);
-        logger.log(logRecord);
+        log(JdkLevel.TRACE, e, supplier.get());
     }
 
     @Override
@@ -99,12 +81,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.TRACE)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " TRACE [" + threadName + "] " + name + " : ";
-        var newMessage = MessageHelper.format(message, params);
-        var logRecord = new LogRecord(JdkLevel.TRACE, prefix + newMessage);
-        logRecord.setThrown(e);
-        logger.log(logRecord);
+        log(JdkLevel.TRACE, e, message, params);
     }
 
     @Override
@@ -117,10 +94,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.DEBUG)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " DEBUG [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.DEBUG, prefix + message);
-        logger.log(logRecord);
+        log(JdkLevel.DEBUG, null, message);
     }
 
     @Override
@@ -128,10 +102,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.DEBUG)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " DEBUG [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.DEBUG, prefix + supplier.get());
-        logger.log(logRecord);
+        log(JdkLevel.DEBUG, null, supplier.get());
     }
 
     @Override
@@ -139,11 +110,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.DEBUG)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " DEBUG [" + threadName + "] " + name + " : ";
-        var newMessage = MessageHelper.format(message, params);
-        var logRecord = new LogRecord(JdkLevel.DEBUG, prefix + newMessage);
-        logger.log(logRecord);
+        log(JdkLevel.DEBUG, null, message, params);
     }
 
     @Override
@@ -151,11 +118,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.DEBUG)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " DEBUG [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.DEBUG, prefix + message);
-        logRecord.setThrown(e);
-        logger.log(logRecord);
+        log(JdkLevel.DEBUG, e, message);
     }
 
     @Override
@@ -163,11 +126,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.DEBUG)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " DEBUG [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.DEBUG, prefix + supplier.get());
-        logRecord.setThrown(e);
-        logger.log(logRecord);
+        log(JdkLevel.DEBUG, e, supplier.get());
     }
 
     @Override
@@ -175,12 +134,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.DEBUG)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " DEBUG [" + threadName + "] " + name + " : ";
-        var newMessage = MessageHelper.format(message, params);
-        var logRecord = new LogRecord(JdkLevel.DEBUG, prefix + newMessage);
-        logRecord.setThrown(e);
-        logger.log(logRecord);
+        log(JdkLevel.DEBUG, e, message, params);
     }
 
     @Override
@@ -193,10 +147,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.INFO)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " INFO [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.INFO, prefix + message);
-        logger.log(logRecord);
+        log(JdkLevel.INFO, null, message);
     }
 
     @Override
@@ -204,10 +155,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.INFO)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " INFO [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.INFO, prefix + supplier.get());
-        logger.log(logRecord);
+        log(JdkLevel.INFO, null, supplier.get());
     }
 
     @Override
@@ -215,11 +163,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.INFO)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " INFO [" + threadName + "] " + name + " : ";
-        var newMessage = MessageHelper.format(message, params);
-        var logRecord = new LogRecord(JdkLevel.INFO, prefix + newMessage);
-        logger.log(logRecord);
+        log(JdkLevel.INFO, null, message, params);
     }
 
     @Override
@@ -227,11 +171,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.INFO)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " INFO [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.INFO, prefix + message);
-        logRecord.setThrown(e);
-        logger.log(logRecord);
+        log(JdkLevel.INFO, e, message);
     }
 
     @Override
@@ -239,24 +179,16 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.INFO)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " INFO [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.INFO, prefix + supplier.get());
-        logRecord.setThrown(e);
-        logger.log(logRecord);
+        log(JdkLevel.INFO, e, supplier.get());
     }
 
     @Override
     public void info(String message, Throwable e, Object... params) {
-        if (!logger.isLoggable(JdkLevel.INFO)) {
+        var level = JdkLevel.INFO;
+        if (!logger.isLoggable(level)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " INFO [" + threadName + "] " + name + " : ";
-        var newMessage = MessageHelper.format(message, params);
-        var logRecord = new LogRecord(JdkLevel.INFO, prefix + newMessage);
-        logRecord.setThrown(e);
-        logger.log(logRecord);
+        log(level, e, message, params);
     }
 
     @Override
@@ -269,10 +201,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.WARNING)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " WARN [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.WARNING, prefix + message);
-        logger.log(logRecord);
+        log(JdkLevel.WARNING, null, message);
     }
 
     @Override
@@ -280,10 +209,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.WARNING)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " WARN [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.WARNING, prefix + supplier.get());
-        logger.log(logRecord);
+        log(JdkLevel.WARNING, null, supplier.get());
     }
 
     @Override
@@ -291,11 +217,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.WARNING)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " WARN [" + threadName + "] " + name + " : ";
-        var newMessage = MessageHelper.format(message, params);
-        var logRecord = new LogRecord(JdkLevel.WARNING, prefix + newMessage);
-        logger.log(logRecord);
+        log(JdkLevel.WARNING, null, message, params);
     }
 
     @Override
@@ -303,11 +225,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.WARNING)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " WARN [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.WARNING, prefix + message);
-        logRecord.setThrown(e);
-        logger.log(logRecord);
+        log(JdkLevel.WARNING, e, message);
     }
 
     @Override
@@ -315,11 +233,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.WARNING)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " WARN [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.WARNING, prefix + supplier.get());
-        logRecord.setThrown(e);
-        logger.log(logRecord);
+        log(JdkLevel.WARNING, e, supplier.get());
     }
 
     @Override
@@ -327,12 +241,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.WARNING)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " WARN [" + threadName + "] " + name + " : ";
-        var newMessage = MessageHelper.format(message, params);
-        var logRecord = new LogRecord(JdkLevel.WARNING, prefix + newMessage);
-        logRecord.setThrown(e);
-        logger.log(logRecord);
+        log(JdkLevel.WARNING, e, message, params);
     }
 
     @Override
@@ -345,10 +254,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.SEVERE)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " ERROR [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.SEVERE, prefix + message);
-        logger.log(logRecord);
+        log(JdkLevel.SEVERE, null, message);
     }
 
     @Override
@@ -356,10 +262,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.SEVERE)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " ERROR [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.SEVERE, prefix + supplier.get());
-        logger.log(logRecord);
+        log(JdkLevel.SEVERE, null, supplier.get());
     }
 
     @Override
@@ -367,11 +270,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.SEVERE)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " ERROR [" + threadName + "] " + name + " : ";
-        var newMessage = MessageHelper.format(message, params);
-        var logRecord = new LogRecord(JdkLevel.SEVERE, prefix + newMessage);
-        logger.log(logRecord);
+        log(JdkLevel.SEVERE, null, message, params);
     }
 
     @Override
@@ -379,11 +278,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.SEVERE)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " ERROR [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.SEVERE, prefix + message);
-        logRecord.setThrown(e);
-        logger.log(logRecord);
+        log(JdkLevel.SEVERE, e, message);
     }
 
     @Override
@@ -391,11 +286,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.SEVERE)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " ERROR [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.SEVERE, prefix + supplier.get());
-        logRecord.setThrown(e);
-        logger.log(logRecord);
+        log(JdkLevel.SEVERE, e, supplier.get());
     }
 
     @Override
@@ -403,12 +294,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.SEVERE)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " ERROR [" + threadName + "] " + name + " : ";
-        var newMessage = MessageHelper.format(message, params);
-        var logRecord = new LogRecord(JdkLevel.SEVERE, prefix + newMessage);
-        logRecord.setThrown(e);
-        logger.log(logRecord);
+        log(JdkLevel.SEVERE, e, message, params);
     }
 
     @Override
@@ -421,10 +307,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.FATAL)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " FATAL [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.FATAL, prefix + message);
-        logger.log(logRecord);
+        log(JdkLevel.FATAL, null, message);
     }
 
     @Override
@@ -432,10 +315,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.FATAL)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " FATAL [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.FATAL, prefix + supplier.get());
-        logger.log(logRecord);
+        log(JdkLevel.FATAL, null, supplier.get());
     }
 
     @Override
@@ -443,11 +323,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.FATAL)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " FATAL [" + threadName + "] " + name + " : ";
-        var newMessage = MessageHelper.format(message, params);
-        var logRecord = new LogRecord(JdkLevel.FATAL, prefix + newMessage);
-        logger.log(logRecord);
+        log(JdkLevel.FATAL, null, message, params);
     }
 
     @Override
@@ -455,11 +331,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.FATAL)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " FATAL [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.FATAL, prefix + message);
-        logRecord.setThrown(e);
-        logger.log(logRecord);
+        log(JdkLevel.FATAL, e, message);
     }
 
     @Override
@@ -467,11 +339,7 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.FATAL)) {
             return;
         }
-        var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " FATAL [" + threadName + "] " + name + " : ";
-        var logRecord = new LogRecord(JdkLevel.FATAL, prefix + supplier.get());
-        logRecord.setThrown(e);
-        logger.log(logRecord);
+        log(JdkLevel.FATAL, e, supplier.get());
     }
 
     @Override
@@ -479,11 +347,32 @@ public class JdkLoggerImpl implements Logger {
         if (!logger.isLoggable(JdkLevel.FATAL)) {
             return;
         }
+        log(JdkLevel.FATAL, e, message, params);
+    }
+
+    private void log(Level level, Throwable ex, String message, Object... params) {
+        // Hack (?) to get the stack trace.
+        Throwable dummyException = new Throwable();
+        StackTraceElement[] locations = dummyException.getStackTrace();
+        // Caller will be the third element
+        String cname = name;
+        String method = "unknown";
+        if (locations != null && locations.length > 2) {
+            StackTraceElement caller = locations[2];
+            cname = caller.getClassName();
+            method = caller.getMethodName();
+        }
+
         var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " FATAL [" + threadName + "] " + name + " : ";
+        var prefix = nowStr() + " INFO [" + threadName + "] " + cname + "." + method + "() : ";
         var newMessage = MessageHelper.format(message, params);
-        var logRecord = new LogRecord(JdkLevel.FATAL, prefix + newMessage);
-        logRecord.setThrown(e);
+
+        var logRecord = new LogRecord(level, prefix + newMessage);
+        logRecord.setSourceClassName(cname);
+        logRecord.setSourceMethodName(method);
+        if (ex != null) {
+            logRecord.setThrown(ex);
+        }
         logger.log(logRecord);
     }
 

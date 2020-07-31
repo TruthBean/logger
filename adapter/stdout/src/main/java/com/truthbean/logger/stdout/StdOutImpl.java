@@ -10,10 +10,11 @@
 package com.truthbean.logger.stdout;
 
 import com.truthbean.Logger;
-import com.truthbean.logger.util.DateTimeHelper;
 import com.truthbean.logger.util.MessageHelper;
 
 import java.util.function.Supplier;
+
+import static com.truthbean.logger.util.DateTimeHelper.nowStr;
 
 /**
  * @author TruthBean/Rogar·Q
@@ -21,6 +22,12 @@ import java.util.function.Supplier;
  */
 public class StdOutImpl implements Logger {
     private String loggerName;
+    public static final String TRACE = "TRACE";
+    public static final String DEBUG = "DEBUG";
+    public static final String INFO = "INFO";
+    public static final String WARN = "WARN";
+    public static final String ERROR = "ERROR";
+    public static final String FATAL = "FATAL";
 
     @Override
     public Logger setName(String name) {
@@ -41,49 +48,32 @@ public class StdOutImpl implements Logger {
 
     @Override
     public void trace(String message) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.out.println(time + " TRACE [" + threadName + "] " + loggerName + " --- " + message);
+        log(TRACE, null, message);
     }
 
     @Override
     public void trace(Supplier<String> supplier) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.out.println(time + " TRACE [" + threadName + "] " + loggerName + " --- " + supplier.get());
+        log(TRACE, null, supplier.get());
     }
 
     @Override
     public void trace(String message, Object... params) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        var msg = MessageHelper.format(message, params);
-        System.out.println(time + " TRACE [" + threadName + "] " + loggerName + " --- " + msg);
+        log(TRACE, null, message, params);
     }
 
     @Override
     public void trace(String message, Throwable e) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.out.println(time + " TRACE [" + threadName + "] " + loggerName + " --- " + message);
-        e.printStackTrace();
+        log(TRACE, null, message);
     }
 
     @Override
     public void trace(Supplier<String> supplier, Throwable e) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.out.println(time + " TRACE [" + threadName + "] " + loggerName + " --- " + supplier.get());
-        e.printStackTrace();
+        log(TRACE, e, supplier.get());
     }
 
     @Override
     public void trace(String message, Throwable e, Object... params) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        var msg = MessageHelper.format(message, params);
-        System.out.println(time + " TRACE [" + threadName + "] " + loggerName + " --- " + msg);
-        e.printStackTrace();
+        log(TRACE, e, message, params);
     }
 
     @Override
@@ -93,49 +83,32 @@ public class StdOutImpl implements Logger {
 
     @Override
     public void debug(String message) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.out.println(time + " DEBUG [" + threadName + "] " + loggerName + " --- " + message);
+        log(DEBUG, null, message);
     }
 
     @Override
     public void debug(Supplier<String> supplier) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.out.println(time + " DEBUG [" + threadName + "] " + loggerName + " --- " + supplier.get());
+        log(DEBUG, null, supplier.get());
     }
 
     @Override
     public void debug(String message, Object... params) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        var msg = MessageHelper.format(message, params);
-        System.out.println(time + " DEBUG [" + threadName + "] " + loggerName + " --- " + msg);
+        log(DEBUG, null, message, params);
     }
 
     @Override
     public void debug(String message, Throwable e) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.out.println(time + " DEBUG [" + threadName + "] " + loggerName + " --- " + message);
-        e.printStackTrace();
+        log(DEBUG, e, message);
     }
 
     @Override
     public void debug(Supplier<String> supplier, Throwable e) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.out.println(time + " DEBUG [" + threadName + "] " + loggerName + " --- " + supplier.get());
-        e.printStackTrace();
+        log(DEBUG, e, supplier.get());
     }
 
     @Override
     public void debug(String message, Throwable e, Object... params) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        var msg = MessageHelper.format(message, params);
-        System.out.println(time + " DEBUG [" + threadName + "] " + loggerName + " --- " + msg);
-        e.printStackTrace();
+        log(DEBUG, e, message, params);
     }
 
     @Override
@@ -145,49 +118,32 @@ public class StdOutImpl implements Logger {
 
     @Override
     public void info(String message) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.out.println(time + " INFO [" + threadName + "] " + loggerName + " --- " + message);
+        log(INFO, null, message);
     }
 
     @Override
     public void info(Supplier<String> supplier) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.out.println(time + " INFO [" + threadName + "] " + loggerName + " --- " + supplier.get());
+        log(INFO, null, supplier.get());
     }
 
     @Override
     public void info(String message, Object... params) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        var msg = MessageHelper.format(message, params);
-        System.out.println(time + " INFO [" + threadName + "] " + loggerName + " --- " + msg);
+        log(INFO, null, message, params);
     }
 
     @Override
     public void info(String message, Throwable e) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.out.println(time + " INFO [" + threadName + "] " + loggerName + " --- " + message);
-        e.printStackTrace();
+        log(INFO, e, message);
     }
 
     @Override
     public void info(Supplier<String> supplier, Throwable e) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.out.println(time + " INFO [" + threadName + "] " + loggerName + " --- " + supplier.get());
-        e.printStackTrace();
+        log(INFO, e, supplier.get());
     }
 
     @Override
     public void info(String message, Throwable e, Object... params) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        var msg = MessageHelper.format(message, params);
-        System.out.println(time + " INFO [" + threadName + "] " + loggerName + " --- " + msg);
-        e.printStackTrace();
+        log(INFO, e, message, params);
     }
 
     @Override
@@ -197,49 +153,32 @@ public class StdOutImpl implements Logger {
 
     @Override
     public void warn(String message) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.out.println(time + " WARN [" + threadName + "] " + loggerName + " --- " + message);
+        log(WARN, null, message);
     }
 
     @Override
     public void warn(Supplier<String> supplier) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.out.println(time + " WARN [" + threadName + "] " + loggerName + " --- " + supplier.get());
+        log(WARN, null, supplier.get());
     }
 
     @Override
     public void warn(String message, Object... params) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        var msg = MessageHelper.format(message, params);
-        System.out.println(time + " WARN [" + threadName + "] " + loggerName + " --- " + msg);
+        log(WARN, null, message, params);
     }
 
     @Override
     public void warn(String message, Throwable e) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.out.println(time + " WARN [" + threadName + "] " + loggerName + " --- " + message);
-        e.printStackTrace();
+        log(WARN, e, message);
     }
 
     @Override
     public void warn(Supplier<String> supplier, Throwable e) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.out.println(time + " WARN [" + threadName + "] " + loggerName + " --- " + supplier.get());
-        e.printStackTrace();
+        log(WARN, e, supplier.get());
     }
 
     @Override
     public void warn(String message, Throwable e, Object... params) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        var msg = MessageHelper.format(message, params);
-        System.out.println(time + " WARN [" + threadName + "] " + loggerName + " --- " + msg);
-        e.printStackTrace();
+        log(WARN, e, message, params);
     }
 
     @Override
@@ -249,49 +188,32 @@ public class StdOutImpl implements Logger {
 
     @Override
     public void error(String message) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.err.println(time + " ERROR [" + threadName + "] " + loggerName + " --- " + message);
+        log(ERROR, null, message);
     }
 
     @Override
     public void error(Supplier<String> supplier) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.err.println(time + " ERROR [" + threadName + "] " + loggerName + " --- " + supplier.get());
+        log(ERROR, null, supplier.get());
     }
 
     @Override
     public void error(String message, Object... params) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        var msg = MessageHelper.format(message, params);
-        System.err.println(time + " ERROR [" + threadName + "] " + loggerName + " --- " + msg);
+        log(ERROR, null, message, params);
     }
 
     @Override
     public void error(String message, Throwable e) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.err.println(time + " ERROR [" + threadName + "] " + loggerName + " --- " + message);
-        e.printStackTrace();
+        log(ERROR, e, message);
     }
 
     @Override
     public void error(Supplier<String> supplier, Throwable e) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.err.println(time + " ERROR [" + threadName + "] " + loggerName + " --- " + supplier.get());
-        e.printStackTrace();
+        log(ERROR, e, supplier.get());
     }
 
     @Override
     public void error(String message, Throwable e, Object... params) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        var msg = MessageHelper.format(message, params);
-        System.err.println(time + " ERROR [" + threadName + "] " + loggerName + " --- " + msg);
-        e.printStackTrace();
+        log(ERROR, e, message, params);
     }
 
     @Override
@@ -301,48 +223,55 @@ public class StdOutImpl implements Logger {
 
     @Override
     public void fatal(String message) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.err.println(time + " FATAL [" + threadName + "] " + loggerName + " --- " + message);
+        log(FATAL, null, message);
     }
 
     @Override
     public void fatal(Supplier<String> supplier) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.err.println(time + " FATAL [" + threadName + "] " + loggerName + " --- " + supplier.get());
+        log(FATAL, null, supplier.get());
     }
 
     @Override
     public void fatal(String message, Object... params) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        var msg = MessageHelper.format(message, params);
-        System.err.println(time + " FATAL [" + threadName + "] " + loggerName + " --- " + msg);
+        log(FATAL, null, message, params);
     }
 
     @Override
     public void fatal(String message, Throwable e) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.err.println(time + " FATAL [" + threadName + "] " + loggerName + " --- " + message);
-        e.printStackTrace();
+        log(FATAL, e, message);
     }
 
     @Override
     public void fatal(Supplier<String> supplier, Throwable e) {
-        var time = DateTimeHelper.nowStr();
-        var threadName = Thread.currentThread().getName();
-        System.err.println(time + " FATAL [" + threadName + "] " + loggerName + " --- " + supplier.get());
-        e.printStackTrace();
+        log(FATAL, e, supplier.get());
     }
 
     @Override
     public void fatal(String message, Throwable e, Object... params) {
-        var time = DateTimeHelper.nowStr();
+
+        log(FATAL, e, message, params);
+    }
+
+    private void log(String level, Throwable ex, String message, Object... params) {
+        // Hack (?) to get the stack trace.
+        Throwable dummyException = new Throwable();
+        StackTraceElement[] locations = dummyException.getStackTrace();
+        // Caller will be the third element
+        String cname = loggerName;
+        String method = "";
+        if (locations != null && locations.length > 2) {
+            StackTraceElement caller = locations[2];
+            cname = caller.getClassName();
+            method = caller.getMethodName();
+        }
+
         var threadName = Thread.currentThread().getName();
-        var msg = MessageHelper.format(message, params);
-        System.err.println(time + " FATAL [" + threadName + "] " + loggerName + " --- " + msg);
-        e.printStackTrace();
+        var prefix = nowStr() + " "+level+" [" + threadName + "] " + cname + "." + method + "() : ";
+        var newMessage = MessageHelper.format(message, params);
+
+        System.out.println(prefix + newMessage);
+        if (ex != null) {
+            ex.printStackTrace();
+        }
     }
 }

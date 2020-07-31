@@ -14,6 +14,6 @@
  */
 module com.truthbean.logger.log4j2.boot {
     requires transitive com.truthbean.logger.log4j2;
-    requires transitive org.slf4j;
+    requires static org.slf4j;
     requires transitive java.logging;
 }

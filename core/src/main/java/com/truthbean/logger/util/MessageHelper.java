@@ -19,6 +19,9 @@ public class MessageHelper {
     }
 
     public static String format(String message, Object...params) {
+        if (params == null || params.length == 0) {
+            return message;
+        }
         var splits = message.split("\\{}");
         StringBuilder result = new StringBuilder(splits[0]);
         result.append(params[0]);

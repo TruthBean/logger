@@ -23,7 +23,7 @@ public class DateTimeHelper {
     }
 
     public static String nowStr() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S", Locale.CHINA);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSS", Locale.CHINA);
         LocalDateTime localDateTime = LocalDateTime.now();
         return localDateTime.format(formatter);
     }

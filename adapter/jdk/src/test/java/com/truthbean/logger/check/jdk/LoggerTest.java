@@ -25,6 +25,7 @@ class LoggerTest extends Logging {
     void testInfo() {
         logger.info("msg");
         LOGGER.info("msg{},{}", 1, "444");
+        LOGGER.info("error: {}", new RuntimeException(), "test");
     }
 
     @Test
