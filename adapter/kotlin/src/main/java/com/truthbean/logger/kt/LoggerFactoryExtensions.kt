@@ -21,6 +21,9 @@ import kotlin.reflect.KProperty
  */
 inline fun <reified T : Any> LoggerFactory.getLogger(): Logger = LoggerFactory.getLogger(T::class.java)
 
+/**
+ * factory logger by kotlin class
+ */
 fun LoggerFactory.getLogger(kClass: KClass<*>): Logger {
     val qualifiedName = kClass.qualifiedName
     if (qualifiedName != null)
@@ -28,11 +31,20 @@ fun LoggerFactory.getLogger(kClass: KClass<*>): Logger {
     return LoggerFactory.getLogger(Logger::javaClass.name)
 }
 
+/**
+ * factory logger by kotlin property
+ */
 fun LoggerFactory.getLogger(property: KProperty<Class<*>>): Logger {
     return LoggerFactory.getLogger(property.name)
 }
 
+/**
+ * logger interface
+ */
 interface Logging {
-    val logger
+    /**
+     * factory logger by this java class
+     */
+    val logger: Logger
         get() = LoggerFactory.getLogger(this.javaClass)
 }

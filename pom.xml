@@ -6,7 +6,7 @@
 
     <groupId>com.truthbean.logger</groupId>
     <artifactId>logger-parent</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0-RELEASE</version>
     <modules>
         <module>core</module>
         <module>adapter</module>
@@ -243,8 +243,8 @@
                     <charset>UTF-8</charset>
                     <encoding>UTF-8</encoding>
                     <docencoding>UTF-8</docencoding>
-                    <failOnError>false</failOnError>
-                    <doclint>none</doclint>
+                    <!--<failOnError>false</failOnError>
+                    <doclint>none</doclint>-->
                 </configuration>
                 <executions>
                     <execution>
