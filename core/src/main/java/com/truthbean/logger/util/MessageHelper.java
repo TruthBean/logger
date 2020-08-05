@@ -26,8 +26,14 @@ public class MessageHelper {
         StringBuilder result = new StringBuilder(splits[0]);
         result.append(params[0]);
         if (splits.length > 1) {
-            for (int i = 0; i < splits.length; i++) {
+            var min = Math.min(splits.length, params.length);
+            for (int i = 1; i < min; i++) {
                 result.append(splits[i]).append(params[i]);
+            }
+            if (splits.length > params.length) {
+                for (int i = params.length; i < splits.length; i++) {
+                    result.append(splits[i]);
+                }
             }
         }
         return result.toString();

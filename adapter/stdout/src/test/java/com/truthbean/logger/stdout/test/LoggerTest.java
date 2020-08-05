@@ -25,7 +25,7 @@ class LoggerTest {
     @Test
     void testInfo() {
         LOGGER.info("msg");
-        LOGGER.info("msg{},{}", 1, "444");
+        LOGGER.info("msg({}),({}),特{}朗普", 1, "444", "吹牛");
         service.info();
     }
 

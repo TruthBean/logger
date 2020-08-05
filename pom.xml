@@ -6,7 +6,7 @@
 
     <groupId>com.truthbean.logger</groupId>
     <artifactId>logger-parent</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.1.1-RELEASE</version>
     <modules>
         <module>core</module>
         <module>adapter</module>
