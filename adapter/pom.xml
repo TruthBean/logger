@@ -6,7 +6,6 @@
         <artifactId>logger-parent</artifactId>
         <groupId>com.truthbean.logger</groupId>
         <version>0.2.0-SNAPSHOT</version>
-        <relativePath>..</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -18,12 +17,11 @@
     <url>http://www.truthbean.com/logger</url>
 
     <modules>
-        <module>log4j</module>
         <module>log4j2</module>
         <module>jdk</module>
         <module>slf4j</module>
         <module>stdout</module>
-        <module>kotlin</module>
+<!--        <module>kotlin</module>-->
     </modules>
 
     <dependencies>

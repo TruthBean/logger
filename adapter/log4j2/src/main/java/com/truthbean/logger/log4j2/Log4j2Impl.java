@@ -30,6 +30,9 @@ public class Log4j2Impl implements Logger {
     static final Marker MARKER = MarkerManager.getMarker("truthbean");
     static final String FQCN = Log4j2Impl.class.getName();
 
+    public Log4j2Impl() {
+    }
+
     @Override
     public Logger setClass(Class<?> tracedClass) {
         var logger = LogManager.getLogger(tracedClass);

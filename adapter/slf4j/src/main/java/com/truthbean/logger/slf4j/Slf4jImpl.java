@@ -38,6 +38,9 @@ public class Slf4jImpl implements Logger {
         }
     }
 
+    public Slf4jImpl() {
+    }
+
     @Override
     public Logger setClass(Class<?> tracedClass) {
         this.rawLogger = LoggerFactory.getLogger(tracedClass);

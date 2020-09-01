@@ -16,7 +16,7 @@
     <url>http://www.truthbean.com/logger</url>
 
     <properties>
-        <kotlin.version>1.3.72</kotlin.version>
+        <kotlin.version>1.4.0</kotlin.version>
         <kotlin.compiler.jvmTarget>11</kotlin.compiler.jvmTarget>
     </properties>
 
@@ -53,6 +53,14 @@
         </dependency>
 
     </dependencies>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jcenter</id>
+            <name>JCenter</name>
+            <url>https://jcenter.bintray.com/</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <build>
         <plugins>
@@ -108,13 +116,13 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <dokkaPlugins>
-                        <plugin>
-                            <groupId>org.jetbrains.dokka</groupId>
-                            <artifactId>kotlin-as-java-plugin</artifactId>
-                            <version>${dokka.version}</version>
-                        </plugin>
-                    </dokkaPlugins>
+                    <outputFormat>html</outputFormat>
+                    <jdkVersion>11</jdkVersion>
+                    <skip>false</skip>
+                    <skipDeprecated>true</skipDeprecated>
+                    <skipEmptyPackages>true</skipEmptyPackages>
+                    <noJdkLink>true</noJdkLink>
+                    <noStdlibLink>true</noStdlibLink>
                 </configuration>
             </plugin>
         </plugins>
