@@ -22,92 +22,299 @@ public interface Logger {
         return this;
     }
 
+    default Logger setName(CharSequence name) {
+        // do noting
+        return setName(name.toString());
+    }
+
     default Logger setName(String name) {
         // do noting
         return this;
     }
 
-    boolean isTraceEnabled();
+    private String toString(Object message) {
+        if (message == null) {
+            return "null";
+        }
+        return message.toString();
+    }
 
-    void trace(String message);
+    default boolean isTraceEnabled() {
+        return false;
+    }
 
-    void trace(Supplier<String> supplier);
+    default void trace(Object message) {
+        if (isTraceEnabled()) {
+            trace(toString(message));
+        }
+    }
 
-    void trace(String message, Object... params);
+    default void trace(String message) {
+    }
 
-    void trace(String message, Throwable e);
+    default void trace(Supplier<String> supplier) {
+        if (isTraceEnabled()) {
+            trace(supplier.get());
+        }
+    }
 
-    void trace(Supplier<String> supplier, Throwable e);
+    default void trace(Object message, Object... params) {
+        if (isTraceEnabled()) {
+            trace(toString(message), params);
+        }
+    }
 
-    void trace(String message, Throwable e, Object... params);
+    default void trace(String message, Object... params) {
+    }
 
-    boolean isDebugEnabled();
+    default void trace(Object message, Throwable e) {
+        if (isTraceEnabled()) {
+            trace(toString(message), e);
+        }
+    }
 
-    void debug(String message);
+    default void trace(String message, Throwable e) {
+    }
 
-    void debug(Supplier<String> supplier);
+    default void trace(Supplier<String> supplier, Throwable e) {
+    }
 
-    void debug(String message, Object... params);
+    default void trace(Object message, Throwable e, Object... params) {
+        if (isTraceEnabled()) {
+            trace(toString(message), e, params);
+        }
+    }
 
-    void debug(String message, Throwable e);
+    default void trace(String message, Throwable e, Object... params) {
+    }
 
-    void debug(Supplier<String> supplier, Throwable e);
+    default boolean isDebugEnabled() {
+        return false;
+    }
 
-    void debug(String message, Throwable e, Object... params);
+    default void debug(Object message) {
+        if (isDebugEnabled()) {
+            debug(toString(message));
+        }
+    }
 
-    boolean isInfoEnabled();
+    default void debug(String message) {
+    }
 
-    void info(String message);
+    default void debug(Supplier<String> supplier) {
+    }
 
-    void info(Supplier<String> supplier);
+    default void debug(Object message, Object... params) {
+        if (isDebugEnabled()) {
+            debug(toString(message), params);
+        }
+    }
 
-    void info(String message, Object... params);
+    default void debug(String message, Object... params) {
+    }
 
-    void info(String message, Throwable e);
+    default void debug(Object message, Throwable e) {
+        if (isDebugEnabled()) {
+            debug(toString(message), e);
+        }
+    }
 
-    void info(Supplier<String> supplier, Throwable e);
+    default void debug(String message, Throwable e) {
+    }
 
-    void info(String message, Throwable e, Object... params);
+    default void debug(Supplier<String> supplier, Throwable e) {
+    }
 
-    boolean isWarnEnabled();
+    default void debug(Object message, Throwable e, Object... params) {
+        if (isDebugEnabled()) {
+            debug(toString(message), e, params);
+        }
+    }
 
-    void warn(String message);
+    default void debug(String message, Throwable e, Object... params) {
+    }
 
-    void warn(Supplier<String> supplier);
+    default boolean isInfoEnabled() {
+        return false;
+    }
 
-    void warn(String message, Object... params);
+    default void info(Object message) {
+        if (isInfoEnabled()) {
+            info(toString(message));
+        }
+    }
 
-    void warn(String message, Throwable e);
+    default void info(String message) {
+    }
 
-    void warn(Supplier<String> supplier, Throwable e);
+    default void info(Supplier<String> supplier) {
+    }
 
-    void warn(String message, Throwable e, Object... params);
+    default void info(Object message, Object... params) {
+        if (isInfoEnabled()) {
+            info(toString(message), params);
+        }
+    }
 
-    boolean isErrorEnabled();
+    default void info(String message, Object... params) {
+    }
 
-    void error(String message);
+    default void info(Object message, Throwable e) {
+        if (isInfoEnabled()) {
+            info(toString(message), e);
+        }
+    }
 
-    void error(Supplier<String> supplier);
+    default void info(String message, Throwable e) {
+    }
 
-    void error(String message, Object... params);
+    default void info(Supplier<String> supplier, Throwable e) {
+    }
 
-    void error(String message, Throwable e);
+    default void info(Object message, Throwable e, Object... params) {
+        if (isInfoEnabled()) {
+            info(toString(message), e, params);
+        }
+    }
 
-    void error(Supplier<String> supplier, Throwable e);
+    default void info(String message, Throwable e, Object... params) {
+    }
 
-    void error(String message, Throwable e, Object... params);
+    default boolean isWarnEnabled() {
+        return false;
+    }
 
-    boolean isFatalEnabled();
+    default void warn(Object message) {
+        if (isWarnEnabled()) {
+            warn(toString(message));
+        }
+    }
 
-    void fatal(String message);
+    default void warn(String message) {
+    }
 
-    void fatal(Supplier<String> supplier);
+    default void warn(Supplier<String> supplier) {
+    }
 
-    void fatal(String message, Object... params);
+    default void warn(Object message, Object... params) {
+        if (isWarnEnabled()) {
+            warn(toString(message), params);
+        }
+    }
 
-    void fatal(String message, Throwable e);
+    default void warn(String message, Object... params) {
+    }
 
-    void fatal(Supplier<String> supplier, Throwable e);
+    default void warn(Object message, Throwable e) {
+        if (isWarnEnabled()) {
+            warn(toString(message), e);
+        }
+    }
 
-    void fatal(String message, Throwable e, Object... params);
+    default void warn(String message, Throwable e) {
+    }
+
+    default void warn(Supplier<String> supplier, Throwable e) {
+    }
+
+    default void warn(Object message, Throwable e, Object... params) {
+        if (isWarnEnabled()) {
+            warn(toString(message), e, params);
+        }
+    }
+
+    default void warn(String message, Throwable e, Object... params) {
+    }
+
+    default boolean isErrorEnabled() {
+        return false;
+    }
+
+    default void error(Object message) {
+        if (isErrorEnabled()) {
+            error(toString(message));
+        }
+    }
+
+    default void error(String message) {
+    }
+
+    default void error(Supplier<String> supplier) {
+    }
+
+    default void error(Object message, Object... params) {
+        if (isErrorEnabled()) {
+            error(toString(message), params);
+        }
+    }
+
+    default void error(String message, Object... params) {
+    }
+
+    default void error(Object message, Throwable e) {
+        if (isErrorEnabled()) {
+            error(toString(message), e);
+        }
+    }
+
+    default void error(String message, Throwable e) {
+    }
+
+    default void error(Supplier<String> supplier, Throwable e) {
+    }
+
+    default void error(Object message, Throwable e, Object... params) {
+        if (isErrorEnabled()) {
+            error(toString(message), e, params);
+        }
+    }
+
+    default void error(String message, Throwable e, Object... params) {
+    }
+
+    default boolean isFatalEnabled() {
+        return false;
+    }
+
+    default void fatal(Object message) {
+        if (isFatalEnabled()) {
+            fatal(toString(message));
+        }
+    }
+
+    default void fatal(String message) {
+    }
+
+    default void fatal(Supplier<String> supplier) {
+    }
+
+    default void fatal(Object message, Object... params) {
+        if (isFatalEnabled()) {
+            fatal(toString(message), params);
+        }
+    }
+
+    default void fatal(String message, Object... params) {
+    }
+
+    default void fatal(Object message, Throwable e) {
+        if (isFatalEnabled()) {
+            fatal(toString(message), e);
+        }
+    }
+
+    default void fatal(String message, Throwable e) {
+    }
+
+    default void fatal(Supplier<String> supplier, Throwable e) {
+    }
+
+    default void fatal(Object message, Throwable e, Object... params) {
+        if (isFatalEnabled()) {
+            fatal(toString(message), e, params);
+        }
+    }
+
+    default void fatal(String message, Throwable e, Object... params) {
+    }
 }

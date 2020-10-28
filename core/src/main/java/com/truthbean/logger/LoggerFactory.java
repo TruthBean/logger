@@ -36,7 +36,12 @@ public class LoggerFactory {
         ServiceLoader<Logger> serviceLoader = ServiceLoader.load(Logger.class);
         Optional<Logger> first = serviceLoader.findFirst();
         if (first.isEmpty()) {
-            throw new NoLoggerProviderException();
+            var no = System.getProperty("com.truthbean.logger.no", "false");
+            if ("false".equals(no)) {
+                throw new NoLoggerProviderException();
+            } else {
+                return new NoLogger();
+            }
         }
         return first.get();
     }
