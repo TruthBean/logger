@@ -43,6 +43,16 @@ class LoggerTest extends Logging {
     public String toString() {
         return "888888888888888888888888";
     }
+
+    @Test
+    void testColor() {
+        LOGGER.trace("color");
+        LOGGER.debug("color");
+        LOGGER.info("color");
+        LOGGER.warn("color");
+        LOGGER.error("color");
+        LOGGER.fatal("color");
+    }
     
     public static final Logger LOGGER = LoggerFactory.getLogger(LoggerTest.class);
 }

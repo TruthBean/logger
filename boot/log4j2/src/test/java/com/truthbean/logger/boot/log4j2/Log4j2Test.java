@@ -28,8 +28,9 @@ public class Log4j2Test {
 
     @Test
     void testTruthBean() {
-        com.truthbean.Logger logger = com.truthbean.logger.LoggerFactory.getLogger(Log4j2Test.class);
         logger.info("truthbean");
     }
+
+    private static final com.truthbean.Logger logger = com.truthbean.logger.LoggerFactory.getLogger(Log4j2Test.class);
 
 }

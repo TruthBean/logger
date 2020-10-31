@@ -19,4 +19,5 @@ module com.truthbean.logger.core {
     exports com.truthbean.logger.util;
 
     uses com.truthbean.Logger;
+    uses com.truthbean.logger.LoggerInitiation;
 }

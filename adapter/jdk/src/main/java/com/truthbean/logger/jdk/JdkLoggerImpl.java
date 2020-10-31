@@ -10,6 +10,7 @@
 package com.truthbean.logger.jdk;
 
 import com.truthbean.Logger;
+import com.truthbean.logger.util.DateTimeHelper;
 import com.truthbean.logger.util.MessageHelper;
 
 import java.util.function.Supplier;
@@ -352,28 +353,68 @@ public class JdkLoggerImpl implements Logger {
 
     private void log(Level level, Throwable ex, String message, Object... params) {
         // Hack (?) to get the stack trace.
-        Throwable dummyException = new Throwable();
-        StackTraceElement[] locations = dummyException.getStackTrace();
+        var dummyException = new Throwable();
+        var locations = dummyException.getStackTrace();
         // Caller will be the third element
-        String cname = name;
-        String method = "unknown";
+        var cname = name;
+        var method = "unknown";
         if (locations != null && locations.length > 2) {
-            StackTraceElement caller = locations[2];
+            var caller = locations[2];
             cname = caller.getClassName();
             method = caller.getMethodName();
         }
 
         var threadName = Thread.currentThread().getName();
-        var prefix = nowStr() + " INFO [" + threadName + "] " + cname + "." + method + "() : ";
-        var newMessage = MessageHelper.format(message, params);
+        var logger = new StringBuilder();
+        logger.append("\33[98;1m").append(DateTimeHelper.nowStr()).append("\033[0m ");
+        switch (level.getName()) {
+            case "FATAL":
+                logger.append("\33[30;1m").append(level).append("\033[0m ")
+                        .append("[\33[93;1m").append(threadName).append("\033[0m] ")
+                        .append("\33[98;4m").append(cname).append(".").append(method)
+                        .append("()\033[0m : \33[39;1m");
+                break;
+            case "SEVERE":
+                logger.append("\33[31;1m").append("ERROR").append("\033[0m ")
+                        .append("[\33[93;1m").append(threadName).append("\033[0m] ")
+                        .append("\33[91;4m").append(cname).append(".").append(method)
+                        .append("()\033[0m : \33[39;1m");
+                break;
+            case "WARNING":
+                logger.append("\33[32;1m").append("WARN").append("\033[0m ")
+                        .append("[\33[93;1m").append(threadName).append("\033[0m] ")
+                        .append("\33[92;4m").append(cname).append(".").append(method)
+                        .append("()\033[0m : \33[39;1m");
+                break;
+            case "INFO":
+                logger.append("\33[36;1m").append(level).append("\033[0m ")
+                        .append("[\33[93;1m").append(threadName).append("\033[0m] ")
+                        .append("\33[96;4m").append(cname).append(".").append(method)
+                        .append("()\033[0m : \33[39;1m");
+                break;
+            case "DEBUG":
+                logger.append("\33[34;1m").append(level).append("\033[0m ")
+                        .append("[\33[93;1m").append(threadName).append("\033[0m] ")
+                        .append("\33[94;4m").append(cname).append(".").append(method)
+                        .append("()\033[0m : \33[39;1m");
+                break;
+            case "TRACE":
+                logger.append("\33[35;1m").append(level).append("\033[0m ")
+                        .append("[\33[93;1m").append(threadName).append("\033[0m] ")
+                        .append("\33[95;4m").append(cname).append(".").append(method)
+                        .append("()\033[0m : \33[39;1m");
+                break;
+        }
+        var newMessage = MessageHelper.format(message, params) + "\033[0m";
+        logger.append(newMessage);
 
-        var logRecord = new LogRecord(level, prefix + newMessage);
+        var logRecord = new LogRecord(level, logger.toString());
         logRecord.setSourceClassName(cname);
         logRecord.setSourceMethodName(method);
         if (ex != null) {
             logRecord.setThrown(ex);
         }
-        logger.log(logRecord);
+        this.logger.log(logRecord);
     }
 
     @Override

@@ -7,19 +7,13 @@
  * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
+package com.truthbean.logger;
 
 /**
  * @author TruthBean/Rogar·Q
- * @since 0.1.0
+ * @since 0.3.0
+ * Created on 2020-10-30 12:15
  */
-module com.truthbean.logger.slf4j.boot {
-    requires transitive com.truthbean.logger.slf4j;
-    requires transitive org.slf4j;
-    requires transitive java.logging;
-
-    requires transitive org.apache.commons.logging;
-    requires transitive jul.to.slf4j;
-    requires transitive org.apache.log4j;
-
-    provides com.truthbean.logger.LoggerInitiation with com.truthbean.logger.slf4j.boot.Slf4jBootInitiation;
+public interface LoggerInitiation {
+    void init();
 }

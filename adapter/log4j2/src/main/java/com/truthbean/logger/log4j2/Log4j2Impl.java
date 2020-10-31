@@ -59,13 +59,13 @@ public class Log4j2Impl implements Logger {
 
     @Override
     public boolean isTraceEnabled() {
-        return originLogger.isTraceEnabled();
+        return this.originLogger.isTraceEnabled();
     }
 
     @Override
     public void trace(String message) {
-        if (originLogger.isTraceEnabled()) {
-            logger.trace(message);
+        if (this.originLogger.isTraceEnabled()) {
+            this.logger.trace(message);
         }
     }
 

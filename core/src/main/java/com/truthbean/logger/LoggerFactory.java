@@ -21,6 +21,18 @@ import java.util.ServiceLoader;
  * Created on 2020-05-08 22:22
  */
 public class LoggerFactory {
+    public static final String NO_LOGGER = "com.truthbean.logger.no";
+
+    static {
+        try {
+            var serviceLoader = ServiceLoader.load(LoggerInitiation.class);
+            var first = serviceLoader.findFirst();
+            first.ifPresent(LoggerInitiation::init);
+        } catch (Throwable e) {
+            LoggerFactory.getLogger().error("", e);
+        }
+    }
+
     public LoggerFactory() {
     }
 
@@ -33,10 +45,10 @@ public class LoggerFactory {
     }
 
     private static Logger getLogger() {
-        ServiceLoader<Logger> serviceLoader = ServiceLoader.load(Logger.class);
-        Optional<Logger> first = serviceLoader.findFirst();
+        var serviceLoader = ServiceLoader.load(Logger.class);
+        var first = serviceLoader.findFirst();
         if (first.isEmpty()) {
-            var no = System.getProperty("com.truthbean.logger.no", "false");
+            var no = System.getProperty(NO_LOGGER, "false");
             if ("false".equals(no)) {
                 throw new NoLoggerProviderException();
             } else {

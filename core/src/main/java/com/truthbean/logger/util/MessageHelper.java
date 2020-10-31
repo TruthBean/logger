@@ -23,7 +23,7 @@ public class MessageHelper {
             return message;
         }
         var splits = message.split("\\{}");
-        StringBuilder result = new StringBuilder(splits[0]);
+        var result = new StringBuilder(splits[0]);
         result.append(params[0]);
         if (splits.length > 1) {
             var min = Math.min(splits.length, params.length);

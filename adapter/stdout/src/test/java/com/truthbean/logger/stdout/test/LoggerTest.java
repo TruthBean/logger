@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 class LoggerTest {
 
     private final TestService service = new TestService(LOGGER);
-    
+
     @Test
     void testInfo() {
         LOGGER.info("msg");
@@ -45,7 +45,9 @@ class LoggerTest {
     @Test
     void testTrace() {
         LOGGER.trace("trace");
-        LOGGER.trace(() -> {return "hello trace";});
+        LOGGER.trace(() -> {
+            return "hello trace";
+        });
         LOGGER.trace(() -> "hello trace", new RuntimeException());
         service.trace();
     }
@@ -54,6 +56,20 @@ class LoggerTest {
     public String toString() {
         return "888888888888888888888888";
     }
-    
+
+    @Test
+    void testColor() {
+        LOGGER.trace("color");
+        LOGGER.debug("color");
+        LOGGER.info("color");
+        LOGGER.warn("color");
+        LOGGER.error("color");
+        LOGGER.fatal("color");
+        for (int i = 0; i < 100; i++) {
+            System.out.println(i);
+            System.out.println("[\033[" + i + ";1mcolor\033[0m] ");
+        }
+    }
+
     public static final Logger LOGGER = LoggerFactory.getLogger(LoggerTest.class);
 }

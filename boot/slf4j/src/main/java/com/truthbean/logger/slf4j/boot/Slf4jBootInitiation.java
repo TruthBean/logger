@@ -9,10 +9,18 @@
  */
 package com.truthbean.logger.slf4j.boot;
 
+import com.truthbean.logger.LoggerInitiation;
+import org.slf4j.bridge.SLF4JBridgeHandler;
+
 /**
  * @author TruthBean/Rogar·Q
- * @since 0.1.0
- * Created on 2020-08-03 21:06
+ * @since 0.3.0
+ * Created on 2020-10-30 12:20
  */
-public class NothingJustForJavaDoc {
+public class Slf4jBootInitiation implements LoggerInitiation {
+    @Override
+    public void init() {
+        SLF4JBridgeHandler.removeHandlersForRootLogger();
+        SLF4JBridgeHandler.install();
+    }
 }
