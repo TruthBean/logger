@@ -14,10 +14,10 @@ import com.truthbean.logger.util.DateTimeHelper;
 import com.truthbean.logger.util.MessageHelper;
 
 import java.util.function.Supplier;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
-
-import static com.truthbean.logger.util.DateTimeHelper.nowStr;
 
 /**
  * @author TruthBean/Rogar·Q
@@ -28,8 +28,17 @@ public class JdkLoggerImpl implements Logger {
     private java.util.logging.Logger logger;
     private String name;
 
+    static {
+        var handlers = java.util.logging.Logger.getGlobal().getParent().getHandlers();
+        for (Handler handler : handlers) {
+            if (handler instanceof ConsoleHandler) {
+                handler.setLevel(Level.ALL);
+                handler.setFormatter(new TruthBeanFormatter());
+            }
+        }
+    }
+
     public JdkLoggerImpl() {
-        java.util.logging.Logger.getGlobal().getParent().getHandlers()[0].setLevel(Level.ALL);
     }
 
     @Override
@@ -381,13 +390,13 @@ public class JdkLoggerImpl implements Logger {
                         .append("()\033[0m : \33[39;1m");
                 break;
             case "WARNING":
-                logger.append("\33[32;1m").append("WARN").append("\033[0m ")
+                logger.append("\33[32;1m").append("WARN").append(" \033[0m ")
                         .append("[\33[93;1m").append(threadName).append("\033[0m] ")
                         .append("\33[92;4m").append(cname).append(".").append(method)
                         .append("()\033[0m : \33[39;1m");
                 break;
             case "INFO":
-                logger.append("\33[36;1m").append(level).append("\033[0m ")
+                logger.append("\33[36;1m").append(level).append(" \033[0m ")
                         .append("[\33[93;1m").append(threadName).append("\033[0m] ")
                         .append("\33[96;4m").append(cname).append(".").append(method)
                         .append("()\033[0m : \33[39;1m");
@@ -426,7 +435,7 @@ public class JdkLoggerImpl implements Logger {
     public Logger setName(String name) {
         this.name = name;
         this.logger = java.util.logging.Logger.getLogger(name);
-        this.logger.setLevel(Level.FINER);
+        this.logger.setLevel(Level.ALL);
         return this;
     }
 }

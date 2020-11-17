@@ -20,7 +20,12 @@ import org.junit.jupiter.api.Test;
  * Created on 2020-05-08 22:32
  */
 class LoggerTest extends Logging {
-    
+
+    @Test
+    void testTrace() {
+        LOGGER.trace("trace");
+    }
+
     @Test
     void testInfo() {
         logger.info("msg");

@@ -283,13 +283,13 @@ public class StdOutImpl implements Logger {
                         .append("()\033[0m : \33[39;1m");
                 break;
             case WARN:
-                logger.append("\33[32;1m").append(level).append("\033[0m ")
+                logger.append("\33[32;1m").append(level).append(" \033[0m ")
                         .append("[\33[93;1m").append(threadName).append("\033[0m] ")
                         .append("\33[92;4m").append(cname).append(".").append(method)
                         .append("()\033[0m : \33[39;1m");
                 break;
             case INFO:
-                logger.append("\33[36;1m").append(level).append("\033[0m ")
+                logger.append("\33[36;1m").append(level).append(" \033[0m ")
                         .append("[\33[93;1m").append(threadName).append("\033[0m] ")
                         .append("\33[96;4m").append(cname).append(".").append(method)
                         .append("()\033[0m : \33[39;1m");

@@ -6,16 +6,20 @@
  * http://license.coscl.org.cn/MulanPSL2
  * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
- *
- *
- * @author TruthBean/Rogar·Q
- * @since 0.1.0
  */
-module com.truthbean.logger.jdk {
-    requires java.base;
-    requires transitive com.truthbean.logger.core;
-    requires transitive java.logging;
+package com.truthbean.logger.jdk;
 
-    provides com.truthbean.Logger with
-            com.truthbean.logger.jdk.JdkLoggerImpl;
+import java.util.logging.Formatter;
+import java.util.logging.LogRecord;
+
+/**
+ * @author TruthBean/Rogar·Q
+ * @since 0.3.1
+ * Created on 2020-11-17 13:50
+ */
+public class TruthBeanFormatter extends Formatter {
+    @Override
+    public String format(LogRecord record) {
+        return record.getMessage() + "\n";
+    }
 }
