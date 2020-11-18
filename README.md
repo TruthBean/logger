@@ -24,14 +24,14 @@ logger adapter
     <!-- logger adapter core -->
     <dependency>
       <groupId>com.truthbean.logger</groupId>
-      <artifactId>core</artifactId>
+      <artifactId>logger-core</artifactId>
       <version>0.4.0-SNAPSHOT</version>
     </dependency>
 
     <!-- log4j2 adapter -->
     <dependency>
       <groupId>com.truthbean.logger</groupId>
-      <artifactId>log4j2</artifactId>
+      <artifactId>log4j2-adapter</artifactId>
       <version>0.4.0-SNAPSHOT</version>
     </dependency>
 
@@ -39,7 +39,7 @@ logger adapter
     <!-- slf4j adapter -->
     <dependency>
       <groupId>com.truthbean.logger</groupId>
-      <artifactId>slf4j</artifactId>
+      <artifactId>slf4j-adapter</artifactId>
       <version>0.4.0-SNAPSHOT</version>
     </dependency>
 
@@ -47,14 +47,21 @@ logger adapter
     <!-- jdk adapter -->
     <dependency>
       <groupId>com.truthbean.logger</groupId>
-      <artifactId>jdk</artifactId>
+      <artifactId>jdk-adapter</artifactId>
+      <version>0.4.0-SNAPSHOT</version>
+    </dependency>
+    
+    <!-- jul adapter -->
+    <dependency>
+      <groupId>com.truthbean.logger</groupId>
+      <artifactId>jul-adapter</artifactId>
       <version>0.4.0-SNAPSHOT</version>
     </dependency>
 
     <!-- stdout adapter -->
     <dependency>
       <groupId>com.truthbean.logger</groupId>
-      <artifactId>stdout</artifactId>
+      <artifactId>stdout-adapter</artifactId>
       <version>0.4.0-SNAPSHOT</version>
     </dependency>
     

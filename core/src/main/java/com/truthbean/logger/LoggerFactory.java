@@ -40,7 +40,7 @@ public class LoggerFactory {
         }
     }
 
-    private LoggerFactory() {
+    public LoggerFactory() {
     }
 
     public static Map<String, LogLevel> config() {

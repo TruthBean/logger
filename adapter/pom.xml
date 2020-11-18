@@ -19,6 +19,7 @@
     <modules>
         <module>log4j2</module>
         <module>jdk</module>
+        <module>jul</module>
         <module>slf4j</module>
         <module>stdout</module>
         <module>kotlin</module>

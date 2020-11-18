@@ -1,1 +1,1 @@
-com.truthbean.logger.jdk.JulLoggerImpl
+com.truthbean.logger.jdk.JdkSystemLogger

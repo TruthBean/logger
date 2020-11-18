@@ -9,9 +9,10 @@
  */
 /**
  * @author TruthBean/Rogar·Q
- * @since 0.1.0
+ * @since 0.4.0
+ * Created on 2020-11-18 11:58
  */
-open module com.truthbean.logger.jdk.test {
+open module com.truthbean.logger.test.jdk {
     requires com.truthbean.logger.jdk;
     requires transitive org.junit.jupiter.api;
 }

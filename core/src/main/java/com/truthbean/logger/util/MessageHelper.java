@@ -38,4 +38,11 @@ public class MessageHelper {
         }
         return result.toString();
     }
+
+    public static String toString(Object message) {
+        if (message == null) {
+            return "null";
+        }
+        return message.toString();
+    }
 }

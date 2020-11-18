@@ -10,6 +10,7 @@
 package com.truthbean;
 
 import com.truthbean.logger.LogLevel;
+import com.truthbean.logger.util.MessageHelper;
 
 import java.util.function.Supplier;
 
@@ -42,12 +43,54 @@ public interface Logger {
         return LogLevel.TRACE;
     }
 
-    private String toString(Object message) {
-        if (message == null) {
-            return "null";
-        }
-        return message.toString();
+    default boolean isLoggable(LogLevel level) {
+        return getLevel().compareTo(level) >= 0;
     }
+
+    /*default void log(LogLevel level, Object message) {
+        if (isLoggable(level)) {
+            log(level, MessageHelper.toString(message));
+        }
+    }
+
+    default void log(LogLevel level, String message) {
+    }
+
+    default void log(LogLevel level, Supplier<String> supplier) {
+        if (isLoggable(level)) {
+            log(level, supplier.get());
+        }
+    }
+
+    default void log(LogLevel level, Object message, Object... params) {
+        if (isLoggable(level)) {
+            log(level, MessageHelper.toString(message), params);
+        }
+    }
+
+    default void log(LogLevel level, String message, Object... params) {
+    }
+
+    default void log(LogLevel level, Object message, Throwable e) {
+        if (isLoggable(level)) {
+            log(level, MessageHelper.toString(message), e);
+        }
+    }
+
+    default void log(LogLevel level, String message, Throwable e) {
+    }
+
+    default void log(LogLevel level, Supplier<String> supplier, Throwable e) {
+    }
+
+    default void log(LogLevel level, Object message, Throwable e, Object... params) {
+        if (isLoggable(level)) {
+            trace(MessageHelper.toString(message), e, params);
+        }
+    }
+
+    default void log(LogLevel level, String message, Throwable e, Object... params) {
+    }*/
 
     default boolean isTraceEnabled() {
         return getLevel().compareTo(LogLevel.TRACE) >= 0;
@@ -55,7 +98,7 @@ public interface Logger {
 
     default void trace(Object message) {
         if (isTraceEnabled()) {
-            trace(toString(message));
+            trace(MessageHelper.toString(message));
         }
     }
 
@@ -70,7 +113,7 @@ public interface Logger {
 
     default void trace(Object message, Object... params) {
         if (isTraceEnabled()) {
-            trace(toString(message), params);
+            trace(MessageHelper.toString(message), params);
         }
     }
 
@@ -79,7 +122,7 @@ public interface Logger {
 
     default void trace(Object message, Throwable e) {
         if (isTraceEnabled()) {
-            trace(toString(message), e);
+            trace(MessageHelper.toString(message), e);
         }
     }
 
@@ -91,7 +134,7 @@ public interface Logger {
 
     default void trace(Object message, Throwable e, Object... params) {
         if (isTraceEnabled()) {
-            trace(toString(message), e, params);
+            trace(MessageHelper.toString(message), e, params);
         }
     }
 
@@ -104,7 +147,7 @@ public interface Logger {
 
     default void debug(Object message) {
         if (isDebugEnabled()) {
-            debug(toString(message));
+            debug(MessageHelper.toString(message));
         }
     }
 
@@ -116,7 +159,7 @@ public interface Logger {
 
     default void debug(Object message, Object... params) {
         if (isDebugEnabled()) {
-            debug(toString(message), params);
+            debug(MessageHelper.toString(message), params);
         }
     }
 
@@ -125,7 +168,7 @@ public interface Logger {
 
     default void debug(Object message, Throwable e) {
         if (isDebugEnabled()) {
-            debug(toString(message), e);
+            debug(MessageHelper.toString(message), e);
         }
     }
 
@@ -137,7 +180,7 @@ public interface Logger {
 
     default void debug(Object message, Throwable e, Object... params) {
         if (isDebugEnabled()) {
-            debug(toString(message), e, params);
+            debug(MessageHelper.toString(message), e, params);
         }
     }
 
@@ -150,7 +193,7 @@ public interface Logger {
 
     default void info(Object message) {
         if (isInfoEnabled()) {
-            info(toString(message));
+            info(MessageHelper.toString(message));
         }
     }
 
@@ -162,7 +205,7 @@ public interface Logger {
 
     default void info(Object message, Object... params) {
         if (isInfoEnabled()) {
-            info(toString(message), params);
+            info(MessageHelper.toString(message), params);
         }
     }
 
@@ -171,7 +214,7 @@ public interface Logger {
 
     default void info(Object message, Throwable e) {
         if (isInfoEnabled()) {
-            info(toString(message), e);
+            info(MessageHelper.toString(message), e);
         }
     }
 
@@ -183,7 +226,7 @@ public interface Logger {
 
     default void info(Object message, Throwable e, Object... params) {
         if (isInfoEnabled()) {
-            info(toString(message), e, params);
+            info(MessageHelper.toString(message), e, params);
         }
     }
 
@@ -196,7 +239,7 @@ public interface Logger {
 
     default void warn(Object message) {
         if (isWarnEnabled()) {
-            warn(toString(message));
+            warn(MessageHelper.toString(message));
         }
     }
 
@@ -208,7 +251,7 @@ public interface Logger {
 
     default void warn(Object message, Object... params) {
         if (isWarnEnabled()) {
-            warn(toString(message), params);
+            warn(MessageHelper.toString(message), params);
         }
     }
 
@@ -217,7 +260,7 @@ public interface Logger {
 
     default void warn(Object message, Throwable e) {
         if (isWarnEnabled()) {
-            warn(toString(message), e);
+            warn(MessageHelper.toString(message), e);
         }
     }
 
@@ -229,7 +272,7 @@ public interface Logger {
 
     default void warn(Object message, Throwable e, Object... params) {
         if (isWarnEnabled()) {
-            warn(toString(message), e, params);
+            warn(MessageHelper.toString(message), e, params);
         }
     }
 
@@ -242,7 +285,7 @@ public interface Logger {
 
     default void error(Object message) {
         if (isErrorEnabled()) {
-            error(toString(message));
+            error(MessageHelper.toString(message));
         }
     }
 
@@ -254,7 +297,7 @@ public interface Logger {
 
     default void error(Object message, Object... params) {
         if (isErrorEnabled()) {
-            error(toString(message), params);
+            error(MessageHelper.toString(message), params);
         }
     }
 
@@ -263,7 +306,7 @@ public interface Logger {
 
     default void error(Object message, Throwable e) {
         if (isErrorEnabled()) {
-            error(toString(message), e);
+            error(MessageHelper.toString(message), e);
         }
     }
 
@@ -275,7 +318,7 @@ public interface Logger {
 
     default void error(Object message, Throwable e, Object... params) {
         if (isErrorEnabled()) {
-            error(toString(message), e, params);
+            error(MessageHelper.toString(message), e, params);
         }
     }
 
@@ -288,7 +331,7 @@ public interface Logger {
 
     default void fatal(Object message) {
         if (isFatalEnabled()) {
-            fatal(toString(message));
+            fatal(MessageHelper.toString(message));
         }
     }
 
@@ -300,7 +343,7 @@ public interface Logger {
 
     default void fatal(Object message, Object... params) {
         if (isFatalEnabled()) {
-            fatal(toString(message), params);
+            fatal(MessageHelper.toString(message), params);
         }
     }
 
@@ -309,7 +352,7 @@ public interface Logger {
 
     default void fatal(Object message, Throwable e) {
         if (isFatalEnabled()) {
-            fatal(toString(message), e);
+            fatal(MessageHelper.toString(message), e);
         }
     }
 
@@ -321,7 +364,7 @@ public interface Logger {
 
     default void fatal(Object message, Throwable e, Object... params) {
         if (isFatalEnabled()) {
-            fatal(toString(message), e, params);
+            fatal(MessageHelper.toString(message), e, params);
         }
     }
 

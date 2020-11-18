@@ -13,7 +13,6 @@ import com.truthbean.logger.LoggerFactory
 import com.truthbean.logger.kt.getLogger
 import org.junit.jupiter.api.Test
 
-
 /**
  * @author TruthBean/Rogar·Q
  * @since 0.0.1

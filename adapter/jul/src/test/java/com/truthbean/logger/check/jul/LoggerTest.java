@@ -7,7 +7,7 @@
  * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
-package com.truthbean.logger.check.jdk;
+package com.truthbean.logger.check.jul;
 
 import com.truthbean.Logger;
 import com.truthbean.logger.LoggerFactory;
@@ -26,6 +26,7 @@ class LoggerTest extends Logging {
     @Test
     void testJdk9() {
         var logger = java.lang.System.getLogger(LoggerTest.class.getName());
+        System.out.println(logger);
         logger.log(System.Logger.Level.TRACE, "trace");
         logger.log(System.Logger.Level.DEBUG, "debug");
         logger.log(System.Logger.Level.INFO, "info");

@@ -18,14 +18,14 @@ import org.junit.jupiter.api.Test;
  * @since 0.0.1
  * Created on 2020-05-08 22:32
  */
-class LoggerTest {
+public class LoggerTest {
 
     private final TestService service = new TestService(LOGGER);
 
     static {
         System.setProperty("com.truthbean.logger.no", "true");
     }
-    
+
     @Test
     void testInfo() {
         LOGGER.info("msg");

@@ -6,16 +6,12 @@
  * http://license.coscl.org.cn/MulanPSL2
  * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
- *
- *
- * @author TruthBean/Rogar·Q
- * @since 0.4.0
- * Created on 2020-11-18 11:42
  */
-open module com.truthbean.logger.jdk {
-    requires java.base;
-    requires transitive com.truthbean.logger.core;
-
-    provides com.truthbean.Logger with com.truthbean.logger.jdk.JdkSystemLogger;
-    provides System.LoggerFinder with com.truthbean.logger.jdk.JdkSystemLoggerProvider;
+/**
+ * @author TruthBean/Rogar·Q
+ * @since 0.1.0
+ */
+open module com.truthbean.logger.jul.test {
+    requires com.truthbean.logger.jul;
+    requires transitive org.junit.jupiter.api;
 }

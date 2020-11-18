@@ -1,3 +1,5 @@
+import com.truthbean.logger.jul.JulLoggerImpl;
+
 /**
  * Copyright (c) 2020 TruthBean(Rogar·Q)
  * Debbie is licensed under Mulan PSL v2.
@@ -9,13 +11,14 @@
  *
  *
  * @author TruthBean/Rogar·Q
- * @since 0.4.0
- * Created on 2020-11-18 11:42
+ * @since 0.1.0
  */
-open module com.truthbean.logger.jdk {
+module com.truthbean.logger.jul {
     requires java.base;
     requires transitive com.truthbean.logger.core;
+    requires transitive java.logging;
 
-    provides com.truthbean.Logger with com.truthbean.logger.jdk.JdkSystemLogger;
-    provides System.LoggerFinder with com.truthbean.logger.jdk.JdkSystemLoggerProvider;
+    provides com.truthbean.Logger with com.truthbean.logger.jul.JulLoggerImpl;
+
+    provides com.truthbean.logger.LoggerInitiation with com.truthbean.logger.jul.JulBootInitiation;
 }
