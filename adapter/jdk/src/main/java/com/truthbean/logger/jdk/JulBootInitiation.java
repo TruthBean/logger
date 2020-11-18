@@ -7,71 +7,53 @@
  * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
-package com.truthbean.logger.slf4j.boot;
+package com.truthbean.logger.jdk;
 
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.LoggerContext;
 import com.truthbean.logger.LogLevel;
 import com.truthbean.logger.LoggerFactory;
 import com.truthbean.logger.LoggerInitiation;
-import org.slf4j.Logger;
-import org.slf4j.bridge.SLF4JBridgeHandler;
-import org.slf4j.impl.StaticLoggerBinder;
+
+import java.util.logging.Logger;
 
 /**
  * @author TruthBean/Rogar·Q
- * @since 0.3.0
- * Created on 2020-10-30 12:20
+ * @since 0.4.0
+ * Created on 2020-11-18 09:49
  */
-public class Slf4jBootInitiation implements LoggerInitiation {
+public class JulBootInitiation implements LoggerInitiation {
     @Override
     public void init() {
-        SLF4JBridgeHandler.removeHandlersForRootLogger();
-        SLF4JBridgeHandler.install();
-
         var config = LoggerFactory.config();
         config.forEach(this::setLogLevel);
     }
 
     public void setLogLevel(String loggerName, LogLevel logLevel) {
-        var logger = getLogger(loggerName);
+        if (loggerName == null || "ROOT".equals(loggerName)) {
+            loggerName = "";
+        }
+        var logger = Logger.getLogger(loggerName);
         if (logger != null) {
-            var level = Level.ERROR;
+            var level = JulLevel.SEVERE;
             switch (logLevel) {
                 case FATAL:
+                    level = JulLevel.FATAL;
+                    break;
                 case ERROR:
                     break;
                 case WARN:
-                    level = Level.WARN;
+                    level = JulLevel.WARNING;
                     break;
                 case INFO:
-                    level = Level.INFO;
+                    level = JulLevel.INFO;
                     break;
                 case DEBUG:
-                    level = Level.DEBUG;
+                    level = JulLevel.DEBUG;
                     break;
                 case TRACE:
-                    level = Level.TRACE;
+                    level = JulLevel.TRACE;
                     break;
             }
             logger.setLevel(level);
         }
-    }
-
-    private ch.qos.logback.classic.Logger getLogger(String name) {
-        var factory = getLoggerContext();
-        return factory.getLogger(getLoggerName(name));
-    }
-
-    private String getLoggerName(String name) {
-        if (name != null && !name.isBlank() || Logger.ROOT_LOGGER_NAME.equals(name)) {
-            return "ROOT";
-        }
-        return name;
-    }
-
-    private LoggerContext getLoggerContext() {
-        var factory = StaticLoggerBinder.getSingleton().getLoggerFactory();
-        return (LoggerContext) factory;
     }
 }

@@ -12,7 +12,7 @@ package com.truthbean.logger;
 import com.truthbean.Logger;
 import com.truthbean.logger.exception.NoLoggerProviderException;
 
-import java.util.Optional;
+import java.util.Map;
 import java.util.ServiceLoader;
 
 /**
@@ -22,26 +22,59 @@ import java.util.ServiceLoader;
  */
 public class LoggerFactory {
     public static final String NO_LOGGER = "com.truthbean.logger.no";
+    private static LoggerConfig config;
 
     static {
         try {
+            var loggerConfigs = ServiceLoader.load(LoggerConfig.class);
+            var loggerConfig = loggerConfigs.findFirst();
+            config = loggerConfig.orElseGet(DefaultLoggerConfig::new);
+
             var serviceLoader = ServiceLoader.load(LoggerInitiation.class);
             var first = serviceLoader.findFirst();
             first.ifPresent(LoggerInitiation::init);
+
         } catch (Throwable e) {
             LoggerFactory.getLogger().error("", e);
+            config = new DefaultLoggerConfig();
         }
     }
 
-    public LoggerFactory() {
+    private LoggerFactory() {
+    }
+
+    public static Map<String, LogLevel> config() {
+        return config.getLoggers();
+    }
+
+    public static Logger getLogger(LogLevel level, Class<?> clazz) {
+        var logger = getLogger();
+        if (logger.getClass() != NoLogger.class) {
+            logger.setClass(clazz).setLevel(level);
+        }
+        return logger;
     }
 
     public static Logger getLogger(Class<?> clazz) {
-        return getLogger().setClass(clazz);
+        var logger = getLogger();
+        if (logger.getClass() != NoLogger.class) {
+            var level = config.getLevel(clazz.getName());
+            logger.setClass(clazz).setLevel(level);
+        }
+        return logger;
+    }
+
+    public static Logger getLogger(LogLevel level, String loggerName) {
+        return getLogger().setName(loggerName).setLevel(level);
     }
 
     public static Logger getLogger(String loggerName) {
-        return getLogger().setName(loggerName);
+        var logger = getLogger();
+        if (logger.getClass() != NoLogger.class) {
+            var level = config.getLevel(loggerName);
+            logger.setName(loggerName).setLevel(level);
+        }
+        return logger;
     }
 
     private static Logger getLogger() {

@@ -9,13 +9,23 @@
  */
 package com.truthbean.logger;
 
-import com.truthbean.Logger;
+import java.util.Optional;
 
 /**
  * @author TruthBean/Rogar·Q
- * @since 0.1.0
- * Created on 2020-06-23 10:37.
+ * @since 0.4.0
+ * Created on 2020-11-17 14:28
  */
-public class Logging {
-    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+public enum LogLevel {
+    FATAL, ERROR, WARN, INFO, DEBUG, TRACE;
+
+    public static Optional<LogLevel> of(String level) {
+        var values = values();
+        for (var value : values) {
+            if (value.name().equalsIgnoreCase(level)) {
+                return Optional.of(value);
+            }
+        }
+        return Optional.empty();
+    }
 }

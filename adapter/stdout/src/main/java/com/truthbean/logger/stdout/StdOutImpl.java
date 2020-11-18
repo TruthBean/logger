@@ -10,6 +10,7 @@
 package com.truthbean.logger.stdout;
 
 import com.truthbean.Logger;
+import com.truthbean.logger.LogLevel;
 import com.truthbean.logger.util.DateTimeHelper;
 import com.truthbean.logger.util.MessageHelper;
 
@@ -22,13 +23,15 @@ import static com.truthbean.logger.util.DateTimeHelper.nowStr;
  * @since 0.0.1
  */
 public class StdOutImpl implements Logger {
-    private String loggerName;
     public static final String TRACE = "TRACE";
     public static final String DEBUG = "DEBUG";
     public static final String INFO = "INFO";
     public static final String WARN = "WARN";
     public static final String ERROR = "ERROR";
     public static final String FATAL = "FATAL";
+
+    private String loggerName;
+    private LogLevel level;
 
     @Override
     public Logger setName(String name) {
@@ -43,158 +46,185 @@ public class StdOutImpl implements Logger {
     }
 
     @Override
-    public boolean isTraceEnabled() {
-        return true;
+    public Logger setLevel(LogLevel level) {
+        this.level = level;
+        return this;
+    }
+
+    @Override
+    public LogLevel getLevel() {
+        if (this.level == null)
+            return LogLevel.ERROR;
+        return this.level;
     }
 
     @Override
     public void trace(String message) {
-        log(TRACE, null, message);
+        if (isTraceEnabled()) {
+            log(TRACE, null, message);
+        }
     }
 
     @Override
     public void trace(Supplier<String> supplier) {
-        log(TRACE, null, supplier.get());
+        if (isTraceEnabled()) {
+            log(TRACE, null, supplier.get());
+        }
     }
 
     @Override
     public void trace(String message, Object... params) {
-        log(TRACE, null, message, params);
+        if (isTraceEnabled()) {
+            log(TRACE, null, message, params);
+        }
     }
 
     @Override
     public void trace(String message, Throwable e) {
-        log(TRACE, null, message);
+        if (isTraceEnabled()) {
+            log(TRACE, null, message);
+        }
     }
 
     @Override
     public void trace(Supplier<String> supplier, Throwable e) {
-        log(TRACE, e, supplier.get());
+        if (isTraceEnabled()) {
+            log(TRACE, e, supplier.get());
+        }
     }
 
     @Override
     public void trace(String message, Throwable e, Object... params) {
-        log(TRACE, e, message, params);
-    }
-
-    @Override
-    public boolean isDebugEnabled() {
-        return true;
+        if (isTraceEnabled()) {
+            log(TRACE, e, message, params);
+        }
     }
 
     @Override
     public void debug(String message) {
-        log(DEBUG, null, message);
+        if (isDebugEnabled()) {
+            log(DEBUG, null, message);
+        }
     }
 
     @Override
     public void debug(Supplier<String> supplier) {
-        log(DEBUG, null, supplier.get());
+        if (isDebugEnabled()) {
+            log(DEBUG, null, supplier.get());
+        }
     }
 
     @Override
     public void debug(String message, Object... params) {
-        log(DEBUG, null, message, params);
+        if (isDebugEnabled()) {
+            log(DEBUG, null, message, params);
+        }
     }
 
     @Override
     public void debug(String message, Throwable e) {
-        log(DEBUG, e, message);
+        if (isDebugEnabled()) {
+            log(DEBUG, e, message);
+        }
     }
 
     @Override
     public void debug(Supplier<String> supplier, Throwable e) {
-        log(DEBUG, e, supplier.get());
+        if (isDebugEnabled()) {
+            log(DEBUG, e, supplier.get());
+        }
     }
 
     @Override
     public void debug(String message, Throwable e, Object... params) {
-        log(DEBUG, e, message, params);
-    }
-
-    @Override
-    public boolean isInfoEnabled() {
-        return true;
+        if (isDebugEnabled()) {
+            log(DEBUG, e, message, params);
+        }
     }
 
     @Override
     public void info(String message) {
-        log(INFO, null, message);
+        if (isInfoEnabled()) {
+            log(INFO, null, message);
+        }
     }
 
     @Override
     public void info(Supplier<String> supplier) {
-        log(INFO, null, supplier.get());
+        if (isInfoEnabled())
+            log(INFO, null, supplier.get());
     }
 
     @Override
     public void info(String message, Object... params) {
-        log(INFO, null, message, params);
+        if (isInfoEnabled())
+            log(INFO, null, message, params);
     }
 
     @Override
     public void info(String message, Throwable e) {
-        log(INFO, e, message);
+        if (isInfoEnabled())
+            log(INFO, e, message);
     }
 
     @Override
     public void info(Supplier<String> supplier, Throwable e) {
-        log(INFO, e, supplier.get());
+        if (isInfoEnabled())
+            log(INFO, e, supplier.get());
     }
 
     @Override
     public void info(String message, Throwable e, Object... params) {
-        log(INFO, e, message, params);
-    }
-
-    @Override
-    public boolean isWarnEnabled() {
-        return true;
+        if (isInfoEnabled())
+            log(INFO, e, message, params);
     }
 
     @Override
     public void warn(String message) {
-        log(WARN, null, message);
+        if (isWarnEnabled())
+            log(WARN, null, message);
     }
 
     @Override
     public void warn(Supplier<String> supplier) {
-        log(WARN, null, supplier.get());
+        if (isWarnEnabled())
+            log(WARN, null, supplier.get());
     }
 
     @Override
     public void warn(String message, Object... params) {
-        log(WARN, null, message, params);
+        if (isWarnEnabled())
+            log(WARN, null, message, params);
     }
 
     @Override
     public void warn(String message, Throwable e) {
-        log(WARN, e, message);
+        if (isWarnEnabled())
+            log(WARN, e, message);
     }
 
     @Override
     public void warn(Supplier<String> supplier, Throwable e) {
-        log(WARN, e, supplier.get());
+        if (isWarnEnabled())
+            log(WARN, e, supplier.get());
     }
 
     @Override
     public void warn(String message, Throwable e, Object... params) {
-        log(WARN, e, message, params);
-    }
-
-    @Override
-    public boolean isErrorEnabled() {
-        return true;
+        if (isWarnEnabled())
+            log(WARN, e, message, params);
     }
 
     @Override
     public void error(String message) {
-        log(ERROR, null, message);
+        if (isErrorEnabled())
+            log(ERROR, null, message);
     }
 
     @Override
     public void error(Supplier<String> supplier) {
-        log(ERROR, null, supplier.get());
+        if (isErrorEnabled())
+            log(ERROR, null, supplier.get());
     }
 
     @Override
@@ -204,53 +234,56 @@ public class StdOutImpl implements Logger {
 
     @Override
     public void error(String message, Throwable e) {
-        log(ERROR, e, message);
+        if (isErrorEnabled())
+            log(ERROR, e, message);
     }
 
     @Override
     public void error(Supplier<String> supplier, Throwable e) {
-        log(ERROR, e, supplier.get());
+        if (isErrorEnabled())
+            log(ERROR, e, supplier.get());
     }
 
     @Override
     public void error(String message, Throwable e, Object... params) {
-        log(ERROR, e, message, params);
-    }
-
-    @Override
-    public boolean isFatalEnabled() {
-        return true;
+        if (isErrorEnabled())
+            log(ERROR, e, message, params);
     }
 
     @Override
     public void fatal(String message) {
-        log(FATAL, null, message);
+        if (isFatalEnabled())
+            log(FATAL, null, message);
     }
 
     @Override
     public void fatal(Supplier<String> supplier) {
-        log(FATAL, null, supplier.get());
+        if (isFatalEnabled())
+            log(FATAL, null, supplier.get());
     }
 
     @Override
     public void fatal(String message, Object... params) {
-        log(FATAL, null, message, params);
+        if (isFatalEnabled())
+            log(FATAL, null, message, params);
     }
 
     @Override
     public void fatal(String message, Throwable e) {
-        log(FATAL, e, message);
+        if (isFatalEnabled())
+            log(FATAL, e, message);
     }
 
     @Override
     public void fatal(Supplier<String> supplier, Throwable e) {
-        log(FATAL, e, supplier.get());
+        if (isFatalEnabled())
+            log(FATAL, e, supplier.get());
     }
 
     @Override
     public void fatal(String message, Throwable e, Object... params) {
-
-        log(FATAL, e, message, params);
+        if (isFatalEnabled())
+            log(FATAL, e, message, params);
     }
 
     private void log(String level, Throwable ex, String message, Object... params) {

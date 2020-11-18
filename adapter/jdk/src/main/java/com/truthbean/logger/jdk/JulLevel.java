@@ -16,23 +16,23 @@ import java.util.logging.Level;
  * @since 0.0.1
  * Created on 2020-02-13 13:29
  */
-class JdkLevel extends Level {
+public class JulLevel extends Level {
     /**
      * serial version
      */
     private static final long serialVersionUID = -4242942266318231264L;
 
-    protected JdkLevel(String name, int value) {
+    protected JulLevel(String name, int value) {
         super(name, value);
     }
 
-    JdkLevel(String name, int value, String resourceBundleName) {
+    JulLevel(String name, int value, String resourceBundleName) {
         super(name, value, resourceBundleName);
     }
 
     private static final String defaultBundle = "sun.util.logging.resources.logging";
 
-    public static final Level FATAL = new JdkLevel("FATAL", 1100, defaultBundle);
-    public static final Level DEBUG = new JdkLevel("DEBUG", 600, defaultBundle);
-    public static final Level TRACE = new JdkLevel("TRACE", 500, defaultBundle);
+    public static final Level FATAL = new JulLevel("FATAL", 1100, defaultBundle);
+    public static final Level DEBUG = new JulLevel("DEBUG", 600, defaultBundle);
+    public static final Level TRACE = new JulLevel("TRACE", 500, defaultBundle);
 }

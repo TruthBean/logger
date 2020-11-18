@@ -15,7 +15,6 @@ public class Log4j2Test {
 
     @Test
     void testJdk() {
-        //  -Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager
         java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Log4j2Test.class.getName());
         logger.info("jul");
     }

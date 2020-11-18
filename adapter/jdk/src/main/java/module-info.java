@@ -1,3 +1,5 @@
+import com.truthbean.logger.jdk.JulLoggerImpl;
+
 /**
  * Copyright (c) 2020 TruthBean(Rogar·Q)
  * Debbie is licensed under Mulan PSL v2.
@@ -17,5 +19,7 @@ module com.truthbean.logger.jdk {
     requires transitive java.logging;
 
     provides com.truthbean.Logger with
-            com.truthbean.logger.jdk.JdkLoggerImpl;
+            JulLoggerImpl;
+
+    provides com.truthbean.logger.LoggerInitiation with com.truthbean.logger.jdk.JulBootInitiation;
 }

@@ -1,0 +1,95 @@
+/**
+ * Copyright (c) 2020 TruthBean(Rogar·Q)
+ * Debbie is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ * http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+package com.truthbean.logger.log4j2.boot;
+
+import com.truthbean.logger.LogLevel;
+import com.truthbean.logger.LoggerFactory;
+import com.truthbean.logger.LoggerInitiation;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.config.AbstractConfiguration;
+import org.apache.logging.log4j.core.config.LoggerConfig;
+
+import java.util.logging.LogManager;
+
+/**
+ * @author TruthBean/Rogar·Q
+ * @since 0.4.0
+ * Created on 2020-11-17 19:42
+ */
+public class Log4j2BootInitiation implements LoggerInitiation {
+
+    private static final String logManagerClass = "org.apache.logging.log4j.jul.LogManager";
+    static {
+        System.setProperty("java.util.logging.manager", logManagerClass);
+        LogManager logManager = LogManager.getLogManager();
+        if (!logManagerClass.equals(logManager.getClass().getName())) {
+            try {
+                ClassLoader.getSystemClassLoader().loadClass(logManagerClass);
+            } catch (ClassNotFoundException ignored) {
+            }
+        }
+    }
+
+    @Override
+    public void init() {
+        var config = LoggerFactory.config();
+        config.forEach(this::setLogLevel);
+    }
+
+    public void setLogLevel(String loggerName, LogLevel logLevel) {
+        var level = Level.ERROR;
+        switch (logLevel) {
+            case FATAL:
+                level = Level.FATAL;
+                break;
+            case ERROR:
+                break;
+            case WARN:
+                level = Level.WARN;
+                break;
+            case INFO:
+                level = Level.INFO;
+                break;
+            case DEBUG:
+                level = Level.DEBUG;
+                break;
+            case TRACE:
+                level = Level.TRACE;
+                break;
+        }
+        var logger = getLogger(loggerName);
+        if (logger == null) {
+            logger = new LoggerConfig(loggerName, level, true);
+            getLoggerContext().getConfiguration().addLogger(loggerName, logger);
+        }
+        else {
+            logger.setLevel(level);
+        }
+        getLoggerContext().updateLoggers();
+    }
+
+    private LoggerConfig getLogger(String name) {
+        boolean isRootLogger = name != null && !name.isBlank() || "ROOT".equals(name);
+        return findLogger(isRootLogger ? org.apache.logging.log4j.LogManager.ROOT_LOGGER_NAME : name);
+    }
+
+    private LoggerConfig findLogger(String name) {
+        var configuration = getLoggerContext().getConfiguration();
+        if (configuration instanceof AbstractConfiguration) {
+            return ((AbstractConfiguration) configuration).getLogger(name);
+        }
+        return configuration.getLoggers().get(name);
+    }
+
+    private LoggerContext getLoggerContext() {
+        return (LoggerContext) org.apache.logging.log4j.LogManager.getContext(false);
+    }
+}

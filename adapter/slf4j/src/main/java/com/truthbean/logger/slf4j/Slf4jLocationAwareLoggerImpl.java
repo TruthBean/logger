@@ -21,7 +21,6 @@ import java.util.function.Supplier;
  */
 class Slf4jLocationAwareLoggerImpl implements Logger {
 
-    public static final int FATAL_INT = 50;
     private static final String CALLER_FQCN = Slf4jImpl.class.getName();
 
     private final LocationAwareLogger log;
@@ -275,31 +274,31 @@ class Slf4jLocationAwareLoggerImpl implements Logger {
 
     @Override
     public void fatal(String message) {
-        this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, FATAL_INT, message, null, null);
+        this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, message, null, null);
     }
 
     @Override
     public void fatal(Supplier<String> supplier) {
-        this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, FATAL_INT, supplier.get(), null, null);
+        this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, supplier.get(), null, null);
     }
 
     @Override
     public void fatal(String message, Object... params) {
-        this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, FATAL_INT, message, params, null);
+        this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, message, params, null);
     }
 
     @Override
     public void fatal(String message, Throwable e) {
-        this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, FATAL_INT, message, null, e);
+        this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, message, null, e);
     }
 
     @Override
     public void fatal(Supplier<String> supplier, Throwable e) {
-        this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, FATAL_INT, supplier.get(), null, e);
+        this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, supplier.get(), null, e);
     }
 
     @Override
     public void fatal(String message, Throwable e, Object... params) {
-        this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, FATAL_INT, message, params, e);
+        this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, message, params, e);
     }
 }

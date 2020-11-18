@@ -10,6 +10,7 @@
 package com.truthbean.logger.log4j2;
 
 import com.truthbean.Logger;
+import com.truthbean.logger.LogLevel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
@@ -26,6 +27,7 @@ public class Log4j2Impl implements Logger {
 
     private Logger logger;
     private org.apache.logging.log4j.Logger originLogger;
+    private LogLevel level;
 
     static final Marker MARKER = MarkerManager.getMarker("truthbean");
     static final String FQCN = Log4j2Impl.class.getName();
@@ -58,283 +60,298 @@ public class Log4j2Impl implements Logger {
     }
 
     @Override
+    public Logger setLevel(LogLevel level) {
+        this.level = level;
+        this.logger.setLevel(level);
+        return this.logger;
+    }
+
+    @Override
+    public LogLevel getLevel() {
+        if (level == null) {
+            return LogLevel.ERROR;
+        }
+        return level;
+    }
+
+    @Override
     public boolean isTraceEnabled() {
-        return this.originLogger.isTraceEnabled();
+        return getLevel().compareTo(LogLevel.TRACE) >= 0 && this.originLogger.isTraceEnabled();
     }
 
     @Override
     public void trace(String message) {
-        if (this.originLogger.isTraceEnabled()) {
+        if (isTraceEnabled()) {
             this.logger.trace(message);
         }
     }
 
     @Override
     public void trace(Supplier<String> supplier) {
-        if (originLogger.isTraceEnabled()) {
+        if (isTraceEnabled()) {
             logger.trace(supplier);
         }
     }
 
     @Override
     public void trace(String message, Object... params) {
-        if (originLogger.isTraceEnabled()) {
+        if (isTraceEnabled()) {
             logger.trace(message, params);
         }
     }
 
     @Override
     public void trace(String message, Throwable e) {
-        if (originLogger.isTraceEnabled()) {
+        if (isTraceEnabled()) {
             logger.trace(message, e);
         }
     }
 
     @Override
     public void trace(Supplier<String> supplier, Throwable e) {
-        if (originLogger.isTraceEnabled()) {
+        if (isTraceEnabled()) {
             logger.trace(supplier, e);
         }
     }
 
     @Override
     public void trace(String message, Throwable e, Object... params) {
-        if (originLogger.isTraceEnabled()) {
+        if (isTraceEnabled()) {
             logger.trace(message, e, params);
         }
     }
 
     @Override
     public boolean isDebugEnabled() {
-        return originLogger.isDebugEnabled();
+        return getLevel().compareTo(LogLevel.DEBUG) >= 0 && originLogger.isDebugEnabled();
     }
 
     @Override
     public void debug(String message) {
-        if (originLogger.isDebugEnabled()) {
+        if (isDebugEnabled()) {
             logger.debug(message);
         }
     }
 
     @Override
     public void debug(Supplier<String> supplier) {
-        if (originLogger.isDebugEnabled()) {
+        if (isDebugEnabled()) {
             logger.debug(supplier);
         }
     }
 
     @Override
     public void debug(String message, Object... params) {
-        if (originLogger.isDebugEnabled()) {
+        if (isDebugEnabled()) {
             logger.debug(message, params);
         }
     }
 
     @Override
     public void debug(String message, Throwable e) {
-        if (originLogger.isDebugEnabled()) {
+        if (isDebugEnabled()) {
             logger.debug(message, e);
         }
     }
 
     @Override
     public void debug(Supplier<String> supplier, Throwable e) {
-        if (originLogger.isDebugEnabled()) {
+        if (isDebugEnabled()) {
             logger.debug(supplier, e);
         }
     }
 
     @Override
     public void debug(String message, Throwable e, Object... params) {
-        if (originLogger.isDebugEnabled()) {
+        if (isDebugEnabled()) {
             logger.debug(message, e, params);
         }
     }
 
     @Override
     public boolean isInfoEnabled() {
-        return originLogger.isInfoEnabled();
+        return getLevel().compareTo(LogLevel.INFO) >= 0 && originLogger.isInfoEnabled();
     }
 
     @Override
     public void info(String message) {
-        if (originLogger.isInfoEnabled()) {
+        if (isInfoEnabled()) {
             logger.info(message);
         }
     }
 
     @Override
     public void info(Supplier<String> supplier) {
-        if (originLogger.isInfoEnabled()) {
+        if (isInfoEnabled()) {
             logger.info(supplier);
         }
     }
 
     @Override
     public void info(String message, Object... params) {
-        if (originLogger.isInfoEnabled()) {
+        if (isInfoEnabled()) {
             logger.info(message, params);
         }
     }
 
     @Override
     public void info(String message, Throwable e) {
-        if (originLogger.isInfoEnabled()) {
+        if (isInfoEnabled()) {
             logger.info(message, e);
         }
     }
 
     @Override
     public void info(Supplier<String> supplier, Throwable e) {
-        if (originLogger.isInfoEnabled()) {
+        if (isInfoEnabled()) {
             logger.info(supplier, e);
         }
     }
 
     @Override
     public void info(String message, Throwable e, Object... params) {
-        if (originLogger.isInfoEnabled()) {
+        if (isInfoEnabled()) {
             logger.info(message, e, params);
         }
     }
 
     @Override
     public boolean isWarnEnabled() {
-        return originLogger.isWarnEnabled();
+        return getLevel().compareTo(LogLevel.WARN) >= 0 && originLogger.isWarnEnabled();
     }
 
     @Override
     public void warn(String message) {
-        if (originLogger.isWarnEnabled()) {
+        if (isWarnEnabled()) {
             logger.warn(message);
         }
     }
 
     @Override
     public void warn(Supplier<String> supplier) {
-        if (originLogger.isWarnEnabled()) {
+        if (isWarnEnabled()) {
             logger.warn(supplier);
         }
     }
 
     @Override
     public void warn(String message, Object... params) {
-        if (originLogger.isWarnEnabled()) {
+        if (isWarnEnabled()) {
             logger.warn(message, params);
         }
     }
 
     @Override
     public void warn(String message, Throwable e) {
-        if (originLogger.isWarnEnabled()) {
+        if (isWarnEnabled()) {
             logger.warn(message, e);
         }
     }
 
     @Override
     public void warn(Supplier<String> supplier, Throwable e) {
-        if (originLogger.isWarnEnabled()) {
+        if (isWarnEnabled()) {
             logger.warn(supplier, e);
         }
     }
 
     @Override
     public void warn(String message, Throwable e, Object... params) {
-        if (originLogger.isWarnEnabled()) {
+        if (isWarnEnabled()) {
             logger.warn(message, e, params);
         }
     }
 
     @Override
     public boolean isErrorEnabled() {
-        return originLogger.isErrorEnabled();
+        return getLevel().compareTo(LogLevel.ERROR) >= 0 && originLogger.isErrorEnabled();
     }
 
     @Override
     public void error(String message) {
-        if (originLogger.isErrorEnabled()) {
+        if (isErrorEnabled()) {
             logger.error(message);
         }
     }
 
     @Override
     public void error(Supplier<String> supplier) {
-        if (originLogger.isErrorEnabled()) {
+        if (isErrorEnabled()) {
             logger.error(supplier);
         }
     }
 
     @Override
     public void error(String message, Object... params) {
-        if (originLogger.isErrorEnabled()) {
+        if (isErrorEnabled()) {
             logger.error(message, params);
         }
     }
 
     @Override
     public void error(String message, Throwable e) {
-        if (originLogger.isErrorEnabled()) {
+        if (isErrorEnabled()) {
             logger.error(message, e);
         }
     }
 
     @Override
     public void error(Supplier<String> supplier, Throwable e) {
-        if (originLogger.isErrorEnabled()) {
+        if (isErrorEnabled()) {
             logger.error(supplier, e);
         }
     }
 
     @Override
     public void error(String message, Throwable e, Object... params) {
-        if (originLogger.isErrorEnabled()) {
+        if (isErrorEnabled()) {
             logger.error(message, e, params);
         }
     }
 
     @Override
     public boolean isFatalEnabled() {
-        return originLogger.isFatalEnabled();
+        return getLevel().compareTo(LogLevel.FATAL) >= 0 && originLogger.isFatalEnabled();
     }
 
     @Override
     public void fatal(String message) {
-        if (originLogger.isFatalEnabled()) {
+        if (isFatalEnabled()) {
             logger.error(message);
         }
     }
 
     @Override
     public void fatal(Supplier<String> supplier) {
-        if (originLogger.isFatalEnabled()) {
+        if (isFatalEnabled()) {
             logger.error(supplier);
         }
     }
 
     @Override
     public void fatal(String message, Object... params) {
-        if (originLogger.isFatalEnabled()) {
+        if (isFatalEnabled()) {
             logger.error(message, params);
         }
     }
 
     @Override
     public void fatal(String message, Throwable e) {
-        if (originLogger.isFatalEnabled()) {
+        if (isFatalEnabled()) {
             logger.error(message, e);
         }
     }
 
     @Override
     public void fatal(Supplier<String> supplier, Throwable e) {
-        if (originLogger.isFatalEnabled()) {
+        if (isFatalEnabled()) {
             logger.error(supplier, e);
         }
     }
 
     @Override
     public void fatal(String message, Throwable e, Object... params) {
-        if (originLogger.isFatalEnabled()) {
+        if (isFatalEnabled()) {
             logger.error(message, e, params);
         }
     }

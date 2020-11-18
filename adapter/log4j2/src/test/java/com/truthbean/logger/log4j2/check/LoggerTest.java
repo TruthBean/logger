@@ -10,6 +10,7 @@
 package com.truthbean.logger.log4j2.check;
 
 import com.truthbean.Logger;
+import com.truthbean.logger.LogLevel;
 import com.truthbean.logger.LoggerFactory;
 import org.junit.jupiter.api.Test;
 
@@ -55,5 +56,5 @@ class LoggerTest {
         return "888888888888888888888888";
     }
     
-    public static final Logger LOGGER = LoggerFactory.getLogger(LoggerTest.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(LogLevel.TRACE, LoggerTest.class);
 }

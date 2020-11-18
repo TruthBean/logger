@@ -10,6 +10,7 @@
 package com.truthbean.logger.stdout.test;
 
 import com.truthbean.Logger;
+import com.truthbean.logger.LogLevel;
 import com.truthbean.logger.LoggerFactory;
 import org.junit.jupiter.api.Test;
 
@@ -59,17 +60,22 @@ class LoggerTest {
 
     @Test
     void testColor() {
-        LOGGER.trace("color");
-        LOGGER.debug("color");
-        LOGGER.info("color");
-        LOGGER.warn("color");
-        LOGGER.error("color");
-        LOGGER.fatal("color");
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 1000; i++) {
+            LOGGER.trace("color");
+            LOGGER.debug("color");
+            LOGGER.info("color");
+            LOGGER.warn("color");
+            LOGGER.error("color");
+            LOGGER.fatal("color");
+        }
+        long end = System.currentTimeMillis();
+        System.out.println(end - start);
         for (int i = 0; i < 100; i++) {
             System.out.println(i);
             System.out.println("[\033[" + i + ";1mcolor\033[0m] ");
         }
     }
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(LoggerTest.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(LogLevel.TRACE, LoggerTest.class);
 }

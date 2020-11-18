@@ -7,19 +7,23 @@
  * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
-package com.truthbean.logger.jdk;
+package com.truthbean.logger;
 
-import java.util.logging.Formatter;
-import java.util.logging.LogRecord;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author TruthBean/Rogar·Q
- * @since 0.3.1
- * Created on 2020-11-17 13:50
+ * @since 0.4.0
+ * Created on 2020-11-17 16:27
  */
-public class TruthBeanFormatter extends Formatter {
-    @Override
-    public String format(LogRecord record) {
-        return record.getMessage() + "\n";
+public interface LoggerConfig {
+
+    default Map<String, LogLevel> getLoggers() {
+        return new HashMap<>();
+    }
+
+    default LogLevel getLevel(String name) {
+        return LogLevel.TRACE;
     }
 }

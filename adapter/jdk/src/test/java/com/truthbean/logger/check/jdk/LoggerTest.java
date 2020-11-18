@@ -14,12 +14,32 @@ import com.truthbean.logger.LoggerFactory;
 import com.truthbean.logger.Logging;
 import org.junit.jupiter.api.Test;
 
+import java.util.logging.Level;
+
 /**
  * @author TruthBean/Rogar·Q
  * @since 0.0.1
  * Created on 2020-05-08 22:32
  */
 class LoggerTest extends Logging {
+
+    @Test
+    void testJdk9() {
+        var logger = java.lang.System.getLogger(LoggerTest.class.getName());
+        logger.log(System.Logger.Level.TRACE, "trace");
+        logger.log(System.Logger.Level.DEBUG, "debug");
+        logger.log(System.Logger.Level.INFO, "info");
+        logger.log(System.Logger.Level.WARNING, "warn");
+        logger.log(System.Logger.Level.ERROR, "error");
+    }
+
+    @Test
+    void testJdk() {
+        var logger = java.util.logging.Logger.getLogger(LoggerTest.class.getName());
+        logger.log(Level.INFO, "info");
+        logger.log(Level.WARNING, "warn");
+        logger.log(Level.SEVERE, "error");
+    }
 
     @Test
     void testTrace() {
@@ -51,12 +71,17 @@ class LoggerTest extends Logging {
 
     @Test
     void testColor() {
-        LOGGER.trace("color");
-        LOGGER.debug("color");
-        LOGGER.info("color");
-        LOGGER.warn("color");
-        LOGGER.error("color");
-        LOGGER.fatal("color");
+        var start = System.currentTimeMillis();
+        for (int i = 0; i < 1000; i++) {
+            LOGGER.trace("color");
+            LOGGER.debug("color");
+            LOGGER.info("color");
+            LOGGER.warn("color");
+            LOGGER.error("color");
+            LOGGER.fatal("color");
+        }
+        var end = System.currentTimeMillis();
+        System.out.println(end - start);
     }
     
     public static final Logger LOGGER = LoggerFactory.getLogger(LoggerTest.class);

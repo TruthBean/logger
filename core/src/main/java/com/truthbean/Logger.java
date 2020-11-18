@@ -9,6 +9,8 @@
  */
 package com.truthbean;
 
+import com.truthbean.logger.LogLevel;
+
 import java.util.function.Supplier;
 
 /**
@@ -32,6 +34,14 @@ public interface Logger {
         return this;
     }
 
+    default Logger setLevel(LogLevel level) {
+        return this;
+    }
+
+    default LogLevel getLevel() {
+        return LogLevel.TRACE;
+    }
+
     private String toString(Object message) {
         if (message == null) {
             return "null";
@@ -40,7 +50,7 @@ public interface Logger {
     }
 
     default boolean isTraceEnabled() {
-        return false;
+        return getLevel().compareTo(LogLevel.TRACE) >= 0;
     }
 
     default void trace(Object message) {
@@ -89,7 +99,7 @@ public interface Logger {
     }
 
     default boolean isDebugEnabled() {
-        return false;
+        return getLevel().compareTo(LogLevel.DEBUG) >= 0;
     }
 
     default void debug(Object message) {
@@ -135,7 +145,7 @@ public interface Logger {
     }
 
     default boolean isInfoEnabled() {
-        return false;
+        return getLevel().compareTo(LogLevel.INFO) >= 0;
     }
 
     default void info(Object message) {
@@ -181,7 +191,7 @@ public interface Logger {
     }
 
     default boolean isWarnEnabled() {
-        return false;
+        return getLevel().compareTo(LogLevel.WARN) >= 0;
     }
 
     default void warn(Object message) {
@@ -227,7 +237,7 @@ public interface Logger {
     }
 
     default boolean isErrorEnabled() {
-        return false;
+        return getLevel().compareTo(LogLevel.ERROR) >= 0;
     }
 
     default void error(Object message) {
@@ -273,7 +283,7 @@ public interface Logger {
     }
 
     default boolean isFatalEnabled() {
-        return false;
+        return getLevel().compareTo(LogLevel.FATAL) >= 0;
     }
 
     default void fatal(Object message) {

@@ -10,11 +10,7 @@
 package com.truthbean.logger.log4j2.boot;
 
 import org.apache.logging.log4j.core.LoggerContext;
-import org.apache.logging.log4j.core.config.Configuration;
-import org.apache.logging.log4j.core.config.ConfigurationFactory;
-import org.apache.logging.log4j.core.config.ConfigurationSource;
-import org.apache.logging.log4j.core.config.DefaultConfiguration;
-import org.apache.logging.log4j.core.config.Order;
+import org.apache.logging.log4j.core.config.*;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
 
 import static org.apache.logging.log4j.core.config.DefaultConfiguration.DEFAULT_LEVEL;
@@ -30,7 +26,6 @@ public class TruthBeanConfigurationFactory extends ConfigurationFactory {
     private static final String[] TYPES = { ".truthbean" };
 
     public TruthBeanConfigurationFactory() {
-        System.setProperty("java.util.logging.manager", "org.apache.logging.log4j.jul.LogManager");
     }
 
     @Override

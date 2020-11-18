@@ -20,4 +20,5 @@ module com.truthbean.logger.core {
 
     uses com.truthbean.Logger;
     uses com.truthbean.logger.LoggerInitiation;
+    uses com.truthbean.logger.LoggerConfig;
 }
