@@ -26,13 +26,13 @@ import java.util.logging.LogManager;
  */
 public class Log4j2BootInitiation implements LoggerInitiation {
 
-    private static final String logManagerClass = "org.apache.logging.log4j.jul.LogManager";
+    private static final String LOG_MANAGER_CLASS = "org.apache.logging.log4j.jul.LogManager";
     static {
-        System.setProperty("java.util.logging.manager", logManagerClass);
+        System.setProperty("java.util.logging.manager", LOG_MANAGER_CLASS);
         LogManager logManager = LogManager.getLogManager();
-        if (!logManagerClass.equals(logManager.getClass().getName())) {
+        if (!LOG_MANAGER_CLASS.equals(logManager.getClass().getName())) {
             try {
-                ClassLoader.getSystemClassLoader().loadClass(logManagerClass);
+                ClassLoader.getSystemClassLoader().loadClass(LOG_MANAGER_CLASS);
             } catch (ClassNotFoundException ignored) {
             }
         }
@@ -40,7 +40,7 @@ public class Log4j2BootInitiation implements LoggerInitiation {
 
     @Override
     public void init() {
-        var config = LoggerFactory.config();
+        var config = LoggerFactory.getConfig().getLoggers();
         config.forEach(this::setLogLevel);
     }
 
@@ -63,6 +63,9 @@ public class Log4j2BootInitiation implements LoggerInitiation {
                 break;
             case TRACE:
                 level = Level.TRACE;
+                break;
+            default:
+                level = Level.ERROR;
                 break;
         }
         var logger = getLogger(loggerName);

@@ -13,6 +13,7 @@ import com.truthbean.Logger;
 import com.truthbean.logger.LogLevel;
 import com.truthbean.logger.util.MessageHelper;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
@@ -39,6 +40,13 @@ public class JulLoggerImpl implements Logger {
     }
 
     public JulLoggerImpl() {
+    }
+
+    @Override
+    public boolean isLoggable(LogLevel level) {
+        var bool = getLevel().compareTo(level) >= 0;
+        var optional = toLevel(level);
+        return optional.map(value -> bool && logger.isLoggable(value)).orElse(bool);
     }
 
     @Override
@@ -397,27 +405,28 @@ public class JulLoggerImpl implements Logger {
     @Override
     public Logger setLevel(LogLevel level) {
         this.level = level;
+        var julLevel = toLevel(level);
+        julLevel.ifPresent(l -> this.logger.setLevel(l));
+        return this;
+    }
+
+    public Optional<Level> toLevel(LogLevel level) {
         switch (level) {
             case FATAL:
-                this.logger.setLevel(JulLevel.FATAL);
-                break;
+                return Optional.of(JulLevel.FATAL);
             case ERROR:
-                this.logger.setLevel(JulLevel.SEVERE);
-                break;
+                return Optional.of(JulLevel.SEVERE);
             case WARN:
-                this.logger.setLevel(JulLevel.WARNING);
-                break;
+                return Optional.of(JulLevel.WARNING);
             case INFO:
-                this.logger.setLevel(JulLevel.INFO);
-                break;
+                return Optional.of(JulLevel.INFO);
             case DEBUG:
-                this.logger.setLevel(JulLevel.DEBUG);
-                break;
+                return Optional.of(JulLevel.DEBUG);
             case TRACE:
-                this.logger.setLevel(JulLevel.TRACE);
-                break;
+                return Optional.of(JulLevel.TRACE);
+            default:
+                return Optional.empty();
         }
-        return this;
     }
 
     @Override

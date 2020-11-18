@@ -43,8 +43,8 @@ public class LoggerFactory {
     public LoggerFactory() {
     }
 
-    public static Map<String, LogLevel> config() {
-        return config.getLoggers();
+    public static LoggerConfig getConfig() {
+        return config;
     }
 
     public static Logger getLogger(LogLevel level, Class<?> clazz) {
@@ -59,7 +59,7 @@ public class LoggerFactory {
         var logger = getLogger();
         if (logger.getClass() != NoLogger.class) {
             var level = config.getLevel(clazz.getName());
-            logger.setClass(clazz).setLevel(level);
+            logger.setClass(clazz).setLevel(level.orElse(LogLevel.ERROR));
         }
         return logger;
     }
@@ -72,7 +72,7 @@ public class LoggerFactory {
         var logger = getLogger();
         if (logger.getClass() != NoLogger.class) {
             var level = config.getLevel(loggerName);
-            logger.setName(loggerName).setLevel(level);
+            logger.setName(loggerName).setLevel(level.orElse(LogLevel.ERROR));
         }
         return logger;
     }
@@ -82,7 +82,7 @@ public class LoggerFactory {
         var first = serviceLoader.findFirst();
         if (first.isEmpty()) {
             var no = System.getProperty(NO_LOGGER, "false");
-            if ("false".equals(no)) {
+            if ("false".equalsIgnoreCase(no) || "no".equalsIgnoreCase(no)) {
                 throw new NoLoggerProviderException();
             } else {
                 return new NoLogger();

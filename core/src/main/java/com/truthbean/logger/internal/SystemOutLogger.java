@@ -11,7 +11,6 @@ package com.truthbean.logger.internal;
 
 import com.truthbean.Logger;
 import com.truthbean.logger.LogLevel;
-import com.truthbean.logger.util.DateTimeHelper;
 import com.truthbean.logger.util.MessageHelper;
 
 import java.util.function.Supplier;
@@ -45,8 +44,9 @@ public class SystemOutLogger implements Logger {
 
     @Override
     public LogLevel getLevel() {
-        if (this.level == null)
+        if (this.level == null) {
             return LogLevel.ERROR;
+        }
         return this.level;
     }
 
@@ -143,80 +143,93 @@ public class SystemOutLogger implements Logger {
 
     @Override
     public void info(Supplier<String> supplier) {
-        if (isInfoEnabled())
+        if (isInfoEnabled()) {
             log(LogLevel.INFO, null, supplier.get());
+        }
     }
 
     @Override
     public void info(String message, Object... params) {
-        if (isInfoEnabled())
+        if (isInfoEnabled()) {
             log(LogLevel.INFO, null, message, params);
+        }
     }
 
     @Override
     public void info(String message, Throwable e) {
-        if (isInfoEnabled())
+        if (isInfoEnabled()) {
             log(LogLevel.INFO, e, message);
+        }
     }
 
     @Override
     public void info(Supplier<String> supplier, Throwable e) {
-        if (isInfoEnabled())
+        if (isInfoEnabled()) {
             log(LogLevel.INFO, e, supplier.get());
+        }
     }
 
     @Override
     public void info(String message, Throwable e, Object... params) {
-        if (isInfoEnabled())
+        if (isInfoEnabled()) {
             log(LogLevel.INFO, e, message, params);
+        }
     }
 
     @Override
     public void warn(String message) {
-        if (isWarnEnabled())
+        if (isWarnEnabled()) {
             log(LogLevel.WARN, null, message);
+        }
     }
 
     @Override
     public void warn(Supplier<String> supplier) {
-        if (isWarnEnabled())
+        if (isWarnEnabled()) {
             log(LogLevel.WARN, null, supplier.get());
+        }
     }
 
     @Override
     public void warn(String message, Object... params) {
-        if (isWarnEnabled())
+        if (isWarnEnabled()) {
             log(LogLevel.WARN, null, message, params);
+        }
     }
 
     @Override
     public void warn(String message, Throwable e) {
-        if (isWarnEnabled())
+        if (isWarnEnabled()) {
             log(LogLevel.WARN, e, message);
+        }
     }
 
     @Override
     public void warn(Supplier<String> supplier, Throwable e) {
-        if (isWarnEnabled())
+        if (isWarnEnabled()) {
             log(LogLevel.WARN, e, supplier.get());
+        }
     }
 
     @Override
     public void warn(String message, Throwable e, Object... params) {
-        if (isWarnEnabled())
+        if (isWarnEnabled()) {
             log(LogLevel.WARN, e, message, params);
+        }
     }
 
     @Override
     public void error(String message) {
-        if (isErrorEnabled())
+        if (isErrorEnabled()) {
             log(LogLevel.ERROR, null, message);
+        }
     }
 
     @Override
     public void error(Supplier<String> supplier) {
-        if (isErrorEnabled())
+        if (isErrorEnabled()) {
             log(LogLevel.ERROR, null, supplier.get());
+        }
     }
 
     @Override
@@ -226,56 +239,65 @@ public class SystemOutLogger implements Logger {
 
     @Override
     public void error(String message, Throwable e) {
-        if (isErrorEnabled())
+        if (isErrorEnabled()) {
             log(LogLevel.ERROR, e, message);
+        }
     }
 
     @Override
     public void error(Supplier<String> supplier, Throwable e) {
-        if (isErrorEnabled())
+        if (isErrorEnabled()) {
             log(LogLevel.ERROR, e, supplier.get());
+        }
     }
 
     @Override
     public void error(String message, Throwable e, Object... params) {
-        if (isErrorEnabled())
+        if (isErrorEnabled()) {
             log(LogLevel.ERROR, e, message, params);
+        }
     }
 
     @Override
     public void fatal(String message) {
-        if (isFatalEnabled())
+        if (isFatalEnabled()) {
             log(LogLevel.FATAL, null, message);
+        }
     }
 
     @Override
     public void fatal(Supplier<String> supplier) {
-        if (isFatalEnabled())
+        if (isFatalEnabled()) {
             log(LogLevel.FATAL, null, supplier.get());
+        }
     }
 
     @Override
     public void fatal(String message, Object... params) {
-        if (isFatalEnabled())
+        if (isFatalEnabled()) {
             log(LogLevel.FATAL, null, message, params);
+        }
     }
 
     @Override
     public void fatal(String message, Throwable e) {
-        if (isFatalEnabled())
+        if (isFatalEnabled()) {
             log(LogLevel.FATAL, e, message);
+        }
     }
 
     @Override
     public void fatal(Supplier<String> supplier, Throwable e) {
-        if (isFatalEnabled())
+        if (isFatalEnabled()) {
             log(LogLevel.FATAL, e, supplier.get());
+        }
     }
 
     @Override
     public void fatal(String message, Throwable e, Object... params) {
-        if (isFatalEnabled())
+        if (isFatalEnabled()) {
             log(LogLevel.FATAL, e, message, params);
+        }
     }
 
     public void log(LogLevel level, Throwable ex, String message, Object... params) {
@@ -292,46 +314,7 @@ public class SystemOutLogger implements Logger {
         }
 
         var threadName = Thread.currentThread().getName();
-        var logger = new StringBuilder();
-        logger.append("\33[98;1m").append(DateTimeHelper.nowStr()).append("\033[0m ");
-        switch (level) {
-            case FATAL:
-                logger.append("\33[30;1m").append(level).append("\033[0m ")
-                        .append("[\33[93;1m").append(threadName).append("\033[0m] ")
-                        .append("\33[98;4m").append(cname).append(".").append(method)
-                        .append("()\033[0m : \33[39;1m");
-                break;
-            case ERROR:
-                logger.append("\33[31;1m").append(level).append("\033[0m ")
-                        .append("[\33[93;1m").append(threadName).append("\033[0m] ")
-                        .append("\33[91;4m").append(cname).append(".").append(method)
-                        .append("()\033[0m : \33[39;1m");
-                break;
-            case WARN:
-                logger.append("\33[32;1m").append(level).append(" \033[0m ")
-                        .append("[\33[93;1m").append(threadName).append("\033[0m] ")
-                        .append("\33[92;4m").append(cname).append(".").append(method)
-                        .append("()\033[0m : \33[39;1m");
-                break;
-            case INFO:
-                logger.append("\33[36;1m").append(level).append(" \033[0m ")
-                        .append("[\33[93;1m").append(threadName).append("\033[0m] ")
-                        .append("\33[96;4m").append(cname).append(".").append(method)
-                        .append("()\033[0m : \33[39;1m");
-                break;
-            case DEBUG:
-                logger.append("\33[34;1m").append(level).append("\033[0m ")
-                        .append("[\33[93;1m").append(threadName).append("\033[0m] ")
-                        .append("\33[94;4m").append(cname).append(".").append(method)
-                        .append("()\033[0m : \33[39;1m");
-                break;
-            case TRACE:
-                logger.append("\33[35;1m").append(level).append("\033[0m ")
-                        .append("[\33[93;1m").append(threadName).append("\033[0m] ")
-                        .append("\33[95;4m").append(cname).append(".").append(method)
-                        .append("()\033[0m : \33[39;1m");
-                break;
-        }
+        var logger = MessageHelper.buildMessage(level.name(), threadName, cname, method);
         var newMessage = MessageHelper.format(message, params) + "\033[0m";
         logger.append(newMessage);
 

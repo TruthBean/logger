@@ -1,5 +1,6 @@
 package com.truthbean.logger.boot.log4j2;
 
+import com.truthbean.logger.LogLevel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ public class Log4j2Test {
 
     @Test
     void testJdk() {
+        // -Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager
         java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Log4j2Test.class.getName());
         logger.info("jul");
     }
@@ -30,6 +32,6 @@ public class Log4j2Test {
         logger.info("truthbean");
     }
 
-    private static final com.truthbean.Logger logger = com.truthbean.logger.LoggerFactory.getLogger(Log4j2Test.class);
+    private static final com.truthbean.Logger logger = com.truthbean.logger.LoggerFactory.getLogger(LogLevel.TRACE, Log4j2Test.class);
 
 }

@@ -9,6 +9,7 @@
  */
 package com.truthbean.logger.log4j2;
 
+import com.truthbean.logger.LogLevel;
 import com.truthbean.logger.util.MessageHelper;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
@@ -28,6 +29,13 @@ class Log4j2LoggerImpl implements com.truthbean.Logger {
     private final Logger logger;
     Log4j2LoggerImpl(Logger logger) {
         this.logger = logger;
+    }
+
+    @Override
+    public boolean isLoggable(LogLevel level) {
+        var bool = getLevel().compareTo(level) >= 0;
+        var optional = Log4j2Impl.toLevel(level);
+        return optional.map(value -> bool && this.logger.isEnabled(value, marker)).orElse(bool);
     }
 
     @Override

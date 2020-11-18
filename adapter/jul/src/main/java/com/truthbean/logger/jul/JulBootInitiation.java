@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 public class JulBootInitiation implements LoggerInitiation {
     @Override
     public void init() {
-        var config = LoggerFactory.config();
+        var config = LoggerFactory.getConfig().getLoggers();
         config.forEach(this::setLogLevel);
     }
 
@@ -51,6 +51,9 @@ public class JulBootInitiation implements LoggerInitiation {
                     break;
                 case TRACE:
                     level = JulLevel.TRACE;
+                    break;
+                default:
+                    level = JulLevel.SEVERE;
                     break;
             }
             logger.setLevel(level);

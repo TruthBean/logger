@@ -11,6 +11,7 @@ package com.truthbean.logger;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author TruthBean/Rogar·Q
@@ -23,7 +24,7 @@ public interface LoggerConfig {
         return new HashMap<>();
     }
 
-    default LogLevel getLevel(String name) {
-        return LogLevel.TRACE;
+    default Optional<LogLevel> getLevel(String name) {
+        return Optional.empty();
     }
 }

@@ -10,8 +10,10 @@
 package com.truthbean.logger.slf4j;
 
 import com.truthbean.Logger;
+import com.truthbean.logger.LogLevel;
 import org.slf4j.spi.LocationAwareLogger;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -33,8 +35,29 @@ class Slf4jLocationAwareLoggerImpl implements Logger {
     }
 
     @Override
+    public boolean isLoggable(LogLevel level) {
+        var bool = getLevel().compareTo(level) >= 0;
+        switch (level) {
+            case FATAL:
+                return bool;
+            case ERROR:
+                return isErrorEnabled();
+            case WARN:
+                return this.isWarnEnabled();
+            case INFO:
+                return this.isInfoEnabled();
+            case DEBUG:
+                return this.isDebugEnabled();
+            case TRACE:
+                return this.isTraceEnabled();
+            default:
+                return false;
+        }
+    }
+
+    @Override
     public boolean isTraceEnabled() {
-        return this.log.isTraceEnabled(Slf4jImpl.MARKER);
+        return getLevel().compareTo(LogLevel.TRACE) >= 0 && this.log.isTraceEnabled(Slf4jImpl.MARKER);
     }
 
     @Override
@@ -81,7 +104,7 @@ class Slf4jLocationAwareLoggerImpl implements Logger {
 
     @Override
     public boolean isDebugEnabled() {
-        return this.log.isDebugEnabled(Slf4jImpl.MARKER);
+        return getLevel().compareTo(LogLevel.DEBUG) >= 0 && this.log.isDebugEnabled(Slf4jImpl.MARKER);
     }
 
     @Override
@@ -128,7 +151,7 @@ class Slf4jLocationAwareLoggerImpl implements Logger {
 
     @Override
     public boolean isInfoEnabled() {
-        return this.log.isInfoEnabled(Slf4jImpl.MARKER);
+        return getLevel().compareTo(LogLevel.INFO) >= 0 && this.log.isInfoEnabled(Slf4jImpl.MARKER);
     }
 
     @Override
@@ -175,7 +198,7 @@ class Slf4jLocationAwareLoggerImpl implements Logger {
 
     @Override
     public boolean isWarnEnabled() {
-        return this.log.isWarnEnabled(Slf4jImpl.MARKER);
+        return getLevel().compareTo(LogLevel.WARN) >= 0 && this.log.isWarnEnabled(Slf4jImpl.MARKER);
     }
 
     @Override
@@ -222,7 +245,7 @@ class Slf4jLocationAwareLoggerImpl implements Logger {
 
     @Override
     public boolean isErrorEnabled() {
-        return this.log.isErrorEnabled(Slf4jImpl.MARKER);
+        return getLevel().compareTo(LogLevel.ERROR) >= 0 && this.log.isErrorEnabled(Slf4jImpl.MARKER);
     }
 
     @Override

@@ -30,9 +30,9 @@ public class JulLevel extends Level {
         super(name, value, resourceBundleName);
     }
 
-    private static final String defaultBundle = "sun.util.logging.resources.logging";
+    private static final String DEFAULT_BUNDLE = "sun.util.logging.resources.logging";
 
-    public static final Level FATAL = new JulLevel("FATAL", 1100, defaultBundle);
-    public static final Level DEBUG = new JulLevel("DEBUG", 600, defaultBundle);
-    public static final Level TRACE = new JulLevel("TRACE", 500, defaultBundle);
+    public static final Level FATAL = new JulLevel("FATAL", 1100, DEFAULT_BUNDLE);
+    public static final Level DEBUG = new JulLevel("DEBUG", 600, DEFAULT_BUNDLE);
+    public static final Level TRACE = new JulLevel("TRACE", 500, DEFAULT_BUNDLE);
 }

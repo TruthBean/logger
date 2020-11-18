@@ -11,6 +11,7 @@ package com.truthbean.logger;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -45,7 +46,7 @@ public class DefaultLoggerConfig implements LoggerConfig {
     }
 
     @Override
-    public LogLevel getLevel(String name) {
+    public Optional<LogLevel> getLevel(String name) {
         if (levelMap.isEmpty()) {
             getLoggers();
         }
@@ -54,7 +55,7 @@ public class DefaultLoggerConfig implements LoggerConfig {
                 var key = entry.getKey();
                 var level = entry.getValue();
                 if (key.equals(name)) {
-                    return level;
+                    return Optional.of(level);
                 }
             }
             LogLevel result = null;
@@ -68,9 +69,9 @@ public class DefaultLoggerConfig implements LoggerConfig {
             }
             if (result != null) {
                 levelMap.put(name, result);
-                return result;
+                return Optional.of(result);
             }
         }
-        return LogLevel.TRACE;
+        return Optional.empty();
     }
 }

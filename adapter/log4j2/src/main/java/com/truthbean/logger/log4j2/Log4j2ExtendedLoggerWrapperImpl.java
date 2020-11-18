@@ -41,9 +41,17 @@ class Log4j2ExtendedLoggerWrapperImpl implements Logger {
 
     @Override
     public LogLevel getLevel() {
-        if (this.level == null)
+        if (this.level == null) {
             return LogLevel.ERROR;
+        }
         return this.level;
+    }
+
+    @Override
+    public boolean isLoggable(LogLevel level) {
+        var bool = getLevel().compareTo(level) >= 0;
+        var optional = Log4j2Impl.toLevel(level);
+        return optional.map(value -> bool && this.logger.isEnabled(value, MARKER)).orElse(bool);
     }
 
     @Override

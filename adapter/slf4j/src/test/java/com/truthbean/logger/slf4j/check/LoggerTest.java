@@ -46,7 +46,7 @@ class LoggerTest {
     @Test
     void testTrace() {
         LOGGER.trace("trace");
-        LOGGER.trace(() -> {return "hello trace";});
+        LOGGER.trace(() -> "hello trace");
         LOGGER.trace(() -> "hello trace", new RuntimeException());
         service.trace();
     }

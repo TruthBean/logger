@@ -19,8 +19,18 @@ import org.junit.jupiter.api.Test;
  * Created on 2020-11-18 11:56
  */
 public class JdkLoggerTest {
+
+    static {
+        System.setProperty("logging.level.com.truthbean.logger.test.jdk", "TRACE");
+    }
+
     @Test
     void trace() {
+        logger.trace((String) null);
+        logger.trace("trace", (Object) null);
+        logger.trace("trace {} 1", (Object) null);
+        logger.trace("trace {} 1", (Throwable) null);
+        logger.trace("trace {} 1", null, null, null);
         logger.trace("trace");
 
         var logger = java.lang.System.getLogger(JdkLoggerTest.class.getName());

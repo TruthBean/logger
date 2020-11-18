@@ -10,6 +10,7 @@
 package com.truthbean.logger.jdk;
 
 import com.truthbean.logger.LogLevel;
+import com.truthbean.logger.LoggerFactory;
 import com.truthbean.logger.internal.SystemOutLogger;
 import com.truthbean.logger.util.MessageHelper;
 
@@ -36,6 +37,11 @@ public class JdkSystemLogger extends SystemOutLogger implements System.Logger {
     }
 
     private LogLevel getDefaultLevel() {
+        var config = LoggerFactory.getConfig();
+        var level = config.getLevel(name);
+        if (level.isPresent()) {
+            return level.get();
+        }
         String levelName = System.getProperty("jdk.system.logger.level", "INFO");
         try {
             return LogLevel.valueOf(levelName);
@@ -56,8 +62,9 @@ public class JdkSystemLogger extends SystemOutLogger implements System.Logger {
                 return LogLevel.DEBUG;
             case TRACE:
                 return LogLevel.TRACE;
+            default:
+                return LogLevel.FATAL;
         }
-        return LogLevel.FATAL;
     }
 
     private Level ofLevel(LogLevel level) {
@@ -72,8 +79,9 @@ public class JdkSystemLogger extends SystemOutLogger implements System.Logger {
                 return Level.DEBUG;
             case TRACE:
                 return Level.TRACE;
+            default:
+                return Level.OFF;
         }
-        return Level.OFF;
     }
 
     @Override
@@ -88,49 +96,57 @@ public class JdkSystemLogger extends SystemOutLogger implements System.Logger {
 
     @Override
     public void log(Level level, String msg) {
-        if (isLoggable(level))
+        if (isLoggable(level)) {
             super.log(toLevel(level), null, msg);
+        }
     }
 
     @Override
     public void log(Level level, Supplier<String> msgSupplier) {
-        if (isLoggable(level))
+        if (isLoggable(level)) {
             super.log(toLevel(level), null, msgSupplier.get());
+        }
     }
 
     @Override
     public void log(Level level, Object obj) {
-        if (isLoggable(level))
+        if (isLoggable(level)) {
             super.log(toLevel(level), null, MessageHelper.toString(obj));
+        }
     }
 
     @Override
     public void log(Level level, String msg, Throwable thrown) {
-        if (isLoggable(level))
+        if (isLoggable(level)) {
             super.log(toLevel(level), thrown, msg);
+        }
     }
 
     @Override
     public void log(Level level, Supplier<String> msgSupplier, Throwable thrown) {
-        if (isLoggable(level))
+        if (isLoggable(level)) {
             super.log(toLevel(level), thrown, msgSupplier.get());
+        }
     }
 
     @Override
     public void log(Level level, String format, Object... params) {
-        if (isLoggable(level))
+        if (isLoggable(level)) {
             super.log(toLevel(level), null, format, params);
+        }
     }
 
     @Override
     public void log(Level level, ResourceBundle bundle, String msg, Throwable thrown) {
-        if (isLoggable(level))
+        if (isLoggable(level)) {
             super.log(toLevel(level), thrown, msg);
+        }
     }
 
     @Override
     public void log(Level level, ResourceBundle bundle, String format, Object... params) {
-        if (isLoggable(level))
+        if (isLoggable(level)) {
             super.log(toLevel(level), null, format, params);
+        }
     }
 }

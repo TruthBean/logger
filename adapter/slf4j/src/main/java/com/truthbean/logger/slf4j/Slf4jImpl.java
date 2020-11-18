@@ -73,9 +73,15 @@ public class Slf4jImpl implements Logger {
 
     @Override
     public LogLevel getLevel() {
-        if (this.level == null)
+        if (this.level == null) {
             return LogLevel.ERROR;
+        }
         return level;
+    }
+
+    @Override
+    public boolean isLoggable(LogLevel level) {
+        return getLevel().compareTo(level) >= 0 && logger.isLoggable(level);
     }
 
     @Override
@@ -85,38 +91,44 @@ public class Slf4jImpl implements Logger {
 
     @Override
     public void trace(String message) {
-        if (isTraceEnabled())
+        if (isTraceEnabled()) {
             logger.trace(message);
+        }
     }
 
     @Override
     public void trace(Supplier<String> supplier) {
-        if (isTraceEnabled())
+        if (isTraceEnabled()) {
             logger.trace(supplier);
+        }
     }
 
     @Override
     public void trace(String message, Object... params) {
-        if (isTraceEnabled())
+        if (isTraceEnabled()) {
             logger.trace(message, params);
+        }
     }
 
     @Override
     public void trace(String message, Throwable e) {
-        if (isTraceEnabled())
+        if (isTraceEnabled()) {
             logger.trace(message, e);
+        }
     }
 
     @Override
     public void trace(Supplier<String> supplier, Throwable e) {
-        if (isTraceEnabled())
+        if (isTraceEnabled()) {
             logger.trace(supplier, e);
+        }
     }
 
     @Override
     public void trace(String message, Throwable e, Object... params) {
-        if (isTraceEnabled())
+        if (isTraceEnabled()) {
             logger.trace(message, e, params);
+        }
     }
 
     @Override
@@ -126,38 +138,44 @@ public class Slf4jImpl implements Logger {
 
     @Override
     public void debug(String message) {
-        if (isDebugEnabled())
+        if (isDebugEnabled()) {
             logger.debug(message);
+        }
     }
 
     @Override
     public void debug(Supplier<String> supplier) {
-        if (isDebugEnabled())
+        if (isDebugEnabled()) {
             logger.debug(supplier);
+        }
     }
 
     @Override
     public void debug(String message, Object... params) {
-        if (isDebugEnabled())
+        if (isDebugEnabled()) {
             logger.debug(message, params);
+        }
     }
 
     @Override
     public void debug(String message, Throwable e) {
-        if (isDebugEnabled())
+        if (isDebugEnabled()) {
             logger.debug(message, e);
+        }
     }
 
     @Override
     public void debug(Supplier<String> supplier, Throwable e) {
-        if (isDebugEnabled())
+        if (isDebugEnabled()) {
             logger.debug(supplier, e);
+        }
     }
 
     @Override
     public void debug(String message, Throwable e, Object... params) {
-        if (isDebugEnabled())
+        if (isDebugEnabled()) {
             logger.debug(message, e, params);
+        }
     }
 
     @Override
@@ -167,38 +185,44 @@ public class Slf4jImpl implements Logger {
 
     @Override
     public void info(String message) {
-        if (isInfoEnabled())
+        if (isInfoEnabled()) {
             logger.info(message);
+        }
     }
 
     @Override
     public void info(Supplier<String> supplier) {
-        if (isInfoEnabled())
+        if (isInfoEnabled()) {
             logger.info(supplier);
+        }
     }
 
     @Override
     public void info(String message, Object... params) {
-        if (isInfoEnabled())
+        if (isInfoEnabled()) {
             logger.info(message, params);
+        }
     }
 
     @Override
     public void info(String message, Throwable e) {
-        if (isInfoEnabled())
+        if (isInfoEnabled()) {
             logger.info(message, e);
+        }
     }
 
     @Override
     public void info(Supplier<String> supplier, Throwable e) {
-        if (isInfoEnabled())
+        if (isInfoEnabled()) {
             logger.info(supplier, e);
+        }
     }
 
     @Override
     public void info(String message, Throwable e, Object... params) {
-        if (isInfoEnabled())
+        if (isInfoEnabled()) {
             logger.info(message, e, params);
+        }
     }
 
     @Override
@@ -208,38 +232,44 @@ public class Slf4jImpl implements Logger {
 
     @Override
     public void warn(String message) {
-        if (isWarnEnabled())
+        if (isWarnEnabled()) {
             logger.warn(message);
+        }
     }
 
     @Override
     public void warn(Supplier<String> supplier) {
-        if (isWarnEnabled())
+        if (isWarnEnabled()) {
             logger.warn(supplier);
+        }
     }
 
     @Override
     public void warn(String message, Object... params) {
-        if (isWarnEnabled())
+        if (isWarnEnabled()) {
             logger.warn(message, params);
+        }
     }
 
     @Override
     public void warn(String message, Throwable e) {
-        if (isWarnEnabled())
+        if (isWarnEnabled()) {
             logger.warn(message, e);
+        }
     }
 
     @Override
     public void warn(Supplier<String> supplier, Throwable e) {
-        if (isWarnEnabled())
+        if (isWarnEnabled()) {
             logger.warn(supplier, e);
+        }
     }
 
     @Override
     public void warn(String message, Throwable e, Object... params) {
-        if (isWarnEnabled())
+        if (isWarnEnabled()) {
             logger.warn(message, e, params);
+        }
     }
 
     @Override
@@ -249,38 +279,44 @@ public class Slf4jImpl implements Logger {
 
     @Override
     public void error(String message) {
-        if (isErrorEnabled())
+        if (isErrorEnabled()) {
             logger.error(message);
+        }
     }
 
     @Override
     public void error(Supplier<String> supplier) {
-        if (isErrorEnabled())
+        if (isErrorEnabled()) {
             logger.error(supplier);
+        }
     }
 
     @Override
     public void error(String message, Object... params) {
-        if (isErrorEnabled())
+        if (isErrorEnabled()) {
             logger.error(message, params);
+        }
     }
 
     @Override
     public void error(String message, Throwable e) {
-        if (isErrorEnabled())
+        if (isErrorEnabled()) {
             logger.error(message, e);
+        }
     }
 
     @Override
     public void error(Supplier<String> supplier, Throwable e) {
-        if (isErrorEnabled())
+        if (isErrorEnabled()) {
             logger.error(supplier, e);
+        }
     }
 
     @Override
     public void error(String message, Throwable e, Object... params) {
-        if (isErrorEnabled())
+        if (isErrorEnabled()) {
             logger.error(message, e, params);
+        }
     }
 
     @Override
@@ -290,37 +326,43 @@ public class Slf4jImpl implements Logger {
 
     @Override
     public void fatal(String message) {
-        if (isFatalEnabled())
+        if (isFatalEnabled()) {
             logger.fatal(message);
+        }
     }
 
     @Override
     public void fatal(Supplier<String> supplier) {
-        if (isFatalEnabled())
+        if (isFatalEnabled()) {
             logger.fatal(supplier);
+        }
     }
 
     @Override
     public void fatal(String message, Object... params) {
-        if (isFatalEnabled())
+        if (isFatalEnabled()) {
             logger.fatal(message, params);
+        }
     }
 
     @Override
     public void fatal(String message, Throwable e) {
-        if (isFatalEnabled())
+        if (isFatalEnabled()) {
             logger.fatal(message, e);
+        }
     }
 
     @Override
     public void fatal(Supplier<String> supplier, Throwable e) {
-        if (isFatalEnabled())
+        if (isFatalEnabled()) {
             logger.fatal(supplier, e);
+        }
     }
 
     @Override
     public void fatal(String message, Throwable e, Object... params) {
-        if (isFatalEnabled())
+        if (isFatalEnabled()) {
             logger.fatal(message, e, params);
+        }
     }
 }

@@ -11,11 +11,13 @@ package com.truthbean.logger.log4j2;
 
 import com.truthbean.Logger;
 import com.truthbean.logger.LogLevel;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.apache.logging.log4j.spi.AbstractLogger;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -72,6 +74,32 @@ public class Log4j2Impl implements Logger {
             return LogLevel.ERROR;
         }
         return level;
+    }
+
+    public static Optional<Level> toLevel(LogLevel logLevel) {
+        switch (logLevel) {
+            case FATAL:
+                return Optional.of(Level.FATAL);
+            case ERROR:
+                return Optional.of(Level.ERROR);
+            case WARN:
+                return Optional.of(Level.WARN);
+            case INFO:
+                return Optional.of(Level.INFO);
+            case DEBUG:
+                return Optional.of(Level.DEBUG);
+            case TRACE:
+                return Optional.of(Level.TRACE);
+            default:
+                return Optional.empty();
+        }
+    }
+
+    @Override
+    public boolean isLoggable(LogLevel level) {
+        var bool = getLevel().compareTo(level) >= 0;
+        var optional = toLevel(level);
+        return optional.map(value -> bool && this.originLogger.isEnabled(value)).orElse(bool);
     }
 
     @Override

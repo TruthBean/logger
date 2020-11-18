@@ -29,7 +29,7 @@ public class Slf4jBootInitiation implements LoggerInitiation {
         SLF4JBridgeHandler.removeHandlersForRootLogger();
         SLF4JBridgeHandler.install();
 
-        var config = LoggerFactory.config();
+        var config = LoggerFactory.getConfig().getLoggers();
         config.forEach(this::setLogLevel);
     }
 
@@ -40,6 +40,7 @@ public class Slf4jBootInitiation implements LoggerInitiation {
             switch (logLevel) {
                 case FATAL:
                 case ERROR:
+                default:
                     break;
                 case WARN:
                     level = Level.WARN;

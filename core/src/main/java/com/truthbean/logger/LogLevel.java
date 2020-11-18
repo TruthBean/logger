@@ -17,7 +17,35 @@ import java.util.Optional;
  * Created on 2020-11-17 14:28
  */
 public enum LogLevel {
-    FATAL, ERROR, WARN, INFO, DEBUG, TRACE;
+    /**
+     * 导致系统崩溃无法运行的错误
+     */
+    FATAL,
+
+    /**
+     * 导致数据错误或者丢失，但是系统依然能运行
+     */
+    ERROR,
+
+    /**
+     * 能容忍但是必须被记录下来的错误
+     */
+    WARN,
+
+    /**
+     * 在正常情况下需要被记录的重要信息
+     */
+    INFO,
+
+    /**
+     * 用于记录方便开发者排查错误及潜在隐患的信息
+     */
+    DEBUG,
+
+    /**
+     * 用于跟踪数据的变化
+     */
+    TRACE;
 
     public static Optional<LogLevel> of(String level) {
         var values = values();
