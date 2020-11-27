@@ -51,7 +51,8 @@ public class MessageHelper {
         return message.toString();
     }
 
-    public static StringBuilder buildMessage(String level, String threadName, String className, String methodName) {
+    public static StringBuilder buildMessage(String level, String threadName,
+                                             String className, String methodName) {
         var logger = new StringBuilder();
         logger.append("\33[98;1m").append(DateTimeHelper.nowStr()).append("\033[0m ");
         switch (level) {

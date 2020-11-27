@@ -17,7 +17,6 @@ module com.truthbean.logger.core {
     exports com.truthbean;
     exports com.truthbean.logger;
     exports com.truthbean.logger.util;
-    exports com.truthbean.logger.internal to com.truthbean.logger.stdout, com.truthbean.logger.jdk;
 
     uses com.truthbean.Logger;
     uses com.truthbean.logger.LoggerInitiation;

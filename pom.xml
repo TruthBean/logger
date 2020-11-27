@@ -11,6 +11,7 @@
         <module>core</module>
         <module>adapter</module>
         <module>boot</module>
+        <module>logger-dependence</module>
     </modules>
 
     <packaging>pom</packaging>

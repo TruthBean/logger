@@ -9,7 +9,7 @@
  */
 package com.truthbean.logger.stdout;
 
-import com.truthbean.logger.internal.SystemOutLogger;
+import com.truthbean.logger.SystemOutLogger;
 
 /**
  * @author TruthBean/Rogar·Q

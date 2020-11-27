@@ -11,7 +11,7 @@ package com.truthbean.logger.jdk;
 
 import com.truthbean.logger.LogLevel;
 import com.truthbean.logger.LoggerFactory;
-import com.truthbean.logger.internal.SystemOutLogger;
+import com.truthbean.logger.SystemOutLogger;
 import com.truthbean.logger.util.MessageHelper;
 
 import java.util.ResourceBundle;

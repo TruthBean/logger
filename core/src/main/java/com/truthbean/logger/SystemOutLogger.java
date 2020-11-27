@@ -7,10 +7,9 @@
  * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
-package com.truthbean.logger.internal;
+package com.truthbean.logger;
 
 import com.truthbean.Logger;
-import com.truthbean.logger.LogLevel;
 import com.truthbean.logger.util.MessageHelper;
 
 import java.util.function.Supplier;
@@ -309,11 +308,19 @@ public class SystemOutLogger implements Logger {
         var method = "";
         if (locations != null && locations.length > 2) {
             var caller = locations[2];
+            String moduleName = caller.getModuleName();
+            String moduleVersion = caller.getModuleVersion();
             cname = caller.getClassName();
+            if (moduleName != null && moduleVersion != null) {
+                cname = moduleName + "[" + moduleVersion + "]/" + cname;
+            } else if (moduleName != null) {
+                cname = moduleName + "/" + cname;
+            }
             method = caller.getMethodName();
         }
 
         var threadName = Thread.currentThread().getName();
+
         var logger = MessageHelper.buildMessage(level.name(), threadName, cname, method);
         var newMessage = MessageHelper.format(message, params) + "\033[0m";
         logger.append(newMessage);

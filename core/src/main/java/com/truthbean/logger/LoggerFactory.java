@@ -12,7 +12,7 @@ package com.truthbean.logger;
 import com.truthbean.Logger;
 import com.truthbean.logger.exception.NoLoggerProviderException;
 
-import java.util.Map;
+import java.util.Optional;
 import java.util.ServiceLoader;
 
 /**
@@ -22,6 +22,7 @@ import java.util.ServiceLoader;
  */
 public class LoggerFactory {
     public static final String NO_LOGGER = "com.truthbean.logger.no";
+    public static final String STD_OUT = "com.truthbean.logger.system.out";
     private static LoggerConfig config;
 
     static {
@@ -35,7 +36,10 @@ public class LoggerFactory {
             first.ifPresent(LoggerInitiation::init);
 
         } catch (Throwable e) {
-            LoggerFactory.getLogger().error("", e);
+            LoggerFactory.getLogger()
+                    .setName("com.truthbean.logger.LoggerFactory")
+                    .setLevel(LogLevel.ERROR)
+                    .error("", e);
             config = new DefaultLoggerConfig();
         }
     }
@@ -78,14 +82,26 @@ public class LoggerFactory {
     }
 
     private static Logger getLogger() {
-        var serviceLoader = ServiceLoader.load(Logger.class);
-        var first = serviceLoader.findFirst();
+        Optional<Logger> first = Optional.empty();
+        try {
+            var serviceLoader = ServiceLoader.load(Logger.class);
+            first = serviceLoader.findFirst();
+        } catch (Throwable e) {
+            new SystemOutLogger().error("load logger error.", e);
+        }
         if (first.isEmpty()) {
-            var no = System.getProperty(NO_LOGGER, "false");
-            if ("false".equalsIgnoreCase(no) || "no".equalsIgnoreCase(no)) {
-                throw new NoLoggerProviderException();
+            var out = System.getProperty(STD_OUT, "false");
+            if (!("true".equalsIgnoreCase(out) || "yes".equalsIgnoreCase(out) || "y".equalsIgnoreCase(out) || "ok".equalsIgnoreCase(out)
+                    || "是".equalsIgnoreCase(out) || "好".equalsIgnoreCase(out) || "确定".equalsIgnoreCase(out) || "陛下英明".equalsIgnoreCase(out))) {
+                var no = System.getProperty(NO_LOGGER, "false");
+                if ("false".equalsIgnoreCase(no) || "no".equalsIgnoreCase(no) || "y".equalsIgnoreCase(no)
+                        || "不".equalsIgnoreCase(no) || "滚".equalsIgnoreCase(no) || "否".equalsIgnoreCase(no) || "面对疾风吧".equalsIgnoreCase(no)) {
+                    throw new NoLoggerProviderException();
+                } else {
+                    return new NoLogger();
+                }
             } else {
-                return new NoLogger();
+                return new SystemOutLogger();
             }
         }
         return first.get();

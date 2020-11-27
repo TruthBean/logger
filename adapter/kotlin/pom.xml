@@ -16,7 +16,7 @@
     <url>http://www.truthbean.com/logger</url>
 
     <properties>
-        <kotlin.version>1.4.10</kotlin.version>
+        <kotlin.version>1.4.20</kotlin.version>
         <kotlin.compiler.jvmTarget>11</kotlin.compiler.jvmTarget>
     </properties>
 

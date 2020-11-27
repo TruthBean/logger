@@ -89,3 +89,5 @@ logger adapter
 
 ### 注意
 JDK要求最低11
+
+本框架藏有彩蛋！！请移步至core/src/main/java/com/truthbean/logger/LoggerFactory
