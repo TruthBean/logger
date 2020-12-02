@@ -3,6 +3,7 @@
 
 # Log file
 *.log
+!third/juli/src/main/resources/META-INF/services/org.apache.juli.logging.Log
 
 # BlueJ files
 *.ctxt

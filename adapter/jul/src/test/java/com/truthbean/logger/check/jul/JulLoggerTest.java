@@ -7,22 +7,51 @@
  * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
-package com.truthbean.logger.test.jdk;
+package com.truthbean.logger.check.jul;
 
 import com.truthbean.Logger;
 import com.truthbean.logger.LogLevel;
 import com.truthbean.logger.LoggerFactory;
+import com.truthbean.logger.Logging;
 import org.junit.jupiter.api.Test;
+
+import java.util.logging.Level;
 
 /**
  * @author TruthBean/Rogar·Q
- * @since 0.4.0
- * Created on 2020-11-18 11:56
+ * @since 0.0.1
+ * Created on 2020-05-08 22:32
  */
-public class JdkLoggerTest {
+public class JulLoggerTest extends Logging {
 
     static {
-        System.setProperty("logging.level.com.truthbean.logger.test.jdk", "trace");
+        System.setProperty("logging.level.com.truthbean", "TRACE");
+    }
+
+    @Test
+    void testJdk9() {
+        long start = System.nanoTime();
+        var logger = java.lang.System.getLogger(JulLoggerTest.class.getName());
+        System.out.println(logger);
+        for (int i = 0; i < 10000; i++) {
+            logger.log(System.Logger.Level.TRACE, "trace");
+            logger.log(System.Logger.Level.DEBUG, "debug");
+            logger.log(System.Logger.Level.INFO, "info");
+            logger.log(System.Logger.Level.WARNING, "warn");
+            logger.log(System.Logger.Level.ERROR, "error");
+            logger.log(System.Logger.Level.OFF, "FATAL");
+        }
+        long end = System.nanoTime();
+        System.out.println(end - start);
+        // 14_727_239_100
+    }
+
+    @Test
+    void testJdk() {
+        var logger = java.util.logging.Logger.getLogger(JulLoggerTest.class.getName());
+        logger.log(Level.INFO, "info");
+        logger.log(Level.WARNING, "warn");
+        logger.log(Level.SEVERE, "error");
     }
 
     @Test
@@ -37,7 +66,7 @@ public class JdkLoggerTest {
             logger.trace("trace");
             logger.trace(this);
 
-            var logger = java.lang.System.getLogger(JdkLoggerTest.class.getName());
+            var logger = java.lang.System.getLogger(JulLoggerTest.class.getName());
             System.out.println(logger);
             logger.log(System.Logger.Level.TRACE, "trace");
             logger.log(System.Logger.Level.DEBUG, "debug");
@@ -120,5 +149,26 @@ public class JdkLoggerTest {
         logger.fatal("msg({}),({}),特{}朗普", 1, "444", "吹牛");
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(LogLevel.INFO, JdkLoggerTest.class);
+    @Override
+    public String toString() {
+        return "888888888888888888888888";
+    }
+
+    @Test
+    void testColor() {
+        var start = System.currentTimeMillis();
+        for (int i = 0; i < 10000; i++) {
+            LOGGER.trace("color");
+            LOGGER.debug("color");
+            LOGGER.info("color");
+            LOGGER.warn("color");
+            LOGGER.error("color");
+            LOGGER.fatal("color");
+        }
+        var end = System.currentTimeMillis();
+        System.out.println(end - start);
+        // 13_229
+    }
+
+    public static final Logger LOGGER = LoggerFactory.getLogger(JulLoggerTest.class);
 }

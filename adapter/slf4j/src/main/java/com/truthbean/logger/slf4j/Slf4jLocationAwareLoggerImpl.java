@@ -10,10 +10,13 @@
 package com.truthbean.logger.slf4j;
 
 import com.truthbean.Logger;
+import com.truthbean.logger.ConfigurableLogger;
 import com.truthbean.logger.LogLevel;
+import com.truthbean.logger.LoggerFactory;
+import com.truthbean.logger.util.MessageHelper;
 import org.slf4j.spi.LocationAwareLogger;
 
-import java.util.Optional;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
@@ -21,307 +24,624 @@ import java.util.function.Supplier;
  * @since 0.0.1
  * Created on 2018-02-01 22:31.
  */
-class Slf4jLocationAwareLoggerImpl implements Logger {
+class Slf4jLocationAwareLoggerImpl implements ConfigurableLogger {
 
     private static final String CALLER_FQCN = Slf4jImpl.class.getName();
 
     private final LocationAwareLogger log;
+    
+    private LogLevel level;
+    private final String name;
 
     /**
      * @param log slf4j location aware logger
      */
-    Slf4jLocationAwareLoggerImpl(LocationAwareLogger log) {
+    Slf4jLocationAwareLoggerImpl(LocationAwareLogger log, String name) {
         this.log = log;
+        this.name = name;
+    }
+
+    @Override
+    public ConfigurableLogger setDefaultLevel(LogLevel level) {
+        this.level = level;
+        return this;
+    }
+
+    @Override
+    public LogLevel getDefaultLevel() {
+        return this.level;
+    }
+
+    @Override
+    public LogLevel getLevel() {
+        var config = LoggerFactory.getConfig();
+        var level = config.getLevel(getLoggerName());
+        return level.orElseGet(() -> Objects.requireNonNullElse(getDefaultLevel(), LogLevel.ERROR));
+    }
+
+    @Override
+    public ConfigurableLogger setClass(Class<?> tracedClass) {
+        return this;
+    }
+
+    @Override
+    public ConfigurableLogger setName(CharSequence name) {
+        return this;
+    }
+
+    @Override
+    public ConfigurableLogger setName(String name) {
+        return this;
+    }
+
+    @Override
+    public String getLoggerName() {
+        return name;
+    }
+
+    public int getLevel(LogLevel level) {
+        switch (level) {
+            case FATAL:
+                return 40;
+            case ERROR:
+                return 40;
+            case WARN:
+                return 30;
+            case INFO:
+                return 20;
+            case DEBUG:
+                return 10;
+            case TRACE:
+                return 0;
+            default:
+                return 0;
+        }
+    }
+
+    @Override
+    public Logger logger() {
+        this.level = getLevel();
+        return this;
     }
 
     @Override
     public boolean isLoggable(LogLevel level) {
-        var bool = getLevel().compareTo(level) >= 0;
+        var bool = this.level.compareTo(level) >= 0;
         switch (level) {
             case FATAL:
                 return bool;
             case ERROR:
-                return isErrorEnabled();
+                return isErrorEnabled() && bool;
             case WARN:
-                return this.isWarnEnabled();
+                return this.log.isWarnEnabled(Slf4jImpl.MARKER) && bool;
             case INFO:
-                return this.isInfoEnabled();
+                return this.log.isInfoEnabled(Slf4jImpl.MARKER) && bool;
             case DEBUG:
-                return this.isDebugEnabled();
+                return this.log.isDebugEnabled(Slf4jImpl.MARKER) && bool;
             case TRACE:
-                return this.isTraceEnabled();
+                return this.log.isTraceEnabled(Slf4jImpl.MARKER) && bool;
             default:
                 return false;
         }
     }
 
     @Override
+    public void log(LogLevel level, Object message) {
+        if (isLoggable(level)) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, getLevel(level), MessageHelper.toString(message), null, null);
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, String message) {
+        if (isLoggable(level)) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, getLevel(level), message, null, null);
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, Supplier<String> supplier) {
+        if (isLoggable(level)) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, getLevel(level), supplier.get(), null, null);
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, Object message, Object... params) {
+        if (isLoggable(level)) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, getLevel(level), MessageHelper.toString(message), params, null);
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, String message, Object... params) {
+        if (isLoggable(level)) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, getLevel(level), message, params, null);
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, Object message, Throwable e) {
+        if (isLoggable(level)) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, getLevel(level), MessageHelper.toString(message), null, e);
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, String message, Throwable e) {
+        if (isLoggable(level)) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, getLevel(level), message, null, e);
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, Supplier<String> supplier, Throwable e) {
+        if (isLoggable(level)) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, getLevel(level), supplier.get(), null, e);
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, Object message, Throwable e, Object... params) {
+        if (isLoggable(level)) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, getLevel(level), MessageHelper.toString(message), params, e);
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, String message, Throwable e, Object... params) {
+        if (isLoggable(level)) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, getLevel(level), message, params, e);
+        }
+    }
+
+    @Override
     public boolean isTraceEnabled() {
-        return getLevel().compareTo(LogLevel.TRACE) >= 0 && this.log.isTraceEnabled(Slf4jImpl.MARKER);
+        return this.level.compareTo(LogLevel.TRACE) >= 0 && this.log.isTraceEnabled(Slf4jImpl.MARKER);
+    }
+
+    @Override
+    public void trace(Object message) {
+        if (isTraceEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.TRACE_INT, MessageHelper.toString(message), null, null);
+        }
     }
 
     @Override
     public void trace(String message) {
-        if (this.log.isTraceEnabled(Slf4jImpl.MARKER)) {
+        if (this.isTraceEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.TRACE_INT, message, null, null);
         }
     }
 
     @Override
     public void trace(Supplier<String> supplier) {
-        if (this.log.isTraceEnabled(Slf4jImpl.MARKER)) {
+        if (this.isTraceEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.TRACE_INT, supplier.get(), null, null);
         }
     }
 
     @Override
+    public void trace(Object message, Object... params) {
+        if (isTraceEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.TRACE_INT, MessageHelper.toString(message), params, null);
+        }
+    }
+
+    @Override
     public void trace(String message, Object... params) {
-        if (this.log.isTraceEnabled(Slf4jImpl.MARKER)) {
+        if (this.isTraceEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.TRACE_INT, message, params, null);
         }
     }
 
     @Override
+    public void trace(Object message, Throwable e) {
+        if (isTraceEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.TRACE_INT, MessageHelper.toString(message), null, e);
+        }
+    }
+
+    @Override
     public void trace(String message, Throwable e) {
-        if (this.log.isTraceEnabled(Slf4jImpl.MARKER)) {
+        if (this.isTraceEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.TRACE_INT, message, null, e);
         }
     }
 
     @Override
     public void trace(Supplier<String> supplier, Throwable e) {
-        if (this.log.isTraceEnabled(Slf4jImpl.MARKER)) {
+        if (this.isTraceEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.TRACE_INT, supplier.get(), null, e);
         }
     }
 
     @Override
+    public void trace(Object message, Throwable e, Object... params) {
+        if (isTraceEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.TRACE_INT, MessageHelper.toString(message), params, e);
+        }
+    }
+
+    @Override
     public void trace(String message, Throwable e, Object... params) {
-        if (this.log.isTraceEnabled(Slf4jImpl.MARKER)) {
+        if (this.isTraceEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.TRACE_INT, message, params, e);
         }
     }
 
     @Override
     public boolean isDebugEnabled() {
-        return getLevel().compareTo(LogLevel.DEBUG) >= 0 && this.log.isDebugEnabled(Slf4jImpl.MARKER);
+        return this.level.compareTo(LogLevel.DEBUG) >= 0 && this.log.isDebugEnabled(Slf4jImpl.MARKER);
+    }
+
+    @Override
+    public void debug(Object message) {
+        if (isDebugEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.DEBUG_INT, MessageHelper.toString(message), null, null);
+        }
     }
 
     @Override
     public void debug(String message) {
-        if (this.log.isDebugEnabled(Slf4jImpl.MARKER)) {
+        if (isDebugEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.DEBUG_INT, message, null, null);
         }
     }
 
     @Override
     public void debug(Supplier<String> supplier) {
-        if (this.log.isDebugEnabled(Slf4jImpl.MARKER)) {
+        if (isDebugEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.DEBUG_INT, supplier.get(), null, null);
         }
     }
 
     @Override
+    public void debug(Object message, Object... params) {
+        if (isDebugEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.DEBUG_INT, MessageHelper.toString(message), params, null);
+        }
+    }
+
+    @Override
     public void debug(String message, Object... params) {
-        if (this.log.isDebugEnabled(Slf4jImpl.MARKER)) {
+        if (isDebugEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.DEBUG_INT, message, params, null);
         }
     }
 
     @Override
+    public void debug(Object message, Throwable e) {
+        if (isDebugEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.DEBUG_INT, MessageHelper.toString(message), null, e);
+        }
+    }
+
+    @Override
     public void debug(String message, Throwable e) {
-        if (this.log.isDebugEnabled(Slf4jImpl.MARKER)) {
+        if (isDebugEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.DEBUG_INT, message, null, e);
         }
     }
 
     @Override
     public void debug(Supplier<String> supplier, Throwable e) {
-        if (this.log.isDebugEnabled(Slf4jImpl.MARKER)) {
+        if (isDebugEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.DEBUG_INT, supplier.get(), null, e);
         }
     }
 
     @Override
+    public void debug(Object message, Throwable e, Object... params) {
+        if (isDebugEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.DEBUG_INT, MessageHelper.toString(message), params, e);
+        }
+    }
+
+    @Override
     public void debug(String message, Throwable e, Object... params) {
-        if (this.log.isDebugEnabled(Slf4jImpl.MARKER)) {
+        if (isDebugEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.DEBUG_INT, message, params, e);
         }
     }
 
     @Override
     public boolean isInfoEnabled() {
-        return getLevel().compareTo(LogLevel.INFO) >= 0 && this.log.isInfoEnabled(Slf4jImpl.MARKER);
+        return this.level.compareTo(LogLevel.INFO) >= 0 && this.log.isInfoEnabled(Slf4jImpl.MARKER);
+    }
+
+    @Override
+    public void info(Object message) {
+        if (isInfoEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.INFO_INT, MessageHelper.toString(message), null, null);
+        }
     }
 
     @Override
     public void info(String message) {
-        if (this.log.isInfoEnabled(Slf4jImpl.MARKER)) {
+        if (isInfoEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.INFO_INT, message, null, null);
         }
     }
 
     @Override
     public void info(Supplier<String> supplier) {
-        if (this.log.isInfoEnabled(Slf4jImpl.MARKER)) {
+        if (isInfoEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.INFO_INT, supplier.get(), null, null);
         }
     }
 
     @Override
+    public void info(Object message, Object... params) {
+        if (isInfoEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.INFO_INT, MessageHelper.toString(message), params, null);
+        }
+    }
+
+    @Override
     public void info(String message, Object... params) {
-        if (this.log.isInfoEnabled(Slf4jImpl.MARKER)) {
+        if (isInfoEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.INFO_INT, message, params, null);
         }
     }
 
     @Override
+    public void info(Object message, Throwable e) {
+        if (isInfoEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.INFO_INT, MessageHelper.toString(message), null, e);
+        }
+    }
+
+    @Override
     public void info(String message, Throwable e) {
-        if (this.log.isInfoEnabled(Slf4jImpl.MARKER)) {
+        if (isInfoEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.INFO_INT, message, null, e);
         }
     }
 
     @Override
     public void info(Supplier<String> supplier, Throwable e) {
-        if (this.log.isInfoEnabled(Slf4jImpl.MARKER)) {
+        if (isInfoEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.INFO_INT, supplier.get(), null, e);
         }
     }
 
     @Override
+    public void info(Object message, Throwable e, Object... params) {
+        if (isInfoEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.INFO_INT, MessageHelper.toString(message), params, e);
+        }
+    }
+
+    @Override
     public void info(String message, Throwable e, Object... params) {
-        if (this.log.isInfoEnabled(Slf4jImpl.MARKER)) {
+        if (isInfoEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.INFO_INT, message, params, e);
         }
     }
 
     @Override
     public boolean isWarnEnabled() {
-        return getLevel().compareTo(LogLevel.WARN) >= 0 && this.log.isWarnEnabled(Slf4jImpl.MARKER);
+        return this.level.compareTo(LogLevel.WARN) >= 0 && this.log.isWarnEnabled(Slf4jImpl.MARKER);
+    }
+
+    @Override
+    public void warn(Object message) {
+        if (isWarnEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.WARN_INT, MessageHelper.toString(message), null, null);
+        }
     }
 
     @Override
     public void warn(String message) {
-        if (this.log.isWarnEnabled(Slf4jImpl.MARKER)) {
+        if (isWarnEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.WARN_INT, message, null, null);
         }
     }
 
     @Override
     public void warn(Supplier<String> supplier) {
-        if (this.log.isWarnEnabled(Slf4jImpl.MARKER)) {
+        if (isWarnEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.WARN_INT, supplier.get(), null, null);
         }
     }
 
     @Override
+    public void warn(Object message, Object... params) {
+        if (isWarnEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.WARN_INT, MessageHelper.toString(message), params, null);
+        }
+    }
+
+    @Override
     public void warn(String message, Object... params) {
-        if (this.log.isWarnEnabled(Slf4jImpl.MARKER)) {
+        if (isWarnEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.WARN_INT, message, params, null);
         }
     }
 
     @Override
+    public void warn(Object message, Throwable e) {
+        if (isWarnEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.WARN_INT, MessageHelper.toString(message), null, e);
+        }
+    }
+
+    @Override
     public void warn(String message, Throwable e) {
-        if (this.log.isWarnEnabled(Slf4jImpl.MARKER)) {
+        if (isWarnEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.WARN_INT, message, null, e);
         }
     }
 
     @Override
     public void warn(Supplier<String> supplier, Throwable e) {
-        if (this.log.isWarnEnabled(Slf4jImpl.MARKER)) {
+        if (isWarnEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.WARN_INT, supplier.get(), null, e);
         }
     }
 
     @Override
+    public void warn(Object message, Throwable e, Object... params) {
+        if (isWarnEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.WARN_INT, MessageHelper.toString(message), params, e);
+        }
+    }
+
+    @Override
     public void warn(String message, Throwable e, Object... params) {
-        if (this.log.isWarnEnabled(Slf4jImpl.MARKER)) {
+        if (isWarnEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.WARN_INT, message, params, e);
         }
     }
 
     @Override
     public boolean isErrorEnabled() {
-        return getLevel().compareTo(LogLevel.ERROR) >= 0 && this.log.isErrorEnabled(Slf4jImpl.MARKER);
+        return this.level.compareTo(LogLevel.ERROR) >= 0 && this.log.isErrorEnabled(Slf4jImpl.MARKER);
+    }
+
+    @Override
+    public void error(Object message) {
+        if (isErrorEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, MessageHelper.toString(message), null, null);
+        }
     }
 
     @Override
     public void error(String message) {
-        if (this.log.isErrorEnabled(Slf4jImpl.MARKER)) {
+        if (isErrorEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, message, null, null);
         }
     }
 
     @Override
     public void error(Supplier<String> supplier) {
-        if (this.log.isErrorEnabled(Slf4jImpl.MARKER)) {
+        if (isErrorEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, supplier.get(), null, null);
         }
     }
 
     @Override
+    public void error(Object message, Object... params) {
+        if (isErrorEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, MessageHelper.toString(message), params, null);
+        }
+    }
+
+    @Override
     public void error(String message, Object... params) {
-        if (this.log.isErrorEnabled(Slf4jImpl.MARKER)) {
+        if (isErrorEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, message, params, null);
         }
     }
 
     @Override
+    public void error(Object message, Throwable e) {
+        if (isErrorEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, MessageHelper.toString(message), null, e);
+        }
+    }
+
+    @Override
     public void error(String message, Throwable e) {
-        if (this.log.isErrorEnabled(Slf4jImpl.MARKER)) {
+        if (isErrorEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, message, null, e);
         }
     }
 
     @Override
     public void error(Supplier<String> supplier, Throwable e) {
-        if (this.log.isErrorEnabled(Slf4jImpl.MARKER)) {
+        if (isErrorEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, supplier.get(), null, e);
         }
     }
 
     @Override
+    public void error(Object message, Throwable e, Object... params) {
+        if (isErrorEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, MessageHelper.toString(message), params, e);
+        }
+    }
+
+    @Override
     public void error(String message, Throwable e, Object... params) {
-        if (this.log.isErrorEnabled(Slf4jImpl.MARKER)) {
+        if (isErrorEnabled()) {
             this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, message, params, e);
         }
     }
 
     @Override
     public boolean isFatalEnabled() {
-        return true;
+        return this.level.compareTo(LogLevel.WARN) >= 0;
+    }
+
+    @Override
+    public void fatal(Object message) {
+        if (isFatalEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, MessageHelper.toString(message), null, null);
+        }
     }
 
     @Override
     public void fatal(String message) {
-        this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, message, null, null);
+        if (isFatalEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, message, null, null);
+        }
     }
 
     @Override
     public void fatal(Supplier<String> supplier) {
-        this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, supplier.get(), null, null);
+        if (isFatalEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, supplier.get(), null, null);
+        }
+    }
+
+    @Override
+    public void fatal(Object message, Object... params) {
+        if (isFatalEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, MessageHelper.toString(message), params, null);
+        }
     }
 
     @Override
     public void fatal(String message, Object... params) {
-        this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, message, params, null);
+        if (isFatalEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, message, params, null);
+        }
+    }
+
+    @Override
+    public void fatal(Object message, Throwable e) {
+        if (isFatalEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, MessageHelper.toString(message), null, e);
+        }
     }
 
     @Override
     public void fatal(String message, Throwable e) {
-        this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, message, null, e);
+        if (isFatalEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, message, null, e);
+        }
     }
 
     @Override
     public void fatal(Supplier<String> supplier, Throwable e) {
-        this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, supplier.get(), null, e);
+        if (isFatalEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, supplier.get(), null, e);
+        }
+    }
+
+    @Override
+    public void fatal(Object message, Throwable e, Object... params) {
+        if (isFatalEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, MessageHelper.toString(message), params, e);
+        }
     }
 
     @Override
     public void fatal(String message, Throwable e, Object... params) {
-        this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, message, params, e);
+        if (isFatalEnabled()) {
+            this.log.log(Slf4jImpl.MARKER, CALLER_FQCN, LocationAwareLogger.ERROR_INT, message, params, e);
+        }
     }
 }

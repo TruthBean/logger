@@ -10,7 +10,6 @@
 package com.truthbean;
 
 import com.truthbean.logger.LogLevel;
-import com.truthbean.logger.util.MessageHelper;
 
 import java.util.function.Supplier;
 
@@ -20,354 +19,164 @@ import java.util.function.Supplier;
  * Created on 2020-05-08 22:14
  */
 public interface Logger {
-    default Logger setClass(Class<?> tracedClass) {
-        // do nothing
-        return this;
-    }
-
-    default Logger setName(CharSequence name) {
-        // do noting
-        return setName(name.toString());
-    }
-
-    default Logger setName(String name) {
-        // do noting
-        return this;
-    }
-
-    default Logger setLevel(LogLevel level) {
-        return this;
-    }
-
-    default LogLevel getLevel() {
-        return LogLevel.TRACE;
-    }
-
-    default boolean isLoggable(LogLevel level) {
-        return getLevel().compareTo(level) >= 0;
-    }
-
-    /*default void log(LogLevel level, Object message) {
-        if (isLoggable(level)) {
-            log(level, MessageHelper.toString(message));
-        }
-    }
-
-    default void log(LogLevel level, String message) {
-    }
-
-    default void log(LogLevel level, Supplier<String> supplier) {
-        if (isLoggable(level)) {
-            log(level, supplier.get());
-        }
-    }
-
-    default void log(LogLevel level, Object message, Object... params) {
-        if (isLoggable(level)) {
-            log(level, MessageHelper.toString(message), params);
-        }
-    }
-
-    default void log(LogLevel level, String message, Object... params) {
-    }
-
-    default void log(LogLevel level, Object message, Throwable e) {
-        if (isLoggable(level)) {
-            log(level, MessageHelper.toString(message), e);
-        }
-    }
-
-    default void log(LogLevel level, String message, Throwable e) {
-    }
-
-    default void log(LogLevel level, Supplier<String> supplier, Throwable e) {
-    }
-
-    default void log(LogLevel level, Object message, Throwable e, Object... params) {
-        if (isLoggable(level)) {
-            trace(MessageHelper.toString(message), e, params);
-        }
-    }
-
-    default void log(LogLevel level, String message, Throwable e, Object... params) {
-    }*/
-
-    default boolean isTraceEnabled() {
-        return getLevel().compareTo(LogLevel.TRACE) >= 0;
-    }
-
-    default void trace(Object message) {
-        if (isTraceEnabled()) {
-            trace(MessageHelper.toString(message));
-        }
-    }
-
-    default void trace(String message) {
-    }
-
-    default void trace(Supplier<String> supplier) {
-        if (isTraceEnabled()) {
-            trace(supplier.get());
-        }
-    }
-
-    default void trace(Object message, Object... params) {
-        if (isTraceEnabled()) {
-            trace(MessageHelper.toString(message), params);
-        }
-    }
-
-    default void trace(String message, Object... params) {
-    }
-
-    default void trace(Object message, Throwable e) {
-        if (isTraceEnabled()) {
-            trace(MessageHelper.toString(message), e);
-        }
-    }
-
-    default void trace(String message, Throwable e) {
-    }
-
-    default void trace(Supplier<String> supplier, Throwable e) {
-    }
-
-    default void trace(Object message, Throwable e, Object... params) {
-        if (isTraceEnabled()) {
-            trace(MessageHelper.toString(message), e, params);
-        }
-    }
-
-    default void trace(String message, Throwable e, Object... params) {
-    }
-
-    default boolean isDebugEnabled() {
-        return getLevel().compareTo(LogLevel.DEBUG) >= 0;
-    }
-
-    default void debug(Object message) {
-        if (isDebugEnabled()) {
-            debug(MessageHelper.toString(message));
-        }
-    }
-
-    default void debug(String message) {
-    }
-
-    default void debug(Supplier<String> supplier) {
-    }
-
-    default void debug(Object message, Object... params) {
-        if (isDebugEnabled()) {
-            debug(MessageHelper.toString(message), params);
-        }
-    }
-
-    default void debug(String message, Object... params) {
-    }
-
-    default void debug(Object message, Throwable e) {
-        if (isDebugEnabled()) {
-            debug(MessageHelper.toString(message), e);
-        }
-    }
-
-    default void debug(String message, Throwable e) {
-    }
-
-    default void debug(Supplier<String> supplier, Throwable e) {
-    }
-
-    default void debug(Object message, Throwable e, Object... params) {
-        if (isDebugEnabled()) {
-            debug(MessageHelper.toString(message), e, params);
-        }
-    }
-
-    default void debug(String message, Throwable e, Object... params) {
-    }
-
-    default boolean isInfoEnabled() {
-        return getLevel().compareTo(LogLevel.INFO) >= 0;
-    }
-
-    default void info(Object message) {
-        if (isInfoEnabled()) {
-            info(MessageHelper.toString(message));
-        }
-    }
-
-    default void info(String message) {
-    }
-
-    default void info(Supplier<String> supplier) {
-    }
-
-    default void info(Object message, Object... params) {
-        if (isInfoEnabled()) {
-            info(MessageHelper.toString(message), params);
-        }
-    }
-
-    default void info(String message, Object... params) {
-    }
-
-    default void info(Object message, Throwable e) {
-        if (isInfoEnabled()) {
-            info(MessageHelper.toString(message), e);
-        }
-    }
-
-    default void info(String message, Throwable e) {
-    }
-
-    default void info(Supplier<String> supplier, Throwable e) {
-    }
-
-    default void info(Object message, Throwable e, Object... params) {
-        if (isInfoEnabled()) {
-            info(MessageHelper.toString(message), e, params);
-        }
-    }
-
-    default void info(String message, Throwable e, Object... params) {
-    }
-
-    default boolean isWarnEnabled() {
-        return getLevel().compareTo(LogLevel.WARN) >= 0;
-    }
-
-    default void warn(Object message) {
-        if (isWarnEnabled()) {
-            warn(MessageHelper.toString(message));
-        }
-    }
-
-    default void warn(String message) {
-    }
-
-    default void warn(Supplier<String> supplier) {
-    }
-
-    default void warn(Object message, Object... params) {
-        if (isWarnEnabled()) {
-            warn(MessageHelper.toString(message), params);
-        }
-    }
-
-    default void warn(String message, Object... params) {
-    }
-
-    default void warn(Object message, Throwable e) {
-        if (isWarnEnabled()) {
-            warn(MessageHelper.toString(message), e);
-        }
-    }
-
-    default void warn(String message, Throwable e) {
-    }
-
-    default void warn(Supplier<String> supplier, Throwable e) {
-    }
-
-    default void warn(Object message, Throwable e, Object... params) {
-        if (isWarnEnabled()) {
-            warn(MessageHelper.toString(message), e, params);
-        }
-    }
-
-    default void warn(String message, Throwable e, Object... params) {
-    }
-
-    default boolean isErrorEnabled() {
-        return getLevel().compareTo(LogLevel.ERROR) >= 0;
-    }
-
-    default void error(Object message) {
-        if (isErrorEnabled()) {
-            error(MessageHelper.toString(message));
-        }
-    }
-
-    default void error(String message) {
-    }
-
-    default void error(Supplier<String> supplier) {
-    }
-
-    default void error(Object message, Object... params) {
-        if (isErrorEnabled()) {
-            error(MessageHelper.toString(message), params);
-        }
-    }
-
-    default void error(String message, Object... params) {
-    }
-
-    default void error(Object message, Throwable e) {
-        if (isErrorEnabled()) {
-            error(MessageHelper.toString(message), e);
-        }
-    }
-
-    default void error(String message, Throwable e) {
-    }
-
-    default void error(Supplier<String> supplier, Throwable e) {
-    }
-
-    default void error(Object message, Throwable e, Object... params) {
-        if (isErrorEnabled()) {
-            error(MessageHelper.toString(message), e, params);
-        }
-    }
-
-    default void error(String message, Throwable e, Object... params) {
-    }
-
-    default boolean isFatalEnabled() {
-        return getLevel().compareTo(LogLevel.FATAL) >= 0;
-    }
-
-    default void fatal(Object message) {
-        if (isFatalEnabled()) {
-            fatal(MessageHelper.toString(message));
-        }
-    }
-
-    default void fatal(String message) {
-    }
-
-    default void fatal(Supplier<String> supplier) {
-    }
-
-    default void fatal(Object message, Object... params) {
-        if (isFatalEnabled()) {
-            fatal(MessageHelper.toString(message), params);
-        }
-    }
-
-    default void fatal(String message, Object... params) {
-    }
-
-    default void fatal(Object message, Throwable e) {
-        if (isFatalEnabled()) {
-            fatal(MessageHelper.toString(message), e);
-        }
-    }
-
-    default void fatal(String message, Throwable e) {
-    }
-
-    default void fatal(Supplier<String> supplier, Throwable e) {
-    }
-
-    default void fatal(Object message, Throwable e, Object... params) {
-        if (isFatalEnabled()) {
-            fatal(MessageHelper.toString(message), e, params);
-        }
-    }
-
-    default void fatal(String message, Throwable e, Object... params) {
-    }
+
+    boolean isLoggable(LogLevel level);
+
+    void log(LogLevel level, Object message);
+
+    void log(LogLevel level, String message);
+
+    void log(LogLevel level, Supplier<String> supplier);
+
+    void log(LogLevel level, Object message, Object... params);
+
+    void log(LogLevel level, String message, Object... params);
+
+    void log(LogLevel level, Object message, Throwable e);
+
+    void log(LogLevel level, String message, Throwable e);
+
+    void log(LogLevel level, Supplier<String> supplier, Throwable e);
+
+    void log(LogLevel level, Object message, Throwable e, Object... params);
+
+    void log(LogLevel level, String message, Throwable e, Object... params);
+
+
+    boolean isTraceEnabled();
+
+    void trace(Object message);
+
+    void trace(String message);
+
+    void trace(Supplier<String> supplier);
+
+    void trace(Object message, Object... params);
+
+    void trace(String message, Object... params);
+
+    void trace(Object message, Throwable e);
+
+    void trace(String message, Throwable e);
+
+    void trace(Supplier<String> supplier, Throwable e);
+
+    void trace(Object message, Throwable e, Object... params);
+
+    void trace(String message, Throwable e, Object... params);
+
+
+    boolean isDebugEnabled();
+
+    void debug(Object message);
+
+    void debug(String message);
+
+    void debug(Supplier<String> supplier);
+
+    void debug(Object message, Object... params);
+
+    void debug(String message, Object... params);
+
+    void debug(Object message, Throwable e);
+
+    void debug(String message, Throwable e);
+
+    void debug(Supplier<String> supplier, Throwable e);
+
+    void debug(Object message, Throwable e, Object... params);
+
+    void debug(String message, Throwable e, Object... params);
+
+
+    boolean isInfoEnabled();
+
+    void info(Object message);
+
+    void info(String message);
+
+    void info(Supplier<String> supplier);
+
+    void info(Object message, Object... params);
+
+    void info(String message, Object... params);
+
+    void info(Object message, Throwable e);
+
+    void info(String message, Throwable e);
+
+    void info(Supplier<String> supplier, Throwable e);
+
+    void info(Object message, Throwable e, Object... params);
+
+    void info(String message, Throwable e, Object... params);
+
+
+    boolean isWarnEnabled();
+
+    void warn(Object message);
+
+    void warn(String message);
+
+    void warn(Supplier<String> supplier);
+
+    void warn(Object message, Object... params);
+
+    void warn(String message, Object... params);
+
+    void warn(Object message, Throwable e);
+
+    void warn(String message, Throwable e);
+
+    void warn(Supplier<String> supplier, Throwable e);
+
+    void warn(Object message, Throwable e, Object... params);
+
+    void warn(String message, Throwable e, Object... params);
+
+
+    boolean isErrorEnabled();
+
+    void error(Object message);
+
+    void error(String message);
+
+    void error(Supplier<String> supplier);
+
+    void error(Object message, Object... params);
+
+    void error(String message, Object... params);
+
+    void error(Object message, Throwable e);
+
+    void error(String message, Throwable e);
+
+    void error(Supplier<String> supplier, Throwable e);
+
+    void error(Object message, Throwable e, Object... params);
+
+    void error(String message, Throwable e, Object... params);
+
+
+    boolean isFatalEnabled();
+
+    void fatal(Object message);
+
+    void fatal(String message);
+
+    void fatal(Supplier<String> supplier);
+
+    void fatal(Object message, Object... params);
+
+    void fatal(String message, Object... params);
+
+    void fatal(Object message, Throwable e);
+
+    void fatal(String message, Throwable e);
+
+    void fatal(Supplier<String> supplier, Throwable e);
+
+    void fatal(Object message, Throwable e, Object... params);
+
+    void fatal(String message, Throwable e, Object... params);
 }

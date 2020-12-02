@@ -36,10 +36,17 @@ public class LoggerFactory {
             first.ifPresent(LoggerInitiation::init);
 
         } catch (Throwable e) {
-            LoggerFactory.getLogger()
-                    .setName("com.truthbean.logger.LoggerFactory")
-                    .setLevel(LogLevel.ERROR)
-                    .error("", e);
+            var logger = getLogger();
+            if (ConfigurableLogger.class.isAssignableFrom(logger.getClass())) {
+                ((ConfigurableLogger) logger)
+                        .setName("com.truthbean.logger.LoggerFactory")
+                        .setDefaultLevel(LogLevel.ERROR)
+                        .logger()
+                        .error("", e);
+            } else {
+                logger.error("", e);
+            }
+
             config = new DefaultLoggerConfig();
         }
     }
@@ -51,10 +58,15 @@ public class LoggerFactory {
         return config;
     }
 
-    public static Logger getLogger(LogLevel level, Class<?> clazz) {
+    public static Logger getLogger(LogLevel defaultLevel, Class<?> clazz) {
         var logger = getLogger();
         if (logger.getClass() != NoLogger.class) {
-            logger.setClass(clazz).setLevel(level);
+            if (ConfigurableLogger.class.isAssignableFrom(logger.getClass())) {
+                return ((ConfigurableLogger) logger)
+                        .setClass(clazz)
+                        .setDefaultLevel(defaultLevel)
+                        .logger();
+            }
         }
         return logger;
     }
@@ -62,23 +74,49 @@ public class LoggerFactory {
     public static Logger getLogger(Class<?> clazz) {
         var logger = getLogger();
         if (logger.getClass() != NoLogger.class) {
-            var level = config.getLevel(clazz.getName());
-            logger.setClass(clazz).setLevel(level.orElse(LogLevel.ERROR));
+            if (ConfigurableLogger.class.isAssignableFrom(logger.getClass())) {
+                return ((ConfigurableLogger) logger)
+                        .setClass(clazz)
+                        .setDefaultLevel(LogLevel.ERROR)
+                        .logger();
+            }
         }
         return logger;
     }
 
-    public static Logger getLogger(LogLevel level, String loggerName) {
-        return getLogger().setName(loggerName).setLevel(level);
+    public static Logger getLogger(LogLevel defaultLevel, String loggerName) {
+        var logger = getLogger();
+        if (logger.getClass() != NoLogger.class) {
+            if (ConfigurableLogger.class.isAssignableFrom(logger.getClass())) {
+                return ((ConfigurableLogger) logger)
+                        .setName(loggerName)
+                        .setDefaultLevel(defaultLevel)
+                        .logger();
+            }
+        }
+        return logger;
     }
 
     public static Logger getLogger(String loggerName) {
         var logger = getLogger();
         if (logger.getClass() != NoLogger.class) {
-            var level = config.getLevel(loggerName);
-            logger.setName(loggerName).setLevel(level.orElse(LogLevel.ERROR));
+            if (ConfigurableLogger.class.isAssignableFrom(logger.getClass())) {
+                return ((ConfigurableLogger) logger)
+                        .setName(loggerName)
+                        .setDefaultLevel(LogLevel.ERROR)
+                        .logger();
+            }
         }
         return logger;
+    }
+
+    private static Optional<ConfigurableLogger> getBaseLogger() {
+        var logger = getLogger();
+        if (ConfigurableLogger.class.isAssignableFrom(logger.getClass())) {
+            return Optional.of((ConfigurableLogger) logger);
+        } else {
+            return Optional.empty();
+        }
     }
 
     private static Logger getLogger() {

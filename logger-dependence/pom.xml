@@ -167,6 +167,12 @@
                 <artifactId>jul-to-slf4j</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.truthbean.logger</groupId>
+                <artifactId>juli-impl</artifactId>
+                <version>${logger.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

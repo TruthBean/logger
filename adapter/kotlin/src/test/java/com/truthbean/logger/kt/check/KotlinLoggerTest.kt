@@ -18,8 +18,11 @@ import org.junit.jupiter.api.Test
  * @since 0.0.1
  * Created on 2020-05-08 22:32
  */
-class LoggerTest {
-    private val logger = LoggerFactory().getLogger<LoggerTest>()
+class KotlinLoggerTest {
+    init {
+        System.setProperty("logging.level.com.truthbean.logger.kt.check", "TRACE")
+    }
+    private val logger = LoggerFactory().getLogger<KotlinLoggerTest>()
     private val service = TestService(logger)
 
     @Test

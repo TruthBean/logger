@@ -6,24 +6,24 @@ import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.slf4j.LoggerFactory;
 
-public class Log4j2Test {
+public class Log4j2BootTest {
 
     @Test
     void testLog4j2() {
-        Logger logger = LogManager.getLogger(Log4j2Test.class);
+        Logger logger = LogManager.getLogger(Log4j2BootTest.class);
         logger.info("log4j2....");
     }
 
     @Test
     void testJdk() {
         // -Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager
-        java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Log4j2Test.class.getName());
+        java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Log4j2BootTest.class.getName());
         logger.info("jul");
     }
 
     @Test
     void testSlf4j() {
-        org.slf4j.Logger logger = LoggerFactory.getLogger(Log4j2Test.class);
+        org.slf4j.Logger logger = LoggerFactory.getLogger(Log4j2BootTest.class);
         logger.info("slf4j");
     }
 
@@ -32,6 +32,6 @@ public class Log4j2Test {
         logger.info("truthbean");
     }
 
-    private static final com.truthbean.Logger logger = com.truthbean.logger.LoggerFactory.getLogger(LogLevel.TRACE, Log4j2Test.class);
+    private static final com.truthbean.Logger logger = com.truthbean.logger.LoggerFactory.getLogger(LogLevel.TRACE, Log4j2BootTest.class);
 
 }

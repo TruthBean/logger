@@ -7,81 +7,44 @@
  * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
-package com.truthbean.logger;
+package com.truthbean.debbie.core.test;
 
 import com.truthbean.Logger;
+import com.truthbean.logger.LogLevel;
+import com.truthbean.logger.NoLogger;
+import com.truthbean.logger.util.MessageHelper;
 
 import java.util.function.Supplier;
 
 /**
  * @author TruthBean/Rogar·Q
- * @since 0.3.0
- * Created on 2020-10-23 12:14
+ * @since 0.4.0
+ * Created on 2020-12-01 10:57
  */
-public class NoLogger implements Logger {
+public class TestLogger extends NoLogger {
     @Override
     public boolean isLoggable(LogLevel level) {
         return false;
     }
 
     @Override
-    public void log(LogLevel level, Object message) {
-
-    }
-
-    @Override
     public void log(LogLevel level, String message) {
-
-    }
-
-    @Override
-    public void log(LogLevel level, Supplier<String> supplier) {
-
-    }
-
-    @Override
-    public void log(LogLevel level, Object message, Object... params) {
-
-    }
-
-    @Override
-    public void log(LogLevel level, String message, Object... params) {
-
-    }
-
-    @Override
-    public void log(LogLevel level, Object message, Throwable e) {
-
+        System.out.println("level: " + level);
+        System.out.println("message: " + message);
     }
 
     @Override
     public void log(LogLevel level, String message, Throwable e) {
-
-    }
-
-    @Override
-    public void log(LogLevel level, Supplier<String> supplier, Throwable e) {
-
-    }
-
-    @Override
-    public void log(LogLevel level, Object message, Throwable e, Object... params) {
-
+        System.out.println("level: " + level);
+        System.out.println("message: " + message);
+        System.out.println(e.getMessage());
     }
 
     @Override
     public void log(LogLevel level, String message, Throwable e, Object... params) {
-
-    }
-
-    @Override
-    public boolean isTraceEnabled() {
-        return false;
-    }
-
-    @Override
-    public void trace(Object message) {
-
+        System.out.println("level: " + level);
+        System.out.println("message: " + MessageHelper.format(message, params));
+        System.out.println(e.getMessage());
     }
 
     @Override
@@ -90,22 +53,7 @@ public class NoLogger implements Logger {
     }
 
     @Override
-    public void trace(Supplier<String> supplier) {
-
-    }
-
-    @Override
-    public void trace(Object message, Object... params) {
-
-    }
-
-    @Override
     public void trace(String message, Object... params) {
-
-    }
-
-    @Override
-    public void trace(Object message, Throwable e) {
 
     }
 
@@ -120,22 +68,7 @@ public class NoLogger implements Logger {
     }
 
     @Override
-    public void trace(Object message, Throwable e, Object... params) {
-
-    }
-
-    @Override
     public void trace(String message, Throwable e, Object... params) {
-
-    }
-
-    @Override
-    public boolean isDebugEnabled() {
-        return false;
-    }
-
-    @Override
-    public void debug(Object message) {
 
     }
 
@@ -150,17 +83,7 @@ public class NoLogger implements Logger {
     }
 
     @Override
-    public void debug(Object message, Object... params) {
-
-    }
-
-    @Override
     public void debug(String message, Object... params) {
-
-    }
-
-    @Override
-    public void debug(Object message, Throwable e) {
 
     }
 
@@ -175,22 +98,7 @@ public class NoLogger implements Logger {
     }
 
     @Override
-    public void debug(Object message, Throwable e, Object... params) {
-
-    }
-
-    @Override
     public void debug(String message, Throwable e, Object... params) {
-
-    }
-
-    @Override
-    public boolean isInfoEnabled() {
-        return false;
-    }
-
-    @Override
-    public void info(Object message) {
 
     }
 
@@ -205,17 +113,7 @@ public class NoLogger implements Logger {
     }
 
     @Override
-    public void info(Object message, Object... params) {
-
-    }
-
-    @Override
     public void info(String message, Object... params) {
-
-    }
-
-    @Override
-    public void info(Object message, Throwable e) {
 
     }
 
@@ -230,22 +128,7 @@ public class NoLogger implements Logger {
     }
 
     @Override
-    public void info(Object message, Throwable e, Object... params) {
-
-    }
-
-    @Override
     public void info(String message, Throwable e, Object... params) {
-
-    }
-
-    @Override
-    public boolean isWarnEnabled() {
-        return false;
-    }
-
-    @Override
-    public void warn(Object message) {
 
     }
 
@@ -260,17 +143,7 @@ public class NoLogger implements Logger {
     }
 
     @Override
-    public void warn(Object message, Object... params) {
-
-    }
-
-    @Override
     public void warn(String message, Object... params) {
-
-    }
-
-    @Override
-    public void warn(Object message, Throwable e) {
 
     }
 
@@ -285,22 +158,7 @@ public class NoLogger implements Logger {
     }
 
     @Override
-    public void warn(Object message, Throwable e, Object... params) {
-
-    }
-
-    @Override
     public void warn(String message, Throwable e, Object... params) {
-
-    }
-
-    @Override
-    public boolean isErrorEnabled() {
-        return false;
-    }
-
-    @Override
-    public void error(Object message) {
 
     }
 
@@ -315,17 +173,7 @@ public class NoLogger implements Logger {
     }
 
     @Override
-    public void error(Object message, Object... params) {
-
-    }
-
-    @Override
     public void error(String message, Object... params) {
-
-    }
-
-    @Override
-    public void error(Object message, Throwable e) {
 
     }
 
@@ -340,22 +188,7 @@ public class NoLogger implements Logger {
     }
 
     @Override
-    public void error(Object message, Throwable e, Object... params) {
-
-    }
-
-    @Override
     public void error(String message, Throwable e, Object... params) {
-
-    }
-
-    @Override
-    public boolean isFatalEnabled() {
-        return false;
-    }
-
-    @Override
-    public void fatal(Object message) {
 
     }
 
@@ -370,17 +203,7 @@ public class NoLogger implements Logger {
     }
 
     @Override
-    public void fatal(Object message, Object... params) {
-
-    }
-
-    @Override
     public void fatal(String message, Object... params) {
-
-    }
-
-    @Override
-    public void fatal(Object message, Throwable e) {
 
     }
 
@@ -391,11 +214,6 @@ public class NoLogger implements Logger {
 
     @Override
     public void fatal(Supplier<String> supplier, Throwable e) {
-
-    }
-
-    @Override
-    public void fatal(Object message, Throwable e, Object... params) {
 
     }
 

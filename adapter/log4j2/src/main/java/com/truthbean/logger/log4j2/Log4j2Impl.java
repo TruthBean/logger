@@ -10,13 +10,18 @@
 package com.truthbean.logger.log4j2;
 
 import com.truthbean.Logger;
+import com.truthbean.logger.ConfigurableLogger;
 import com.truthbean.logger.LogLevel;
+import com.truthbean.logger.LoggerFactory;
+import com.truthbean.logger.util.MessageHelper;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 import org.apache.logging.log4j.spi.AbstractLogger;
+import org.apache.logging.log4j.spi.ExtendedLoggerWrapper;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -25,11 +30,18 @@ import java.util.function.Supplier;
  * @since 0.0.1
  * Created on 2020-05-11 22:25
  */
-public class Log4j2Impl implements Logger {
+public class Log4j2Impl implements ConfigurableLogger {
 
-    private Logger logger;
-    private org.apache.logging.log4j.Logger originLogger;
+    private String name;
+
+    private Level defaultLevel;
     private LogLevel level;
+
+    // AbstractLogger
+    private AbstractLogger abstractLogger;
+    private ExtendedLoggerWrapper loggerWrapper;
+
+    private org.apache.logging.log4j.Logger rawLogger;
 
     static final Marker MARKER = MarkerManager.getMarker("truthbean");
     static final String FQCN = Log4j2Impl.class.getName();
@@ -38,42 +50,69 @@ public class Log4j2Impl implements Logger {
     }
 
     @Override
-    public Logger setClass(Class<?> tracedClass) {
+    public ConfigurableLogger setClass(Class<?> tracedClass) {
+        this.name = tracedClass.getName();
         var logger = LogManager.getLogger(tracedClass);
-        this.originLogger = logger;
         if (logger instanceof AbstractLogger) {
-            this.logger = new Log4j2ExtendedLoggerWrapperImpl((AbstractLogger) logger);
+            this.abstractLogger = (AbstractLogger) logger;
         } else {
-            this.logger = new Log4j2LoggerImpl(logger);
+            this.rawLogger = logger;
         }
         return this;
     }
 
     @Override
-    public Logger setName(String name) {
+    public ConfigurableLogger setName(CharSequence name) {
+        this.name = name.toString();
         var logger = LogManager.getLogger(name);
-        this.originLogger = logger;
         if (logger instanceof AbstractLogger) {
-            this.logger = new Log4j2ExtendedLoggerWrapperImpl((AbstractLogger) logger);
+            this.abstractLogger = (AbstractLogger) logger;
         } else {
-            this.logger = new Log4j2LoggerImpl(logger);
+            this.rawLogger = logger;
         }
         return this;
     }
 
     @Override
-    public Logger setLevel(LogLevel level) {
+    public ConfigurableLogger setName(String name) {
+        this.name = name;
+        var logger = LogManager.getLogger(name);
+        if (logger instanceof AbstractLogger) {
+            this.abstractLogger = (AbstractLogger) logger;
+        } else {
+            this.rawLogger = logger;
+        }
+        return this;
+    }
+
+    @Override
+    public String getLoggerName() {
+        return this.name;
+    }
+
+    @Override
+    public ConfigurableLogger setDefaultLevel(LogLevel level) {
         this.level = level;
-        this.logger.setLevel(level);
-        return this.logger;
+        defaultLevel = Log4j2Impl.toLevel(level).orElse(Level.ERROR);
+        return this;
+    }
+
+    @Override
+    public LogLevel getDefaultLevel() {
+        return this.level;
     }
 
     @Override
     public LogLevel getLevel() {
-        if (level == null) {
-            return LogLevel.ERROR;
+        var config = LoggerFactory.getConfig();
+        var level = config.getLevel(this.name);
+        if (abstractLogger != null) {
+            LogLevel logLevel = Log4j2Impl.fromLevel(this.abstractLogger.getLevel()).orElseGet(() -> Objects.requireNonNullElse(getDefaultLevel(), LogLevel.ERROR));
+            return level.orElse(logLevel);
+        } else {
+            LogLevel logLevel = Log4j2Impl.fromLevel(this.rawLogger.getLevel()).orElseGet(() -> Objects.requireNonNullElse(getDefaultLevel(), LogLevel.ERROR));
+            return level.orElse(logLevel);
         }
-        return level;
     }
 
     public static Optional<Level> toLevel(LogLevel logLevel) {
@@ -95,292 +134,869 @@ public class Log4j2Impl implements Logger {
         }
     }
 
+    public static Optional<LogLevel> fromLevel(Level level) {
+        if (level == null) {
+            return Optional.empty();
+        }
+        switch (level.intLevel()) {
+            case 100:
+                return Optional.of(LogLevel.FATAL);
+            case 200:
+                return Optional.of(LogLevel.ERROR);
+            case 300:
+                return Optional.of(LogLevel.WARN);
+            case 400:
+                return Optional.of(LogLevel.INFO);
+            case 500:
+                return Optional.of(LogLevel.DEBUG);
+            case 600:
+                return Optional.of(LogLevel.TRACE);
+            default:
+                return Optional.empty();
+        }
+    }
+
+    @Override
+    public Logger logger() {
+        this.level = getLevel();
+        if (abstractLogger != null) {
+            this.loggerWrapper = new ExtendedLoggerWrapper(abstractLogger, abstractLogger.getName(), abstractLogger.getMessageFactory());
+        }
+        return this;
+    }
+
     @Override
     public boolean isLoggable(LogLevel level) {
-        var bool = getLevel().compareTo(level) >= 0;
+        var bool = this.level.compareTo(level) >= 0;
         var optional = toLevel(level);
-        return optional.map(value -> bool && this.originLogger.isEnabled(value)).orElse(bool);
+        if (abstractLogger != null) {
+            return optional.map(value -> bool && this.abstractLogger.isEnabled(value)).orElse(bool);
+        } else {
+            return optional.map(value -> bool && this.rawLogger.isEnabled(value)).orElse(bool);
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, Object message) {
+        if (isLoggable(level)) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, toLevel(level).orElse(defaultLevel), MARKER, MessageHelper.toString(message));
+            } else {
+                this.rawLogger.log(toLevel(level).orElse(defaultLevel), MARKER, message);
+            }
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, String message) {
+        if (isLoggable(level)) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, toLevel(level).orElse(defaultLevel), MARKER, message);
+            } else {
+                this.rawLogger.log(toLevel(level).orElse(defaultLevel), MARKER, message);
+            }
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, Supplier<String> supplier) {
+        if (isLoggable(level)) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, toLevel(level).orElse(defaultLevel), MARKER, supplier.get());
+            } else {
+                this.rawLogger.log(toLevel(level).orElse(defaultLevel), MARKER, supplier.get());
+            }
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, Object message, Object... params) {
+        if (isLoggable(level)) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, toLevel(level).orElse(defaultLevel), MARKER, MessageHelper.format(message, params));
+            } else {
+                this.rawLogger.log(toLevel(level).orElse(defaultLevel), MARKER, MessageHelper.format(message, params));
+            }
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, String message, Object... params) {
+        if (isLoggable(level)) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, toLevel(level).orElse(defaultLevel), MARKER, MessageHelper.format(message, params));
+            } else {
+                this.rawLogger.log(toLevel(level).orElse(defaultLevel), MARKER, MessageHelper.format(message, params));
+            }
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, Object message, Throwable e) {
+        if (isLoggable(level)) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, toLevel(level).orElse(defaultLevel), MARKER, message, e);
+            } else {
+                this.rawLogger.log(toLevel(level).orElse(defaultLevel), MARKER, message, e);
+            }
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, String message, Throwable e) {
+        if (isLoggable(level)) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, toLevel(level).orElse(defaultLevel), MARKER, message);
+            } else {
+                this.rawLogger.log(toLevel(level).orElse(defaultLevel), MARKER, message, e);
+            }
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, Supplier<String> supplier, Throwable e) {
+        if (isLoggable(level)) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, toLevel(level).orElse(defaultLevel), MARKER, supplier.get(), e);
+            } else {
+                this.rawLogger.log(toLevel(level).orElse(defaultLevel), MARKER, supplier.get(), e);
+            }
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, Object message, Throwable e, Object... params) {
+        if (isLoggable(level)) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, toLevel(level).orElse(defaultLevel), MARKER, MessageHelper.format(message, params), e);
+            } else {
+                this.rawLogger.log(toLevel(level).orElse(defaultLevel), MARKER, MessageHelper.format(message, params), e);
+            }
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, String message, Throwable e, Object... params) {
+        if (isLoggable(level)) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, toLevel(level).orElse(defaultLevel), MARKER, MessageHelper.format(message, params), e);
+            } else {
+                this.rawLogger.log(toLevel(level).orElse(defaultLevel), MARKER, MessageHelper.format(message, params), e);
+            }
+        }
     }
 
     @Override
     public boolean isTraceEnabled() {
-        return getLevel().compareTo(LogLevel.TRACE) >= 0 && this.originLogger.isTraceEnabled();
+        if (abstractLogger != null) {
+            return this.level.compareTo(LogLevel.TRACE) >= 0 && this.abstractLogger.isTraceEnabled();
+        } else {
+            return this.level.compareTo(LogLevel.TRACE) >= 0 && this.rawLogger.isTraceEnabled();
+        }
+    }
+
+    @Override
+    public void trace(Object message) {
+        if (isLoggable(level)) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.TRACE, MARKER, MessageHelper.toString(message));
+            } else {
+                this.rawLogger.log(Level.TRACE, MARKER, message);
+            }
+        }
     }
 
     @Override
     public void trace(String message) {
         if (isTraceEnabled()) {
-            this.logger.trace(message);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.TRACE, MARKER, message);
+            } else {
+                this.rawLogger.log(Level.TRACE, MARKER, message);
+            }
         }
     }
 
     @Override
     public void trace(Supplier<String> supplier) {
         if (isTraceEnabled()) {
-            logger.trace(supplier);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.TRACE, MARKER, supplier.get());
+            } else {
+                this.rawLogger.log(Level.TRACE, MARKER, supplier.get());
+            }
+        }
+    }
+
+    @Override
+    public void trace(Object message, Object... params) {
+        if (isTraceEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.TRACE, MARKER, MessageHelper.format(message, params));
+            } else {
+                this.rawLogger.log(Level.TRACE, MARKER, MessageHelper.format(message, params));
+            }
         }
     }
 
     @Override
     public void trace(String message, Object... params) {
         if (isTraceEnabled()) {
-            logger.trace(message, params);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.TRACE, MARKER, MessageHelper.format(message, params));
+            } else {
+                this.rawLogger.log(Level.TRACE, MARKER, MessageHelper.format(message, params));
+            }
+        }
+    }
+
+    @Override
+    public void trace(Object message, Throwable e) {
+        if (isTraceEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.TRACE, MARKER, message, e);
+            } else {
+                this.rawLogger.log(Level.TRACE, MARKER, message, e);
+            }
         }
     }
 
     @Override
     public void trace(String message, Throwable e) {
         if (isTraceEnabled()) {
-            logger.trace(message, e);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.TRACE, MARKER, message, e);
+            } else {
+                this.rawLogger.log(Level.TRACE, MARKER, message, e);
+            }
         }
     }
 
     @Override
     public void trace(Supplier<String> supplier, Throwable e) {
         if (isTraceEnabled()) {
-            logger.trace(supplier, e);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.TRACE, MARKER, supplier.get(), e);
+            } else {
+                this.rawLogger.log(Level.TRACE, MARKER, supplier.get(), e);
+            }
+        }
+    }
+
+    @Override
+    public void trace(Object message, Throwable e, Object... params) {
+        if (isTraceEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.TRACE, MARKER, MessageHelper.format(message, params), e);
+            } else {
+                this.rawLogger.log(Level.TRACE, MARKER, MessageHelper.format(message, params), e);
+            }
         }
     }
 
     @Override
     public void trace(String message, Throwable e, Object... params) {
         if (isTraceEnabled()) {
-            logger.trace(message, e, params);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.TRACE, MARKER, MessageHelper.format(message, params), e);
+            } else {
+                this.rawLogger.log(Level.TRACE, MARKER, MessageHelper.format(message, params), e);
+            }
         }
     }
 
     @Override
     public boolean isDebugEnabled() {
-        return getLevel().compareTo(LogLevel.DEBUG) >= 0 && originLogger.isDebugEnabled();
+        if (abstractLogger != null) {
+            return this.level.compareTo(LogLevel.DEBUG) >= 0 && this.abstractLogger.isDebugEnabled();
+        } else {
+            return this.level.compareTo(LogLevel.DEBUG) >= 0 && this.rawLogger.isDebugEnabled();
+        }
+    }
+
+    @Override
+    public void debug(Object message) {
+        if (isDebugEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.DEBUG, MARKER, MessageHelper.toString(message));
+            } else {
+                this.rawLogger.log(Level.DEBUG, MARKER, message);
+            }
+        }
     }
 
     @Override
     public void debug(String message) {
         if (isDebugEnabled()) {
-            logger.debug(message);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.DEBUG, MARKER, message);
+            } else {
+                this.rawLogger.log(Level.DEBUG, MARKER, message);
+            }
         }
     }
 
     @Override
     public void debug(Supplier<String> supplier) {
         if (isDebugEnabled()) {
-            logger.debug(supplier);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.DEBUG, MARKER, supplier.get());
+            } else {
+                this.rawLogger.log(Level.DEBUG, MARKER, supplier.get());
+            }
+        }
+    }
+
+    @Override
+    public void debug(Object message, Object... params) {
+        if (isDebugEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.DEBUG, MARKER, MessageHelper.format(message, params));
+            } else {
+                this.rawLogger.log(Level.DEBUG, MARKER, MessageHelper.format(message, params));
+            }
         }
     }
 
     @Override
     public void debug(String message, Object... params) {
         if (isDebugEnabled()) {
-            logger.debug(message, params);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.DEBUG, MARKER, MessageHelper.format(message, params));
+            } else {
+                this.rawLogger.log(Level.DEBUG, MARKER, MessageHelper.format(message, params));
+            }
+        }
+    }
+
+    @Override
+    public void debug(Object message, Throwable e) {
+        if (isDebugEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.DEBUG, MARKER, message, e);
+            } else {
+                this.rawLogger.log(Level.DEBUG, MARKER, message, e);
+            }
         }
     }
 
     @Override
     public void debug(String message, Throwable e) {
         if (isDebugEnabled()) {
-            logger.debug(message, e);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.DEBUG, MARKER, message, e);
+            } else {
+                this.rawLogger.log(Level.DEBUG, MARKER, message, e);
+            }
         }
     }
 
     @Override
     public void debug(Supplier<String> supplier, Throwable e) {
         if (isDebugEnabled()) {
-            logger.debug(supplier, e);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.DEBUG, MARKER, supplier.get(), e);
+            } else {
+                this.rawLogger.log(Level.DEBUG, MARKER, supplier.get(), e);
+            }
+        }
+    }
+
+    @Override
+    public void debug(Object message, Throwable e, Object... params) {
+        if (isDebugEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.DEBUG, MARKER, MessageHelper.format(message, params), e);
+            } else {
+                this.rawLogger.log(Level.DEBUG, MARKER, MessageHelper.format(message, params), e);
+            }
         }
     }
 
     @Override
     public void debug(String message, Throwable e, Object... params) {
         if (isDebugEnabled()) {
-            logger.debug(message, e, params);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.DEBUG, MARKER, MessageHelper.format(message, params), e);
+            } else {
+                this.rawLogger.log(Level.DEBUG, MARKER, MessageHelper.format(message, params), e);
+            }
         }
     }
 
     @Override
     public boolean isInfoEnabled() {
-        return getLevel().compareTo(LogLevel.INFO) >= 0 && originLogger.isInfoEnabled();
+        if (abstractLogger != null) {
+            return this.level.compareTo(LogLevel.INFO) >= 0 && this.abstractLogger.isInfoEnabled();
+        } else {
+            return this.level.compareTo(LogLevel.INFO) >= 0 && this.rawLogger.isInfoEnabled();
+        }
+    }
+
+    @Override
+    public void info(Object message) {
+        if (isInfoEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.INFO, MARKER, MessageHelper.toString(message));
+            } else {
+                this.rawLogger.log(Level.INFO, MARKER, message);
+            }
+        }
     }
 
     @Override
     public void info(String message) {
         if (isInfoEnabled()) {
-            logger.info(message);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.INFO, MARKER, message);
+            } else {
+                this.rawLogger.log(Level.INFO, MARKER, message);
+            }
         }
     }
 
     @Override
     public void info(Supplier<String> supplier) {
         if (isInfoEnabled()) {
-            logger.info(supplier);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.INFO, MARKER, supplier.get());
+            } else {
+                this.rawLogger.log(Level.INFO, MARKER, supplier.get());
+            }
+        }
+    }
+
+    @Override
+    public void info(Object message, Object... params) {
+        if (isInfoEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.INFO, MARKER, MessageHelper.format(message, params));
+            } else {
+                this.rawLogger.log(Level.INFO, MARKER, MessageHelper.format(message, params));
+            }
         }
     }
 
     @Override
     public void info(String message, Object... params) {
         if (isInfoEnabled()) {
-            logger.info(message, params);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.INFO, MARKER, MessageHelper.format(message, params));
+            } else {
+                this.rawLogger.log(Level.INFO, MARKER, MessageHelper.format(message, params));
+            }
+        }
+    }
+
+    @Override
+    public void info(Object message, Throwable e) {
+        if (isInfoEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.INFO, MARKER, MessageHelper.toString(message), e);
+            } else {
+                this.rawLogger.log(Level.INFO, MARKER, message, e);
+            }
         }
     }
 
     @Override
     public void info(String message, Throwable e) {
         if (isInfoEnabled()) {
-            logger.info(message, e);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.INFO, MARKER, message, e);
+            } else {
+                this.rawLogger.log(Level.INFO, MARKER, message, e);
+            }
         }
     }
 
     @Override
     public void info(Supplier<String> supplier, Throwable e) {
         if (isInfoEnabled()) {
-            logger.info(supplier, e);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.INFO, MARKER, supplier.get(), e);
+            } else {
+                this.rawLogger.log(Level.INFO, MARKER, supplier.get(), e);
+            }
+        }
+    }
+
+    @Override
+    public void info(Object message, Throwable e, Object... params) {
+        if (isInfoEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.INFO, MARKER, MessageHelper.format(message, params), e);
+            } else {
+                this.rawLogger.log(Level.INFO, MARKER, MessageHelper.format(message, params), e);
+            }
         }
     }
 
     @Override
     public void info(String message, Throwable e, Object... params) {
         if (isInfoEnabled()) {
-            logger.info(message, e, params);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.INFO, MARKER, MessageHelper.format(message, params), e);
+            } else {
+                this.rawLogger.log(Level.INFO, MARKER, MessageHelper.format(message, params), e);
+            }
         }
     }
 
     @Override
     public boolean isWarnEnabled() {
-        return getLevel().compareTo(LogLevel.WARN) >= 0 && originLogger.isWarnEnabled();
+        if (abstractLogger != null) {
+            return this.level.compareTo(LogLevel.WARN) >= 0 && this.abstractLogger.isWarnEnabled();
+        } else {
+            return this.level.compareTo(LogLevel.WARN) >= 0 && this.rawLogger.isWarnEnabled();
+        }
+    }
+
+    @Override
+    public void warn(Object message) {
+        if (isTraceEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.WARN, MARKER, MessageHelper.toString(message));
+            } else {
+                this.rawLogger.log(Level.WARN, MARKER, message);
+            }
+        }
     }
 
     @Override
     public void warn(String message) {
         if (isWarnEnabled()) {
-            logger.warn(message);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.WARN, MARKER, message);
+            } else {
+                this.rawLogger.log(Level.WARN, MARKER, message);
+            }
         }
     }
 
     @Override
     public void warn(Supplier<String> supplier) {
         if (isWarnEnabled()) {
-            logger.warn(supplier);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.WARN, MARKER, supplier.get());
+            } else {
+                this.rawLogger.log(Level.WARN, MARKER, supplier.get());
+            }
+        }
+    }
+
+    @Override
+    public void warn(Object message, Object... params) {
+        if (isWarnEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.WARN, MARKER, MessageHelper.format(message, params));
+            } else {
+                this.rawLogger.log(Level.WARN, MARKER, MessageHelper.format(message, params));
+            }
         }
     }
 
     @Override
     public void warn(String message, Object... params) {
         if (isWarnEnabled()) {
-            logger.warn(message, params);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.WARN, MARKER, MessageHelper.format(message, params));
+            } else {
+                this.rawLogger.log(Level.WARN, MARKER, MessageHelper.format(message, params));
+            }
+        }
+    }
+
+    @Override
+    public void warn(Object message, Throwable e) {
+        if (isWarnEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.WARN, MARKER, MessageHelper.toString(message), e);
+            } else {
+                this.rawLogger.log(Level.WARN, MARKER, message, e);
+            }
         }
     }
 
     @Override
     public void warn(String message, Throwable e) {
         if (isWarnEnabled()) {
-            logger.warn(message, e);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.WARN, MARKER, message, e);
+            } else {
+                this.rawLogger.log(Level.WARN, MARKER, message, e);
+            }
         }
     }
 
     @Override
     public void warn(Supplier<String> supplier, Throwable e) {
         if (isWarnEnabled()) {
-            logger.warn(supplier, e);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.WARN, MARKER, supplier.get(), e);
+            } else {
+                this.rawLogger.log(Level.WARN, MARKER, supplier.get(), e);
+            }
+        }
+    }
+
+    @Override
+    public void warn(Object message, Throwable e, Object... params) {
+        if (isWarnEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.WARN, MARKER, MessageHelper.format(message, params), e);
+            } else {
+                this.rawLogger.log(Level.WARN, MARKER, MessageHelper.format(message, params), e);
+            }
         }
     }
 
     @Override
     public void warn(String message, Throwable e, Object... params) {
         if (isWarnEnabled()) {
-            logger.warn(message, e, params);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.WARN, MARKER, MessageHelper.format(message, params), e);
+            } else {
+                this.rawLogger.log(Level.WARN, MARKER, MessageHelper.format(message, params), e);
+            }
         }
     }
 
     @Override
     public boolean isErrorEnabled() {
-        return getLevel().compareTo(LogLevel.ERROR) >= 0 && originLogger.isErrorEnabled();
+        if (abstractLogger != null) {
+            return this.level.compareTo(LogLevel.ERROR) >= 0 && this.abstractLogger.isErrorEnabled();
+        } else {
+            return this.level.compareTo(LogLevel.ERROR) >= 0 && this.rawLogger.isErrorEnabled();
+        }
+    }
+
+    @Override
+    public void error(Object message) {
+        if (isErrorEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.ERROR, MARKER, MessageHelper.toString(message));
+            } else {
+                this.rawLogger.log(Level.ERROR, MARKER, message);
+            }
+        }
     }
 
     @Override
     public void error(String message) {
         if (isErrorEnabled()) {
-            logger.error(message);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.ERROR, MARKER, message);
+            } else {
+                this.rawLogger.log(Level.ERROR, MARKER, message);
+            }
         }
     }
 
     @Override
     public void error(Supplier<String> supplier) {
         if (isErrorEnabled()) {
-            logger.error(supplier);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.ERROR, MARKER, supplier.get());
+            } else {
+                this.rawLogger.log(Level.ERROR, MARKER, supplier.get());
+            }
+        }
+    }
+
+    @Override
+    public void error(Object message, Object... params) {
+        if (isErrorEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.ERROR, MARKER, MessageHelper.format(message, params));
+            } else {
+                this.rawLogger.log(Level.ERROR, MARKER, MessageHelper.format(message, params));
+            }
         }
     }
 
     @Override
     public void error(String message, Object... params) {
         if (isErrorEnabled()) {
-            logger.error(message, params);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.ERROR, MARKER, MessageHelper.format(message, params));
+            } else {
+                this.rawLogger.log(Level.ERROR, MARKER, MessageHelper.format(message, params));
+            }
+        }
+    }
+
+    @Override
+    public void error(Object message, Throwable e) {
+        if (isErrorEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.ERROR, MARKER, MessageHelper.toString(message), e);
+            } else {
+                this.rawLogger.log(Level.ERROR, MARKER, message, e);
+            }
         }
     }
 
     @Override
     public void error(String message, Throwable e) {
         if (isErrorEnabled()) {
-            logger.error(message, e);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.ERROR, MARKER, message, e);
+            } else {
+                this.rawLogger.log(Level.ERROR, MARKER, message, e);
+            }
         }
     }
 
     @Override
     public void error(Supplier<String> supplier, Throwable e) {
         if (isErrorEnabled()) {
-            logger.error(supplier, e);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.ERROR, MARKER, supplier.get(), e);
+            } else {
+                this.rawLogger.log(Level.ERROR, MARKER, supplier.get(), e);
+            }
+        }
+    }
+
+    @Override
+    public void error(Object message, Throwable e, Object... params) {
+        if (isErrorEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.ERROR, MARKER, MessageHelper.format(message, params), e);
+            } else {
+                this.rawLogger.log(Level.ERROR, MARKER, MessageHelper.format(message, params), e);
+            }
         }
     }
 
     @Override
     public void error(String message, Throwable e, Object... params) {
         if (isErrorEnabled()) {
-            logger.error(message, e, params);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.ERROR, MARKER, MessageHelper.format(message, params), e);
+            } else {
+                this.rawLogger.log(Level.ERROR, MARKER, MessageHelper.format(message, params), e);
+            }
         }
     }
 
     @Override
     public boolean isFatalEnabled() {
-        return getLevel().compareTo(LogLevel.FATAL) >= 0 && originLogger.isFatalEnabled();
+        if (abstractLogger != null) {
+            return this.level.compareTo(LogLevel.FATAL) >= 0 && this.abstractLogger.isFatalEnabled();
+        } else {
+            return this.level.compareTo(LogLevel.FATAL) >= 0 && this.rawLogger.isFatalEnabled();
+        }
+    }
+
+    @Override
+    public void fatal(Object message) {
+        if (isFatalEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.FATAL, MARKER, MessageHelper.toString(message));
+            } else {
+                this.rawLogger.log(Level.FATAL, MARKER, message);
+            }
+        }
     }
 
     @Override
     public void fatal(String message) {
         if (isFatalEnabled()) {
-            logger.error(message);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.FATAL, MARKER, message);
+            } else {
+                this.rawLogger.log(Level.FATAL, MARKER, message);
+            }
         }
     }
 
     @Override
     public void fatal(Supplier<String> supplier) {
         if (isFatalEnabled()) {
-            logger.error(supplier);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.FATAL, MARKER, supplier.get());
+            } else {
+                this.rawLogger.log(Level.FATAL, MARKER, supplier.get());
+            }
+        }
+    }
+
+    @Override
+    public void fatal(Object message, Object... params) {
+        if (isFatalEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.FATAL, MARKER, MessageHelper.format(message, params));
+            } else {
+                this.rawLogger.log(Level.FATAL, MARKER, MessageHelper.format(message, params));
+            }
         }
     }
 
     @Override
     public void fatal(String message, Object... params) {
         if (isFatalEnabled()) {
-            logger.error(message, params);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.FATAL, MARKER, MessageHelper.format(message, params));
+            } else {
+                this.rawLogger.log(Level.FATAL, MARKER, MessageHelper.format(message, params));
+            }
+        }
+    }
+
+    @Override
+    public void fatal(Object message, Throwable e) {
+        if (isFatalEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.FATAL, MARKER, MessageHelper.toString(message), e);
+            } else {
+                this.rawLogger.log(Level.FATAL, MARKER, message, e);
+            }
         }
     }
 
     @Override
     public void fatal(String message, Throwable e) {
         if (isFatalEnabled()) {
-            logger.error(message, e);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.FATAL, MARKER, message, e);
+            } else {
+                this.rawLogger.log(Level.FATAL, MARKER, message, e);
+            }
         }
     }
 
     @Override
     public void fatal(Supplier<String> supplier, Throwable e) {
         if (isFatalEnabled()) {
-            logger.error(supplier, e);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.FATAL, MARKER, supplier.get(), e);
+            } else {
+                this.rawLogger.log(Level.FATAL, MARKER, supplier.get(), e);
+            }
+        }
+    }
+
+    @Override
+    public void fatal(Object message, Throwable e, Object... params) {
+        if (isFatalEnabled()) {
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.FATAL, MARKER, MessageHelper.format(message, params), e);
+            } else {
+                this.rawLogger.log(Level.FATAL, MARKER, MessageHelper.format(message, params), e);
+            }
         }
     }
 
     @Override
     public void fatal(String message, Throwable e, Object... params) {
         if (isFatalEnabled()) {
-            logger.error(message, e, params);
+            if (abstractLogger != null) {
+                this.loggerWrapper.logIfEnabled(FQCN, Level.FATAL, MARKER, MessageHelper.format(message, params), e);
+            } else {
+                this.rawLogger.log(Level.FATAL, MARKER, MessageHelper.format(message, params), e);
+            }
         }
     }
 }

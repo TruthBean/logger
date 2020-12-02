@@ -21,71 +21,96 @@ logger adapter
         用于跟踪数据的变化
 
 ## maven
-    <!-- logger adapter core -->
-    <dependency>
-      <groupId>com.truthbean.logger</groupId>
-      <artifactId>logger-core</artifactId>
-      <version>0.4.0-SNAPSHOT</version>
-    </dependency>
+```xml
+    <dependencyManagement>
+        <dependencies>
+            <!-- import -->
+            <dependency>
+              <groupId>com.truthbean.logger</groupId>
+              <artifactId>logger-dependence</artifactId>
+              <version>0.4.0-SNAPSHOT</version>
+              <scope>import</scope>
+              <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-    <!-- log4j2 adapter -->
-    <dependency>
-      <groupId>com.truthbean.logger</groupId>
-      <artifactId>log4j2-adapter</artifactId>
-      <version>0.4.0-SNAPSHOT</version>
-    </dependency>
-
-    或者使用
-    <!-- slf4j adapter -->
-    <dependency>
-      <groupId>com.truthbean.logger</groupId>
-      <artifactId>slf4j-adapter</artifactId>
-      <version>0.4.0-SNAPSHOT</version>
-    </dependency>
-
-    或者在测试的时候使用以下中的一个
-    <!-- jdk adapter -->
-    <dependency>
-      <groupId>com.truthbean.logger</groupId>
-      <artifactId>jdk-adapter</artifactId>
-      <version>0.4.0-SNAPSHOT</version>
-    </dependency>
-    
-    <!-- jul adapter -->
-    <dependency>
-      <groupId>com.truthbean.logger</groupId>
-      <artifactId>jul-adapter</artifactId>
-      <version>0.4.0-SNAPSHOT</version>
-    </dependency>
-
-    <!-- stdout adapter -->
-    <dependency>
-      <groupId>com.truthbean.logger</groupId>
-      <artifactId>stdout-adapter</artifactId>
-      <version>0.4.0-SNAPSHOT</version>
-    </dependency>
-    
-    <!-- kotlin支持 -->
-    <dependency>
+    <dependencies>
+        <!-- logger adapter core -->
+        <dependency>
           <groupId>com.truthbean.logger</groupId>
-          <artifactId>kotlin-adapter</artifactId>
+          <artifactId>logger-core</artifactId>
           <version>0.4.0-SNAPSHOT</version>
         </dependency>
-
-    包含依赖的boot
-    <!-- log4j2 boot -->
-    <dependency>
-      <groupId>com.truthbean.logger</groupId>
-      <artifactId>log4j2-boot</artifactId>
-      <version>0.4.0-SNAPSHOT</version>
-    </dependency>
     
-    <!-- slf4j boot -->
-    <dependency>
-      <groupId>com.truthbean.logger</groupId>
-      <artifactId>slf4j-boot</artifactId>
-      <version>0.4.0-SNAPSHOT</version>
-    </dependency>
+        <!-- log4j2 adapter -->
+        <dependency>
+          <groupId>com.truthbean.logger</groupId>
+          <artifactId>log4j2-adapter</artifactId>
+          <version>0.4.0-SNAPSHOT</version>
+        </dependency>
+    
+        或者使用
+        <!-- slf4j adapter -->
+        <dependency>
+          <groupId>com.truthbean.logger</groupId>
+          <artifactId>slf4j-adapter</artifactId>
+          <version>0.4.0-SNAPSHOT</version>
+        </dependency>
+    
+        或者在测试的时候使用以下中的一个
+        <!-- jdk adapter -->
+        <dependency>
+          <groupId>com.truthbean.logger</groupId>
+          <artifactId>jdk-adapter</artifactId>
+          <version>0.4.0-SNAPSHOT</version>
+        </dependency>
+        
+        <!-- jul adapter -->
+        <dependency>
+          <groupId>com.truthbean.logger</groupId>
+          <artifactId>jul-adapter</artifactId>
+          <version>0.4.0-SNAPSHOT</version>
+        </dependency>
+    
+        <!-- stdout adapter -->
+        <dependency>
+          <groupId>com.truthbean.logger</groupId>
+          <artifactId>stdout-adapter</artifactId>
+          <version>0.4.0-SNAPSHOT</version>
+        </dependency>
+        
+        <!-- kotlin支持 -->
+        <dependency>
+              <groupId>com.truthbean.logger</groupId>
+              <artifactId>kotlin-adapter</artifactId>
+              <version>0.4.0-SNAPSHOT</version>
+            </dependency>
+    
+        包含依赖的boot
+        <!-- log4j2 boot -->
+        <dependency>
+          <groupId>com.truthbean.logger</groupId>
+          <artifactId>log4j2-boot</artifactId>
+          <version>0.4.0-SNAPSHOT</version>
+        </dependency>
+        
+        <!-- slf4j boot -->
+        <dependency>
+          <groupId>com.truthbean.logger</groupId>
+          <artifactId>slf4j-boot</artifactId>
+          <version>0.4.0-SNAPSHOT</version>
+        </dependency>
+        
+        <!-- tomcat juli -->
+        <dependency>
+            <groupId>com.truthbean.logger</groupId>
+            <artifactId>juli-impl</artifactId>
+            <version>0.4.0-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
+```
 
 ### 注意
 JDK要求最低11

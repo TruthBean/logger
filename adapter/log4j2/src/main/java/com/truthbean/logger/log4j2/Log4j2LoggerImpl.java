@@ -9,313 +9,610 @@
  */
 package com.truthbean.logger.log4j2;
 
+import com.truthbean.logger.BaseLogger;
+import com.truthbean.logger.ConfigurableLogger;
 import com.truthbean.logger.LogLevel;
+import com.truthbean.logger.LoggerFactory;
 import com.truthbean.logger.util.MessageHelper;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
 
+import java.util.Objects;
 import java.util.function.Supplier;
+
+import static com.truthbean.logger.log4j2.Log4j2Impl.FQCN;
+import static com.truthbean.logger.log4j2.Log4j2Impl.MARKER;
 
 /**
  * @author TruthBean/Rogar·Q
  * @since 0.0.1
  * Created on 2020-05-11 22:27
  */
-class Log4j2LoggerImpl implements com.truthbean.Logger {
+class Log4j2LoggerImpl implements ConfigurableLogger {
     private final Marker marker = MarkerManager.getMarker(Log4j2LoggerImpl.class.getName());
 
+    private final String name;
     private final Logger logger;
-    Log4j2LoggerImpl(Logger logger) {
+
+    private LogLevel level;
+    private Level defaultLevel;
+    
+    Log4j2LoggerImpl(Logger logger, String name) {
         this.logger = logger;
+        this.name = name;
+    }
+
+    @Override
+    public ConfigurableLogger setClass(Class<?> tracedClass) {
+        return this;
+    }
+
+    @Override
+    public ConfigurableLogger setName(CharSequence name) {
+        return this;
+    }
+
+    @Override
+    public ConfigurableLogger setName(String name) {
+        return this;
+    }
+
+    @Override
+    public String getLoggerName() {
+        return this.name;
+    }
+
+    @Override
+    public ConfigurableLogger setDefaultLevel(LogLevel level) {
+        this.level = level;
+        defaultLevel = Log4j2Impl.toLevel(level).orElse(Level.ERROR);
+        return this;
+    }
+
+    @Override
+    public LogLevel getDefaultLevel() {
+        return this.level;
+    }
+
+    @Override
+    public LogLevel getLevel() {
+        LogLevel logLevel = Log4j2Impl.fromLevel(logger.getLevel()).orElse(getDefaultLevel());
+        var config = LoggerFactory.getConfig();
+        var level = config.getLevel(logger.getName());
+        return level.orElseGet(() -> Objects.requireNonNullElse(getDefaultLevel(), logLevel));
+    }
+
+    @Override
+    public com.truthbean.Logger logger() {
+        this.level = getLevel();
+        return this;
     }
 
     @Override
     public boolean isLoggable(LogLevel level) {
-        var bool = getLevel().compareTo(level) >= 0;
+        var bool = this.level.compareTo(level) >= 0;
         var optional = Log4j2Impl.toLevel(level);
         return optional.map(value -> bool && this.logger.isEnabled(value, marker)).orElse(bool);
     }
 
     @Override
+    public void log(LogLevel level, Object message) {
+        if (isLoggable(level)) {
+            this.logger.log(Log4j2Impl.toLevel(level).orElse(defaultLevel), MARKER, message);
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, String message) {
+        if (isLoggable(level)) {
+            this.logger.log(Log4j2Impl.toLevel(level).orElse(defaultLevel), MARKER, message);
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, Supplier<String> supplier) {
+        if (isLoggable(level)) {
+            this.logger.log(Log4j2Impl.toLevel(level).orElse(defaultLevel), MARKER, supplier.get());
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, Object message, Object... params) {
+        if (isLoggable(level)) {
+            this.logger.log(Log4j2Impl.toLevel(level).orElse(defaultLevel), MARKER, MessageHelper.format(message, params));
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, String message, Object... params) {
+        if (isLoggable(level)) {
+            this.logger.log(Log4j2Impl.toLevel(level).orElse(defaultLevel), MARKER, MessageHelper.format(message, params));
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, Object message, Throwable e) {
+        if (isLoggable(level)) {
+            this.logger.log(Log4j2Impl.toLevel(level).orElse(defaultLevel), MARKER, message, e);
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, String message, Throwable e) {
+        if (isLoggable(level)) {
+            this.logger.log(Log4j2Impl.toLevel(level).orElse(defaultLevel), MARKER, message, e);
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, Supplier<String> supplier, Throwable e) {
+        if (isLoggable(level)) {
+            this.logger.log(Log4j2Impl.toLevel(level).orElse(defaultLevel), MARKER, supplier.get(), e);
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, Object message, Throwable e, Object... params) {
+        if (isLoggable(level)) {
+            this.logger.log(Log4j2Impl.toLevel(level).orElse(defaultLevel), MARKER, MessageHelper.format(message, params), e);
+        }
+    }
+
+    @Override
+    public void log(LogLevel level, String message, Throwable e, Object... params) {
+        if (isLoggable(level)) {
+            this.logger.log(Log4j2Impl.toLevel(level).orElse(defaultLevel), MARKER, MessageHelper.format(message, params), e);
+        }
+    }
+
+    @Override
     public boolean isTraceEnabled() {
-        return logger.isTraceEnabled(marker);
+        return isLoggable(LogLevel.TRACE);
+    }
+
+    @Override
+    public void trace(Object message) {
+        if (isTraceEnabled()) {
+            this.logger.trace(marker, message);
+        }
     }
 
     @Override
     public void trace(String message) {
-        if (logger.isTraceEnabled(marker)) {
+        if (isTraceEnabled()) {
             this.logger.trace(marker, message);
         }
     }
 
     @Override
     public void trace(Supplier<String> supplier) {
-        if (logger.isTraceEnabled(marker)) {
+        if (isTraceEnabled()) {
             this.logger.trace(marker, supplier::get);
         }
     }
 
     @Override
+    public void trace(Object message, Object... params) {
+        if (isTraceEnabled()) {
+            this.logger.trace(marker, MessageHelper.toString(message), params);
+        }
+    }
+
+    @Override
     public void trace(String message, Object... params) {
-        if (logger.isTraceEnabled(marker)) {
+        if (isTraceEnabled()) {
             this.logger.trace(marker, message, params);
         }
     }
 
     @Override
+    public void trace(Object message, Throwable e) {
+        if (isTraceEnabled()) {
+            this.logger.trace(marker, MessageHelper.toString(message), e);
+        }
+    }
+
+    @Override
     public void trace(String message, Throwable e) {
-        if (logger.isTraceEnabled(marker)) {
+        if (isTraceEnabled()) {
             this.logger.trace(marker, message, e);
         }
     }
 
     @Override
     public void trace(Supplier<String> supplier, Throwable e) {
-        if (logger.isTraceEnabled(marker)) {
+        if (isTraceEnabled()) {
             this.logger.trace(marker, supplier::get, e);
         }
     }
 
     @Override
+    public void trace(Object message, Throwable e, Object... params) {
+        if (isTraceEnabled()) {
+            this.logger.trace(marker, MessageHelper.format(message, params), e);
+        }
+    }
+
+    @Override
     public void trace(String message, Throwable e, Object... params) {
-        if (logger.isTraceEnabled(marker)) {
-            this.logger.trace(marker, () -> MessageHelper.format(message, params), e);
+        if (isTraceEnabled()) {
+            this.logger.trace(marker, MessageHelper.format(message, params), e);
         }
     }
 
     @Override
     public boolean isDebugEnabled() {
-        return logger.isDebugEnabled(marker);
+        return isLoggable(LogLevel.DEBUG);
+    }
+
+    @Override
+    public void debug(Object message) {
+        if (isDebugEnabled()) {
+            this.logger.debug(marker, message);
+        }
     }
 
     @Override
     public void debug(String message) {
-        if (logger.isDebugEnabled(marker)) {
+        if (isDebugEnabled()) {
             this.logger.debug(marker, message);
         }
     }
 
     @Override
     public void debug(Supplier<String> supplier) {
-        if (logger.isDebugEnabled(marker)) {
+        if (isDebugEnabled()) {
             logger.debug(marker, supplier::get);
         }
     }
 
     @Override
+    public void debug(Object message, Object... params) {
+        if (isDebugEnabled()) {
+            logger.debug(marker, MessageHelper.toString(message), params);
+        }
+    }
+
+    @Override
     public void debug(String message, Object... params) {
-        if (logger.isDebugEnabled(marker)) {
-            logger.debug(marker);
+        if (isDebugEnabled()) {
+            logger.debug(marker, message, params);
+        }
+    }
+
+    @Override
+    public void debug(Object message, Throwable e) {
+        if (isDebugEnabled()) {
+            logger.debug(marker, message, e);
         }
     }
 
     @Override
     public void debug(String message, Throwable e) {
-        if (logger.isDebugEnabled(marker)) {
+        if (isDebugEnabled()) {
             logger.log(Level.DEBUG, marker, message, e);
         }
     }
 
     @Override
     public void debug(Supplier<String> supplier, Throwable e) {
-        if (logger.isEnabled(Level.DEBUG, marker)) {
-            logger.log(Level.DEBUG, marker, supplier::get, e);
+        if (isDebugEnabled()) {
+            logger.log(Level.DEBUG, marker, supplier.get(), e);
+        }
+    }
+
+    @Override
+    public void debug(Object message, Throwable e, Object... params) {
+        if (isDebugEnabled()) {
+            logger.log(Level.DEBUG, marker, MessageHelper.format(message, params), e);
         }
     }
 
     @Override
     public void debug(String message, Throwable e, Object... params) {
-        if (logger.isEnabled(Level.DEBUG, marker)) {
+        if (isDebugEnabled()) {
             logger.log(Level.DEBUG, marker, MessageHelper.format(message, params), e);
         }
     }
 
     @Override
     public boolean isInfoEnabled() {
-        return logger.isEnabled(Level.INFO, marker);
+        return isLoggable(LogLevel.INFO);
+    }
+
+    @Override
+    public void info(Object message) {
+        if (isInfoEnabled()) {
+            logger.log(Level.INFO, marker, message);
+        }
     }
 
     @Override
     public void info(String message) {
-        if (logger.isEnabled(Level.INFO, marker)) {
+        if (isInfoEnabled()) {
             logger.log(Level.INFO, marker, message);
         }
     }
 
     @Override
     public void info(Supplier<String> supplier) {
-        if (logger.isEnabled(Level.INFO, marker)) {
+        if (isInfoEnabled()) {
             logger.log(Level.INFO, marker, supplier::get);
         }
     }
 
     @Override
+    public void info(Object message, Object... params) {
+        if (isInfoEnabled()) {
+            logger.info(marker, MessageHelper.format(message, params));
+        }
+    }
+
+    @Override
     public void info(String message, Object... params) {
-        if (logger.isInfoEnabled(marker)) {
+        if (isInfoEnabled()) {
             logger.info(marker, message, params);
         }
     }
 
     @Override
+    public void info(Object message, Throwable e) {
+        if (isInfoEnabled()) {
+            logger.info(marker, message, e);
+        }
+    }
+
+    @Override
     public void info(String message, Throwable e) {
-        if (logger.isInfoEnabled(marker)) {
+        if (isInfoEnabled()) {
             logger.info(marker, message, e);
         }
     }
 
     @Override
     public void info(Supplier<String> supplier, Throwable e) {
-        if (logger.isInfoEnabled(marker)) {
+        if (isInfoEnabled()) {
             logger.info(marker, supplier::get, e);
         }
     }
 
     @Override
+    public void info(Object message, Throwable e, Object... params) {
+        if (isInfoEnabled()) {
+            logger.info(marker, MessageHelper.format(message, params), e);
+        }
+    }
+
+    @Override
     public void info(String message, Throwable e, Object... params) {
-        if (logger.isInfoEnabled(marker)) {
+        if (isInfoEnabled()) {
             logger.info(marker, MessageHelper.format(message, params), e);
         }
     }
 
     @Override
     public boolean isWarnEnabled() {
-        return logger.isWarnEnabled(marker);
+        return isLoggable(LogLevel.WARN);
+    }
+
+    @Override
+    public void warn(Object message) {
+        if (isWarnEnabled()) {
+            logger.warn(marker, message);
+        }
     }
 
     @Override
     public void warn(String message) {
-        if (logger.isWarnEnabled(marker)) {
+        if (isWarnEnabled()) {
             logger.warn(marker, message);
         }
     }
 
     @Override
     public void warn(Supplier<String> supplier) {
-        if (logger.isWarnEnabled(marker)) {
+        if (isWarnEnabled()) {
             logger.warn(marker, supplier::get);
         }
     }
 
     @Override
+    public void warn(Object message, Object... params) {
+        if (isWarnEnabled()) {
+            logger.warn(marker, MessageHelper.toString(message), params);
+        }
+    }
+
+    @Override
     public void warn(String message, Object... params) {
-        if (logger.isWarnEnabled(marker)) {
+        if (isWarnEnabled()) {
             logger.warn(marker, message, params);
         }
     }
 
     @Override
+    public void warn(Object message, Throwable e) {
+        if (isWarnEnabled()) {
+            logger.warn(marker, message, e);
+        }
+    }
+
+    @Override
     public void warn(String message, Throwable e) {
-        if (logger.isWarnEnabled(marker)) {
+        if (isWarnEnabled()) {
             logger.warn(marker, message, e);
         }
     }
 
     @Override
     public void warn(Supplier<String> supplier, Throwable e) {
-        if (logger.isWarnEnabled(marker)) {
+        if (isWarnEnabled()) {
             logger.warn(marker, supplier::get, e);
         }
     }
 
     @Override
+    public void warn(Object message, Throwable e, Object... params) {
+        if (isWarnEnabled()) {
+            logger.warn(marker, MessageHelper.format(message, params), e);
+        }
+    }
+
+    @Override
     public void warn(String message, Throwable e, Object... params) {
-        if (logger.isWarnEnabled(marker)) {
+        if (isWarnEnabled()) {
             logger.warn(marker, MessageHelper.format(message, params), e);
         }
     }
 
     @Override
     public boolean isErrorEnabled() {
-        return logger.isErrorEnabled(marker);
+        return isLoggable(LogLevel.ERROR);
+    }
+
+    @Override
+    public void error(Object message) {
+        if (isErrorEnabled()) {
+            logger.error(marker, message);
+        }
     }
 
     @Override
     public void error(String message) {
-        if (logger.isErrorEnabled(marker)) {
+        if (isErrorEnabled()) {
             logger.error(marker, message);
         }
     }
 
     @Override
     public void error(Supplier<String> supplier) {
-        if (logger.isErrorEnabled(marker)) {
+        if (isErrorEnabled()) {
             logger.error(marker, supplier::get);
         }
     }
 
     @Override
+    public void error(Object message, Object... params) {
+        if (isErrorEnabled()) {
+            logger.error(marker, MessageHelper.toString(message), params);
+        }
+    }
+
+    @Override
     public void error(String message, Object... params) {
-        if (logger.isErrorEnabled(marker)) {
+        if (isErrorEnabled()) {
             logger.error(marker, message, params);
         }
     }
 
     @Override
+    public void error(Object message, Throwable e) {
+        if (isErrorEnabled()) {
+            logger.error(marker, message, e);
+        }
+    }
+
+    @Override
     public void error(String message, Throwable e) {
-        if (logger.isErrorEnabled(marker)) {
+        if (isErrorEnabled()) {
             logger.error(marker, message, e);
         }
     }
 
     @Override
     public void error(Supplier<String> supplier, Throwable e) {
-        if (logger.isErrorEnabled(marker)) {
+        if (isErrorEnabled()) {
             logger.error(marker, supplier::get, e);
         }
     }
 
     @Override
+    public void error(Object message, Throwable e, Object... params) {
+        if (isErrorEnabled()) {
+            logger.error(marker, MessageHelper.format(message, params), e);
+        }
+    }
+
+    @Override
     public void error(String message, Throwable e, Object... params) {
-        if (logger.isErrorEnabled(marker)) {
+        if (isErrorEnabled()) {
             logger.error(marker, MessageHelper.format(message, params), e);
         }
     }
 
     @Override
     public boolean isFatalEnabled() {
-        return logger.isFatalEnabled(marker);
+        return isLoggable(LogLevel.FATAL);
+    }
+
+    @Override
+    public void fatal(Object message) {
+        if (isFatalEnabled()) {
+            logger.fatal(marker, message);
+        }
     }
 
     @Override
     public void fatal(String message) {
-        if (logger.isFatalEnabled(marker)) {
+        if (isFatalEnabled()) {
             logger.fatal(marker, message);
         }
     }
 
     @Override
     public void fatal(Supplier<String> supplier) {
-        if (logger.isFatalEnabled(marker)) {
+        if (isFatalEnabled()) {
             logger.fatal(marker, supplier::get);
         }
     }
 
     @Override
+    public void fatal(Object message, Object... params) {
+        if (isFatalEnabled()) {
+            logger.fatal(marker, MessageHelper.toString(message), params);
+        }
+    }
+
+    @Override
     public void fatal(String message, Object... params) {
-        if (logger.isFatalEnabled(marker)) {
+        if (isFatalEnabled()) {
             logger.fatal(marker, message, params);
         }
     }
 
     @Override
+    public void fatal(Object message, Throwable e) {
+        if (isFatalEnabled()) {
+            logger.fatal(marker, message, e);
+        }
+    }
+
+    @Override
     public void fatal(String message, Throwable e) {
-        if (logger.isFatalEnabled(marker)) {
+        if (isFatalEnabled()) {
             logger.fatal(marker, message, e);
         }
     }
 
     @Override
     public void fatal(Supplier<String> supplier, Throwable e) {
-        if (logger.isFatalEnabled(marker)) {
+        if (isFatalEnabled()) {
             logger.fatal(marker, supplier::get, e);
         }
     }
 
     @Override
+    public void fatal(Object message, Throwable e, Object... params) {
+        if (isFatalEnabled()) {
+            logger.fatal(marker, MessageHelper.format(message, params), e);
+        }
+    }
+
+    @Override
     public void fatal(String message, Throwable e, Object... params) {
-        if (logger.isFatalEnabled(marker)) {
+        if (isFatalEnabled()) {
             logger.fatal(marker, MessageHelper.format(message, params), e);
         }
     }

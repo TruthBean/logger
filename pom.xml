@@ -12,6 +12,7 @@
         <module>adapter</module>
         <module>boot</module>
         <module>logger-dependence</module>
+        <module>third</module>
     </modules>
 
     <packaging>pom</packaging>

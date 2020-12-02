@@ -26,8 +26,10 @@ public class TruthBeanJulFormatter extends Formatter {
         var cname = record.getSourceClassName();
         var method = record.getSourceMethodName();
 
+        var location = cname + "." + method + "()";
+
         var threadName = Thread.currentThread().getName();
-        var logger = MessageHelper.buildMessage(level.getName(), threadName, cname, method);
+        var logger = MessageHelper.buildMessage(level.getName(), threadName, location);
         var newMessage = record.getMessage() + "\033[0m";
         logger.append(newMessage).append("\n");
         return logger.toString();

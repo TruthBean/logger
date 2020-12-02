@@ -33,7 +33,7 @@ public class JulBootInitiation implements LoggerInitiation {
         }
         var logger = Logger.getLogger(loggerName);
         if (logger != null) {
-            var level = JulLevel.SEVERE;
+            var level = JulLevel.ERROR;
             switch (logLevel) {
                 case FATAL:
                     level = JulLevel.FATAL;
@@ -41,7 +41,7 @@ public class JulBootInitiation implements LoggerInitiation {
                 case ERROR:
                     break;
                 case WARN:
-                    level = JulLevel.WARNING;
+                    level = JulLevel.WARN;
                     break;
                 case INFO:
                     level = JulLevel.INFO;
@@ -53,7 +53,7 @@ public class JulBootInitiation implements LoggerInitiation {
                     level = JulLevel.TRACE;
                     break;
                 default:
-                    level = JulLevel.SEVERE;
+                    level = JulLevel.ERROR;
                     break;
             }
             logger.setLevel(level);

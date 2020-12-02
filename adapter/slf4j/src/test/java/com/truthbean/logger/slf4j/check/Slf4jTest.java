@@ -7,7 +7,7 @@
  * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
-package com.truthbean.debbie.core.test;
+package com.truthbean.logger.slf4j.check;
 
 import com.truthbean.Logger;
 import com.truthbean.logger.LogLevel;
@@ -19,35 +19,39 @@ import org.junit.jupiter.api.Test;
  * @since 0.0.1
  * Created on 2020-05-08 22:32
  */
-public class LoggerTest {
+class Slf4jTest {
 
     private final TestService service = new TestService(LOGGER);
 
     static {
-        System.setProperty(LoggerFactory.NO_LOGGER, "true");
-        System.setProperty(LoggerFactory.STD_OUT, "true");
-        System.setProperty("logging.level.com.truthbean.debbie.core.test", "trace");
+        System.setProperty("logging.level.com.truthbean", "trace");
     }
 
     @Test
     void testLog() {
-        LOGGER.log(LogLevel.INFO, "info");
         LOGGER.log(LogLevel.INFO, this);
-        LOGGER.log(LogLevel.INFO, () -> "info");
-        LOGGER.log(LogLevel.INFO, "{", null, "info");
-        LOGGER.log(LogLevel.INFO, this, "info");
-        LOGGER.info(this);
+        LOGGER.log(LogLevel.INFO, "log");
+        LOGGER.log(LogLevel.INFO, () -> "log");
+        LOGGER.log(LogLevel.INFO, "log: {}", 1);
+        LOGGER.log(LogLevel.INFO, new StringBuffer("log: {}"), 1);
+        LOGGER.log(LogLevel.INFO, new StringBuffer("log: {}"), new RuntimeException(), 1);
     }
-
+    
     @Test
     void testInfo() {
+        LOGGER.info("msg");
+        LOGGER.info("msg{},{}", 1, "444");
+        service.info();
+
+        LOGGER.info("66666666", new RuntimeException("7777"));
+        LOGGER.info("info");
+        LOGGER.info("info{},{},{}", 55, "7777", this);
         LOGGER.info("msg");
         LOGGER.info(() -> "msg");
         LOGGER.info("msg{}", 123);
         LOGGER.info(this, 123);
         LOGGER.info(this);
         LOGGER.info("msg({}),({}),特{}朗普", 1, "444", "吹牛");
-        service.info();
     }
 
     @Test
@@ -55,17 +59,23 @@ public class LoggerTest {
         LOGGER.debug("debug");
         LOGGER.debug("debug{},{},{}", 55, "7777", this);
         service.debug();
+
+        LOGGER.debug("66666666", new RuntimeException("7777"));
+        LOGGER.debug("debug");
+        LOGGER.debug("debug{},{debug},{}", 55, "7777", this);
         LOGGER.debug("msg");
         LOGGER.debug(() -> "msg");
         LOGGER.debug("msg{}", 123);
         LOGGER.debug(this, 123);
         LOGGER.debug(this);
         LOGGER.debug("msg({}),({}),特{}朗普", 1, "444", "吹牛");
-        service.debug();
     }
 
     @Test
     void testError() {
+        LOGGER.error("66666666", new RuntimeException("7777"));
+        service.error();
+
         LOGGER.error("66666666", new RuntimeException("7777"));
         LOGGER.error("error");
         LOGGER.error("error{},{},{}", 55, "7777", this);
@@ -75,35 +85,32 @@ public class LoggerTest {
         LOGGER.error(this, 123);
         LOGGER.error(this);
         LOGGER.error("msg({}),({}),特{}朗普", 1, "444", "吹牛");
-        service.error();
     }
 
     @Test
     void testTrace() {
-        LOGGER.trace("66666666", new RuntimeException("7777"));
         LOGGER.trace("trace");
-        LOGGER.trace("trace{},{trace},{}", 55, "7777", this);
-        LOGGER.trace("msg");
-        LOGGER.trace(() -> "msg");
-        LOGGER.trace("msg{}", 123);
-        LOGGER.trace(this, 123);
-        LOGGER.trace(this);
-        LOGGER.trace("msg({}),({}),特{}朗普", 1, "444", "吹牛");
+        LOGGER.trace(() -> "hello trace");
+        LOGGER.trace(() -> "hello trace", new RuntimeException());
         service.trace();
     }
 
     @Test
     void testFatal() {
+        LOGGER.fatal("fatal");
+        LOGGER.fatal(() -> "hello fatal");
+        LOGGER.fatal(() -> "hello fatal", new RuntimeException());
+        service.fatal();
+
         LOGGER.fatal("66666666", new RuntimeException("7777"));
         LOGGER.fatal("fatal");
-        LOGGER.fatal("fatal{},{fatal},{}", 55, "7777", this);
+        LOGGER.fatal("fatal{},{},{}", 55, "7777", this);
         LOGGER.fatal("msg");
-        LOGGER.fatal(() -> "msg");
+        LOGGER.fatal(() -> "msg fatal");
         LOGGER.fatal("msg{}", 123);
         LOGGER.fatal(this, 123);
         LOGGER.fatal(this);
         LOGGER.fatal("msg({}),({}),特{}朗普", 1, "444", "吹牛");
-        service.fatal();
     }
 
     @Override
@@ -111,5 +118,5 @@ public class LoggerTest {
         return "888888888888888888888888";
     }
     
-    public static final Logger LOGGER = LoggerFactory.getLogger(LogLevel.TRACE, LoggerTest.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(LogLevel.TRACE, Slf4jTest.class);
 }

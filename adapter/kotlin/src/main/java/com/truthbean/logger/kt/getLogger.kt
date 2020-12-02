@@ -10,6 +10,7 @@
 package com.truthbean.logger.kt
 
 import com.truthbean.Logger
+import com.truthbean.logger.LogLevel
 import com.truthbean.logger.LoggerFactory
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
@@ -20,6 +21,8 @@ import kotlin.reflect.KProperty
  * Created on 2020-06-22 23:34
  */
 inline fun <reified T : Any> LoggerFactory.getLogger(): Logger = LoggerFactory.getLogger(T::class.java)
+
+inline fun <reified T : Any> LoggerFactory.getLogger(level: LogLevel): Logger = LoggerFactory.getLogger(level, T::class.java)
 
 /**
  * factory logger by kotlin class
@@ -32,10 +35,27 @@ fun LoggerFactory.getLogger(kClass: KClass<*>): Logger {
 }
 
 /**
+ * factory logger by kotlin class
+ */
+fun LoggerFactory.getLogger(level: LogLevel, kClass: KClass<*>): Logger {
+    val qualifiedName = kClass.qualifiedName
+    if (qualifiedName != null)
+        return LoggerFactory.getLogger(level, qualifiedName)
+    return LoggerFactory.getLogger(level, Logger::javaClass.name)
+}
+
+/**
  * factory logger by kotlin property
  */
 fun LoggerFactory.getLogger(property: KProperty<Class<*>>): Logger {
     return LoggerFactory.getLogger(property.name)
+}
+
+/**
+ * factory logger by kotlin property
+ */
+fun LoggerFactory.getLogger(level: LogLevel, property: KProperty<Class<*>>): Logger {
+    return LoggerFactory.getLogger(level, property.name)
 }
 
 /**
