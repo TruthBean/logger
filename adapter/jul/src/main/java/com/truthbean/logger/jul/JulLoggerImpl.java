@@ -14,6 +14,8 @@ import com.truthbean.logger.BaseLogger;
 import com.truthbean.logger.ConfigurableLogger;
 import com.truthbean.logger.LogLevel;
 import com.truthbean.logger.LoggerFactory;
+import com.truthbean.logger.jdk.common.JulLevel;
+import com.truthbean.logger.jdk.common.TruthBeanJulFormatter;
 import com.truthbean.logger.util.MessageHelper;
 
 import java.util.Objects;
@@ -128,7 +130,7 @@ public class JulLoggerImpl implements BaseLogger {
     }
 
     private void logging(Level level, Throwable ex, String message, Object... params) {
-        var location = ConfigurableLogger.getLoggerMethod(getLoggerName(), getClass().getName(), 4);
+        var location = ConfigurableLogger.getLoggerMethod(getLoggerName(), 5);
 
         var logRecord = new LogRecord(level, MessageHelper.format(message, params));
         logRecord.setSourceClassName(location.getClassName());

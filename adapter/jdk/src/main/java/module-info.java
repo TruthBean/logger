@@ -15,6 +15,7 @@
 open module com.truthbean.logger.jdk {
     requires java.base;
     requires transitive com.truthbean.logger.core;
+    requires com.truthbean.logger.jdk.common;
 
     provides com.truthbean.Logger with com.truthbean.logger.jdk.JdkSystemLogger;
     provides System.LoggerFinder with com.truthbean.logger.jdk.JdkSystemLoggerProvider;

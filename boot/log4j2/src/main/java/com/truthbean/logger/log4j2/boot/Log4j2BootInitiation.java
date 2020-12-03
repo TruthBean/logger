@@ -47,6 +47,9 @@ public class Log4j2BootInitiation implements LoggerInitiation {
     public void setLogLevel(String loggerName, LogLevel logLevel) {
         var level = Level.ERROR;
         switch (logLevel) {
+            case OFF:
+                level = Level.OFF;
+                break;
             case FATAL:
                 level = Level.FATAL;
                 break;

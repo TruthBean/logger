@@ -25,6 +25,17 @@ public class SystemOutLogger implements ConfigurableLogger {
     private String loggerName;
     private LogLevel level;
 
+    public SystemOutLogger() {
+    }
+
+    public static Logger getLogger(Class<?> tracedClass) {
+        return new SystemOutLogger().setClass(tracedClass).setDefaultLevel(LogLevel.WARN);
+    }
+
+    public static void err(String message, Throwable e) {
+        new SystemOutLogger().logging(LogLevel.ERROR, e, message);
+    }
+
     @Override
     public ConfigurableLogger setClass(Class<?> tracedClass) {
         this.loggerName = tracedClass.getName();
@@ -597,7 +608,7 @@ public class SystemOutLogger implements ConfigurableLogger {
     }
 
     public void logging(LogLevel level, Throwable ex, String message, Object... params) {
-        var location = ConfigurableLogger.getLoggerMethod(getLoggerName(), getClass().getName(), 1);
+        var location = ConfigurableLogger.getLoggerMethod(getLoggerName(), 3);
 
         var threadName = Thread.currentThread().getName();
 

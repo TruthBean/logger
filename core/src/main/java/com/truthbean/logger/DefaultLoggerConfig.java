@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author TruthBean/Rogar·Q
@@ -21,10 +22,15 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class DefaultLoggerConfig implements LoggerConfig {
 
-    private final Map<String, LogLevel> levelMap = new ConcurrentHashMap<>();
+    private final ConcurrentMap<String, LogLevel> levelMap = new ConcurrentHashMap<>();
 
     public DefaultLoggerConfig() {
         Runtime.getRuntime().addShutdownHook(new Thread(levelMap::clear));
+    }
+
+    @Override
+    public void setLogLevel(String loggerName, LogLevel level) {
+        levelMap.put(loggerName, level);
     }
 
     @Override
@@ -55,7 +61,7 @@ public class DefaultLoggerConfig implements LoggerConfig {
                 var key = entry.getKey();
                 var level = entry.getValue();
                 if (key.equals(name)) {
-                    return Optional.of(level);
+                    return Optional.ofNullable(level);
                 }
             }
             LogLevel result = null;
@@ -72,6 +78,18 @@ public class DefaultLoggerConfig implements LoggerConfig {
                 return Optional.of(result);
             }
         }
+        if (levelMap.containsKey("ROOT")) {
+            LogLevel level = levelMap.get("ROOT");
+            return Optional.ofNullable(level);
+        } else if (levelMap.containsKey("root")) {
+            LogLevel level = levelMap.get("root");
+            return Optional.ofNullable(level);
+        }
         return Optional.empty();
+    }
+
+    @Override
+    public void clear() {
+        levelMap.clear();
     }
 }

@@ -20,11 +20,17 @@ import java.util.Optional;
  */
 public interface LoggerConfig {
 
+    default void setLogLevel(String loggerName, LogLevel level) {
+    }
+
     default Map<String, LogLevel> getLoggers() {
         return new HashMap<>();
     }
 
     default Optional<LogLevel> getLevel(String name) {
         return Optional.empty();
+    }
+
+    default void clear() {
     }
 }

@@ -108,6 +108,8 @@ class Slf4jLocationAwareLoggerImpl implements ConfigurableLogger {
     public boolean isLoggable(LogLevel level) {
         var bool = this.level.compareTo(level) >= 0;
         switch (level) {
+            case OFF:
+                return false;
             case FATAL:
                 return bool;
             case ERROR:

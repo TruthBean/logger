@@ -173,6 +173,18 @@
                 <artifactId>juli-impl</artifactId>
                 <version>${logger.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.truthbean.logger</groupId>
+                <artifactId>logger-spring-boot-starter</artifactId>
+                <version>${logger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.truthbean.logger</groupId>
+                <artifactId>jcl-impl</artifactId>
+                <version>${logger.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

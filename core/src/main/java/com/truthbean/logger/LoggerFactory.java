@@ -22,7 +22,7 @@ import java.util.ServiceLoader;
  */
 public class LoggerFactory {
     public static final String NO_LOGGER = "com.truthbean.logger.no";
-    public static final String STD_OUT = "com.truthbean.logger.system.out";
+    public static final String STD_OUT = "com.truthbean.logger.system-out";
     private static LoggerConfig config;
 
     static {
@@ -120,20 +120,28 @@ public class LoggerFactory {
     }
 
     private static Logger getLogger() {
+        var out = System.getProperty(STD_OUT, "false");
+        var doStdOut = "true".equalsIgnoreCase(out) || "yes".equalsIgnoreCase(out) || "y".equalsIgnoreCase(out) || "ok".equalsIgnoreCase(out)
+                || "是".equalsIgnoreCase(out) || "好".equalsIgnoreCase(out) || "确定".equalsIgnoreCase(out) || "陛下英明".equalsIgnoreCase(out);
+
+        var no = System.getProperty(NO_LOGGER, "false");
+        var noLog = "false".equalsIgnoreCase(no) || "no".equalsIgnoreCase(no) || "y".equalsIgnoreCase(no)
+                || "不".equalsIgnoreCase(no) || "滚".equalsIgnoreCase(no) || "否".equalsIgnoreCase(no) || "面对疾风吧".equalsIgnoreCase(no);
+
         Optional<Logger> first = Optional.empty();
         try {
             var serviceLoader = ServiceLoader.load(Logger.class);
             first = serviceLoader.findFirst();
         } catch (Throwable e) {
-            new SystemOutLogger().error("load logger error.", e);
+            if (doStdOut) {
+                SystemOutLogger.err("load logger error.", e);
+            } else if (noLog) {
+                throw new NoLoggerProviderException("load logger error.", e);
+            }
         }
         if (first.isEmpty()) {
-            var out = System.getProperty(STD_OUT, "false");
-            if (!("true".equalsIgnoreCase(out) || "yes".equalsIgnoreCase(out) || "y".equalsIgnoreCase(out) || "ok".equalsIgnoreCase(out)
-                    || "是".equalsIgnoreCase(out) || "好".equalsIgnoreCase(out) || "确定".equalsIgnoreCase(out) || "陛下英明".equalsIgnoreCase(out))) {
-                var no = System.getProperty(NO_LOGGER, "false");
-                if ("false".equalsIgnoreCase(no) || "no".equalsIgnoreCase(no) || "y".equalsIgnoreCase(no)
-                        || "不".equalsIgnoreCase(no) || "滚".equalsIgnoreCase(no) || "否".equalsIgnoreCase(no) || "面对疾风吧".equalsIgnoreCase(no)) {
+            if (!doStdOut) {
+                if (noLog) {
                     throw new NoLoggerProviderException();
                 } else {
                     return new NoLogger();

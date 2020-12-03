@@ -49,6 +49,9 @@ public class JulLoggerTest extends Logging {
     @Test
     void testJdk() {
         var logger = java.util.logging.Logger.getLogger(JulLoggerTest.class.getName());
+        logger.log(Level.FINEST, "FINEST");
+        logger.log(Level.FINER, "FINER");
+        logger.log(Level.FINE, "fine");
         logger.log(Level.INFO, "info");
         logger.log(Level.WARNING, "warn");
         logger.log(Level.SEVERE, "error");

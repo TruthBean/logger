@@ -18,6 +18,10 @@ import java.util.Optional;
  */
 public enum LogLevel {
     /**
+     * 关闭所有日志
+     */
+    OFF,
+    /**
      * 导致系统崩溃无法运行的错误
      */
     FATAL,

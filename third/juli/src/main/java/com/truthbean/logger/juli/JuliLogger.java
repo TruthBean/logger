@@ -25,6 +25,7 @@ public class JuliLogger implements Log {
     public JuliLogger() {
     }
 
+    @SuppressWarnings("unused")
     public JuliLogger(String name) {
         logger = LoggerFactory.getLogger(name);
     }

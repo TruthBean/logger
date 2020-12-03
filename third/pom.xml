@@ -15,7 +15,8 @@
 
     <modules>
         <module>juli</module>
+        <module>spring-boot</module>
+        <module>jcl</module>
     </modules>
-
 
 </project>

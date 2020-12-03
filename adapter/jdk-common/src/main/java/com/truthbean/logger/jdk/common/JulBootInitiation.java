@@ -7,12 +7,17 @@
  * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
-package com.truthbean.logger.jul;
+package com.truthbean.logger.jdk.common;
 
 import com.truthbean.logger.LogLevel;
 import com.truthbean.logger.LoggerFactory;
 import com.truthbean.logger.LoggerInitiation;
+import com.truthbean.logger.SystemOutLogger;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 /**
@@ -23,6 +28,7 @@ import java.util.logging.Logger;
 public class JulBootInitiation implements LoggerInitiation {
     @Override
     public void init() {
+        loadConfiguration();
         var config = LoggerFactory.getConfig().getLoggers();
         config.forEach(this::setLogLevel);
     }
@@ -57,6 +63,17 @@ public class JulBootInitiation implements LoggerInitiation {
                     break;
             }
             logger.setLevel(level);
+        }
+    }
+
+    private void loadConfiguration() {
+        try {
+            URL resource = Thread.currentThread().getContextClassLoader().getResource("logging.properties");
+            if (resource != null) {
+                LogManager.getLogManager().readConfiguration(new FileInputStream(resource.getPath()));
+            }
+        } catch (IOException e) {
+            SystemOutLogger.err("", e);
         }
     }
 }

@@ -33,7 +33,7 @@ public interface ConfigurableLogger extends Logger {
 
     Logger logger();
 
-    static LoggerLocation getLoggerMethod(String loggerName, String callerName, int nextN) {
+    static LoggerLocation getLoggerMethod(String loggerName, int nextN) {
         LoggerLocation result = new LoggerLocation();
         result.setLoggerName(loggerName);
 
@@ -41,16 +41,29 @@ public interface ConfigurableLogger extends Logger {
         var dummyException = new Throwable();
         var locations = dummyException.getStackTrace();
         // Caller will be the third element
-        String location;
 
-        if (locations != null && locations.length > 2) {
-            var caller = locations[2];
+        if (locations != null && locations.length > nextN) {
+            var deep = locations.length;
+            var caller = locations[nextN];
             String moduleName = caller.getModuleName();
             String moduleVersion = caller.getModuleVersion();
             var className = caller.getClassName();
             var methodName = caller.getMethodName();
             var lineNumber = caller.getLineNumber();
-            if ("com.truthbean.Logger".equals(className)) {
+
+            while (deep > nextN && ("com.truthbean.Logger".equals(className)
+                    || "com.truthbean.logger.BaseLogger".equals(className)
+                    || "com.truthbean.logger.juli.JuliLogger".equals(className)
+                    || "com.truthbean.logger.jcl.JclLogger".equals(className)
+                    || "com.truthbean.logger.jul.JulLoggerImpl".equals(className))) {
+                caller = locations[nextN++];
+                moduleName = caller.getModuleName();
+                moduleVersion = caller.getModuleVersion();
+                className = caller.getClassName();
+                methodName = caller.getMethodName();
+                lineNumber = caller.getLineNumber();
+            }
+            /*if ("com.truthbean.Logger".equals(className)) {
                 // todo
             } else if (callerName.equals(className)) {
                 caller = locations[2 + nextN];
@@ -59,9 +72,13 @@ public interface ConfigurableLogger extends Logger {
                 className = caller.getClassName();
                 methodName = caller.getMethodName();
                 lineNumber = caller.getLineNumber();
-            }
+            }*/
 
-            if (!"com.truthbean.Logger".equals(className)) {
+            if (!("com.truthbean.Logger".equals(className)
+                    || "com.truthbean.logger.BaseLogger".equals(className)
+                    || "com.truthbean.logger.juli.JuliLogger".equals(className)
+                    || "com.truthbean.logger.jcl.JclLogger".equals(className)
+                    || "com.truthbean.logger.jul.JulLoggerImpl".equals(className))) {
                 result.setClassName(className);
                 result.setModuleName(moduleName);
                 result.setMethodName(methodName);
