@@ -55,7 +55,9 @@ public interface ConfigurableLogger extends Logger {
                     || "com.truthbean.logger.BaseLogger".equals(className)
                     || "com.truthbean.logger.juli.JuliLogger".equals(className)
                     || "com.truthbean.logger.jcl.JclLogger".equals(className)
-                    || "com.truthbean.logger.jul.JulLoggerImpl".equals(className))) {
+                    || "com.truthbean.logger.jul.JulLoggerImpl".equals(className)
+                    || "com.truthbean.logger.slf4j.TruthBeanLogger".equals(className)
+                    || "com.truthbean.logger.log4j2.TruthBeanLogger".equals(className))) {
                 caller = locations[nextN++];
                 moduleName = caller.getModuleName();
                 moduleVersion = caller.getModuleVersion();
@@ -63,22 +65,14 @@ public interface ConfigurableLogger extends Logger {
                 methodName = caller.getMethodName();
                 lineNumber = caller.getLineNumber();
             }
-            /*if ("com.truthbean.Logger".equals(className)) {
-                // todo
-            } else if (callerName.equals(className)) {
-                caller = locations[2 + nextN];
-                moduleName = caller.getModuleName();
-                moduleVersion = caller.getModuleVersion();
-                className = caller.getClassName();
-                methodName = caller.getMethodName();
-                lineNumber = caller.getLineNumber();
-            }*/
 
             if (!("com.truthbean.Logger".equals(className)
                     || "com.truthbean.logger.BaseLogger".equals(className)
                     || "com.truthbean.logger.juli.JuliLogger".equals(className)
                     || "com.truthbean.logger.jcl.JclLogger".equals(className)
-                    || "com.truthbean.logger.jul.JulLoggerImpl".equals(className))) {
+                    || "com.truthbean.logger.jul.JulLoggerImpl".equals(className)
+                    || "com.truthbean.logger.slf4j.TruthBeanLogger".equals(className)
+                    || "com.truthbean.logger.log4j2.TruthBeanLogger".equals(className))) {
                 result.setClassName(className);
                 result.setModuleName(moduleName);
                 result.setMethodName(methodName);

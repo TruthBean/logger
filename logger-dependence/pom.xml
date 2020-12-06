@@ -185,6 +185,18 @@
                 <artifactId>jcl-impl</artifactId>
                 <version>${logger.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.truthbean.logger</groupId>
+                <artifactId>slf4j-impl</artifactId>
+                <version>${logger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.truthbean.logger</groupId>
+                <artifactId>log4j2-impl</artifactId>
+                <version>${logger.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

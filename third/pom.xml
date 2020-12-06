@@ -17,6 +17,9 @@
         <module>juli</module>
         <module>spring-boot</module>
         <module>jcl</module>
+        <module>kotlin</module>
+        <module>slf4j</module>
+        <module>log4j2</module>
     </modules>
 
 </project>

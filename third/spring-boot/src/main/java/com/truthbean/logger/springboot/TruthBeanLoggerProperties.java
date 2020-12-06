@@ -11,12 +11,14 @@ package com.truthbean.logger.springboot;
 
 import com.truthbean.logger.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
  * @author TruthBean/Rogar·Q
  * @since 0.4.0
  * Created on 2020-12-02 17:10
  */
+@Component
 @ConfigurationProperties(prefix = "com.truthbean.logger")
 public class TruthBeanLoggerProperties {
 

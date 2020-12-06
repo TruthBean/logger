@@ -23,7 +23,6 @@
         <module>jul</module>
         <module>slf4j</module>
         <module>stdout</module>
-        <module>kotlin</module>
     </modules>
 
     <dependencies>

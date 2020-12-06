@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>logger-boot</artifactId>
+        <groupId>com.truthbean.logger</groupId>
+        <version>0.4.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>stdout-boot</artifactId>
+
+    <properties>
+        <java.version>11</java.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <logger.version>0.4.0-SNAPSHOT</logger.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.truthbean.logger</groupId>
+            <artifactId>logger-core</artifactId>
+            <version>${logger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.truthbean.logger</groupId>
+            <artifactId>stdout-adapter</artifactId>
+            <version>${logger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.truthbean.logger</groupId>
+            <artifactId>jcl-impl</artifactId>
+            <version>${logger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.truthbean.logger</groupId>
+            <artifactId>juli-impl</artifactId>
+            <version>${logger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.truthbean.logger</groupId>
+            <artifactId>kotlin-adapter</artifactId>
+            <version>${logger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.truthbean.logger</groupId>
+            <artifactId>slf4j-impl</artifactId>
+            <version>${logger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.truthbean.logger</groupId>
+            <artifactId>log4j2-impl</artifactId>
+            <version>${logger.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

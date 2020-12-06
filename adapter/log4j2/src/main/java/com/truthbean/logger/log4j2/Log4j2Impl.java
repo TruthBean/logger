@@ -129,6 +129,8 @@ public class Log4j2Impl implements ConfigurableLogger {
                 return Optional.of(Level.DEBUG);
             case TRACE:
                 return Optional.of(Level.TRACE);
+            case OFF:
+                return Optional.of(Level.OFF);
             default:
                 return Optional.empty();
         }
@@ -139,6 +141,8 @@ public class Log4j2Impl implements ConfigurableLogger {
             return Optional.empty();
         }
         switch (level.intLevel()) {
+            case 0:
+                return Optional.of(LogLevel.OFF);
             case 100:
                 return Optional.of(LogLevel.FATAL);
             case 200:
