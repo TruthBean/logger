@@ -34,6 +34,13 @@ public class DefaultLoggerConfig implements LoggerConfig {
     }
 
     @Override
+    public boolean useName() {
+        var properties = System.getProperties();
+        String useName = properties.getProperty(USE_NAME, "false");
+        return Boolean.parseBoolean(useName);
+    }
+
+    @Override
     public Map<String, LogLevel> getLoggers() {
         Map<String, LogLevel> map = new HashMap<>();
         var properties = System.getProperties();

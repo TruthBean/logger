@@ -34,7 +34,7 @@ class Log4j2ExtendedLoggerWrapperImpl implements ConfigurableLogger {
     private final ExtendedLoggerWrapper logger;
     private LogLevel level;
     private Level defaultLevel;
-    private String name;
+    private final String name;
     Log4j2ExtendedLoggerWrapperImpl(AbstractLogger logger, String name) {
         this.name = name;
         this.logger = new ExtendedLoggerWrapper(logger, logger.getName(), logger.getMessageFactory());

@@ -32,15 +32,14 @@ public class LoggerFactory {
             config = loggerConfig.orElseGet(DefaultLoggerConfig::new);
 
             var serviceLoader = ServiceLoader.load(LoggerInitiation.class);
-            var first = serviceLoader.findFirst();
-            first.ifPresent(LoggerInitiation::init);
-
+            serviceLoader.forEach(LoggerInitiation::init);
         } catch (Throwable e) {
             var logger = getLogger();
             if (ConfigurableLogger.class.isAssignableFrom(logger.getClass())) {
                 ((ConfigurableLogger) logger)
                         .setName("com.truthbean.logger.LoggerFactory")
                         .setDefaultLevel(LogLevel.ERROR)
+                        .setUseName(config.useName())
                         .logger()
                         .error("", e);
             } else {
@@ -65,6 +64,7 @@ public class LoggerFactory {
                 return ((ConfigurableLogger) logger)
                         .setClass(clazz)
                         .setDefaultLevel(defaultLevel)
+                        .setUseName(config.useName())
                         .logger();
             }
         }
@@ -78,6 +78,7 @@ public class LoggerFactory {
                 return ((ConfigurableLogger) logger)
                         .setClass(clazz)
                         .setDefaultLevel(LogLevel.ERROR)
+                        .setUseName(config.useName())
                         .logger();
             }
         }
@@ -91,6 +92,7 @@ public class LoggerFactory {
                 return ((ConfigurableLogger) logger)
                         .setName(loggerName)
                         .setDefaultLevel(defaultLevel)
+                        .setUseName(config.useName())
                         .logger();
             }
         }
@@ -104,6 +106,7 @@ public class LoggerFactory {
                 return ((ConfigurableLogger) logger)
                         .setName(loggerName)
                         .setDefaultLevel(LogLevel.ERROR)
+                        .setUseName(config.useName())
                         .logger();
             }
         }

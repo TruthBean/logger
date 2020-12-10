@@ -11,6 +11,7 @@ package com.truthbean.logger.stdout.test;
 
 import com.truthbean.Logger;
 import com.truthbean.logger.LogLevel;
+import com.truthbean.logger.LoggerConfig;
 import com.truthbean.logger.LoggerFactory;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +24,7 @@ class StdoutTest {
 
     static {
         System.setProperty("logging.level.com.truthbean", "info");
+        System.setProperty(LoggerConfig.USE_NAME, "true");
     }
 
     private final TestService service = new TestService(LOGGER);

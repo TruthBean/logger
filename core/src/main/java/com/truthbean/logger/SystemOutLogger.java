@@ -24,6 +24,7 @@ public class SystemOutLogger implements ConfigurableLogger {
 
     private String loggerName;
     private LogLevel level;
+    private boolean useName;
 
     public SystemOutLogger() {
     }
@@ -45,6 +46,12 @@ public class SystemOutLogger implements ConfigurableLogger {
     @Override
     public ConfigurableLogger setName(String name) {
         this.loggerName = name;
+        return this;
+    }
+
+    @Override
+    public ConfigurableLogger setUseName(boolean useName) {
+        this.useName = useName;
         return this;
     }
 
@@ -608,7 +615,13 @@ public class SystemOutLogger implements ConfigurableLogger {
     }
 
     public void logging(LogLevel level, Throwable ex, String message, Object... params) {
-        var location = ConfigurableLogger.getLoggerMethod(getLoggerName(), 3);
+        LoggerLocation location;
+        if (!useName) {
+            location = ConfigurableLogger.getLoggerMethod(getLoggerName(), 3);
+        } else {
+            location = new LoggerLocation();
+            location.setLoggerName(getLoggerName());
+        }
 
         var threadName = Thread.currentThread().getName();
 

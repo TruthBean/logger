@@ -11,10 +11,13 @@ package com.truthbean.logger.check.jul;
 
 import com.truthbean.Logger;
 import com.truthbean.logger.LogLevel;
+import com.truthbean.logger.LoggerConfig;
 import com.truthbean.logger.LoggerFactory;
 import com.truthbean.logger.Logging;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.logging.Level;
 
 /**
@@ -25,15 +28,17 @@ import java.util.logging.Level;
 public class JulLoggerTest extends Logging {
 
     static {
-        System.setProperty("logging.level.com.truthbean", "TRACE");
+        System.setProperty("logging.level.com.truthbean", LogLevel.TRACE.name());
+        System.setProperty(LoggerConfig.USE_NAME, LoggerConfig.FALSE);
     }
 
     @Test
     void testJdk9() {
-        long start = System.nanoTime();
         var logger = java.lang.System.getLogger(JulLoggerTest.class.getName());
         System.out.println(logger);
-        for (int i = 0; i < 10000; i++) {
+        Instant begin = Instant.now();
+        final int count = 10000;
+        for (int i = 0; i < count; i++) {
             logger.log(System.Logger.Level.TRACE, "trace");
             logger.log(System.Logger.Level.DEBUG, "debug");
             logger.log(System.Logger.Level.INFO, "info");
@@ -41,13 +46,19 @@ public class JulLoggerTest extends Logging {
             logger.log(System.Logger.Level.ERROR, "error");
             logger.log(System.Logger.Level.OFF, "FATAL");
         }
-        long end = System.nanoTime();
-        System.out.println(end - start);
-        // 14_727_239_100
+        Instant end = Instant.now();
+        Duration between = Duration.between(begin, end);
+        System.out.println("between day: " + between.toDays() / count);
+        System.out.println("between hours: " + between.toHours()/ count);
+        System.out.println("between minutes: " + between.toMinutes()/ count);
+        System.out.println("between seconds: " + between.toSeconds() / count);
+        System.out.println("between millis seconds: " + between.toMillis() / count);
+        System.out.println("between nanos seconds: " + between.toNanos() / count);
     }
 
     @Test
     void testJdk() {
+        Instant begin = Instant.now();
         var logger = java.util.logging.Logger.getLogger(JulLoggerTest.class.getName());
         logger.log(Level.FINEST, "FINEST");
         logger.log(Level.FINER, "FINER");
@@ -55,6 +66,15 @@ public class JulLoggerTest extends Logging {
         logger.log(Level.INFO, "info");
         logger.log(Level.WARNING, "warn");
         logger.log(Level.SEVERE, "error");
+        Instant end = Instant.now();
+        Duration between = Duration.between(begin, end);
+        System.out.println("between day: " + between.toDays());
+        System.out.println("between hours: " + between.toHours());
+        System.out.println("between minutes: " + between.toMinutes());
+        System.out.println("between seconds: " + between.toSeconds());
+        System.out.println("between millis seconds: " + between.toMillis());
+        System.out.println("between nanos seconds: " + between.toNanos());
+
     }
 
     @Test

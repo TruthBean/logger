@@ -20,7 +20,15 @@ import java.util.Optional;
  */
 public interface LoggerConfig {
 
+    public static final String USE_NAME = "com.truthbean.logger.use-name";
+    public static final String FALSE = "false";
+    public static final String TRUE = "true";
+
     default void setLogLevel(String loggerName, LogLevel level) {
+    }
+
+    default boolean useName() {
+        return false;
     }
 
     default Map<String, LogLevel> getLoggers() {

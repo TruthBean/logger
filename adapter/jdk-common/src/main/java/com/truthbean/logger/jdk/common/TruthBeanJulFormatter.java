@@ -9,6 +9,7 @@
  */
 package com.truthbean.logger.jdk.common;
 
+import com.truthbean.logger.LoggerFactory;
 import com.truthbean.logger.util.MessageHelper;
 
 import java.util.logging.Formatter;
@@ -26,7 +27,12 @@ public class TruthBeanJulFormatter extends Formatter {
         var cname = record.getSourceClassName();
         var method = record.getSourceMethodName();
 
-        var location = cname + "." + method + "()";
+        String location;
+        if (LoggerFactory.getConfig().useName() || cname == null) {
+            location = record.getLoggerName();
+        } else {
+            location = cname + "." + method + "()";
+        }
 
         var threadName = Thread.currentThread().getName();
         var logger = MessageHelper.buildMessage(level.getName(), threadName, location);

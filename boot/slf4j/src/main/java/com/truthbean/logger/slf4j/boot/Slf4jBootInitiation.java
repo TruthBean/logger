@@ -65,7 +65,7 @@ public class Slf4jBootInitiation implements LoggerInitiation {
     }
 
     private String getLoggerName(String name) {
-        if (name != null && !name.isBlank() || Logger.ROOT_LOGGER_NAME.equals(name)) {
+        if (name != null && !name.isBlank() || Logger.ROOT_LOGGER_NAME.equalsIgnoreCase(name)) {
             return "ROOT";
         }
         return name;

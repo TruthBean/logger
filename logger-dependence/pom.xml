@@ -197,6 +197,18 @@
                 <artifactId>log4j2-impl</artifactId>
                 <version>${logger.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.truthbean.logger</groupId>
+                <artifactId>jdk9-impl</artifactId>
+                <version>${logger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.truthbean.logger</groupId>
+                <artifactId>stdout-boot</artifactId>
+                <version>${logger.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

@@ -23,6 +23,7 @@ public class DefaultBaseLogger implements BaseLogger {
     private String loggerName;
     private LogLevel level;
     private Logger logger;
+    private boolean useName;
 
     public DefaultBaseLogger() {
     }
@@ -46,6 +47,12 @@ public class DefaultBaseLogger implements BaseLogger {
     @Override
     public ConfigurableLogger setName(String name) {
         this.loggerName = name;
+        return this;
+    }
+
+    @Override
+    public ConfigurableLogger setUseName(boolean useName) {
+        this.useName = useName;
         return this;
     }
 

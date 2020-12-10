@@ -17,6 +17,8 @@ import com.truthbean.logger.SystemOutLogger;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
@@ -26,6 +28,17 @@ import java.util.logging.Logger;
  * Created on 2020-11-18 09:49
  */
 public class JulBootInitiation implements LoggerInitiation {
+
+    static {
+        var handlers = java.util.logging.Logger.getGlobal().getParent().getHandlers();
+        for (var handler : handlers) {
+            if (handler instanceof ConsoleHandler) {
+                handler.setLevel(Level.ALL);
+                handler.setFormatter(new TruthBeanJulFormatter());
+            }
+        }
+    }
+
     @Override
     public void init() {
         loadConfiguration();
@@ -34,7 +47,7 @@ public class JulBootInitiation implements LoggerInitiation {
     }
 
     public void setLogLevel(String loggerName, LogLevel logLevel) {
-        if (loggerName == null || "ROOT".equals(loggerName)) {
+        if (loggerName == null || "ROOT".equalsIgnoreCase(loggerName)) {
             loggerName = "";
         }
         var logger = Logger.getLogger(loggerName);

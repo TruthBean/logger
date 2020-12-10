@@ -10,10 +10,7 @@
 package com.truthbean.logger.jul;
 
 import com.truthbean.Logger;
-import com.truthbean.logger.BaseLogger;
-import com.truthbean.logger.ConfigurableLogger;
-import com.truthbean.logger.LogLevel;
-import com.truthbean.logger.LoggerFactory;
+import com.truthbean.logger.*;
 import com.truthbean.logger.jdk.common.JulLevel;
 import com.truthbean.logger.jdk.common.TruthBeanJulFormatter;
 import com.truthbean.logger.util.MessageHelper;
@@ -33,6 +30,7 @@ public class JulLoggerImpl implements BaseLogger {
     private java.util.logging.Logger logger;
     private String name;
     private LogLevel level;
+    private boolean useName;
 
     static {
         var handlers = java.util.logging.Logger.getGlobal().getParent().getHandlers();
@@ -61,6 +59,12 @@ public class JulLoggerImpl implements BaseLogger {
     public ConfigurableLogger setName(String name) {
         this.name = name;
         this.logger = java.util.logging.Logger.getLogger(name);
+        return this;
+    }
+
+    @Override
+    public ConfigurableLogger setUseName(boolean useName) {
+        this.useName = useName;
         return this;
     }
 
@@ -130,11 +134,18 @@ public class JulLoggerImpl implements BaseLogger {
     }
 
     private void logging(Level level, Throwable ex, String message, Object... params) {
-        var location = ConfigurableLogger.getLoggerMethod(getLoggerName(), 5);
+        LoggerLocation location;
+        if (!useName) {
+            location = ConfigurableLogger.getLoggerMethod(getLoggerName(), 5);
+        } else {
+            location = new LoggerLocation();
+            location.setLoggerName(getLoggerName());
+        }
 
         var logRecord = new LogRecord(level, MessageHelper.format(message, params));
         logRecord.setSourceClassName(location.getClassName());
         logRecord.setSourceMethodName(location.getMethodName());
+        logRecord.setLoggerName(location.getLoggerName());
         if (ex != null) {
             logRecord.setThrown(ex);
         }

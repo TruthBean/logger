@@ -9,12 +9,7 @@
  */
 package com.truthbean.logger.log4j2;
 
-import org.apache.logging.log4j.spi.LoggerContextFactory;
 import org.apache.logging.log4j.spi.Provider;
-import org.apache.logging.log4j.spi.ThreadContextMap;
-
-import java.net.URL;
-import java.util.Properties;
 
 /**
  * @author TruthBean/Rogar·Q

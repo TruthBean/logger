@@ -27,6 +27,10 @@ public interface ConfigurableLogger extends Logger {
 
     ConfigurableLogger setDefaultLevel(LogLevel level);
 
+    default ConfigurableLogger setUseName(boolean useName) {
+        return this;
+    }
+
     LogLevel getDefaultLevel();
 
     LogLevel getLevel();
@@ -56,8 +60,10 @@ public interface ConfigurableLogger extends Logger {
                     || "com.truthbean.logger.juli.JuliLogger".equals(className)
                     || "com.truthbean.logger.jcl.JclLogger".equals(className)
                     || "com.truthbean.logger.jul.JulLoggerImpl".equals(className)
+                    || "com.truthbean.logger.jdk9.JdkSystemLogger".equals(className)
                     || "com.truthbean.logger.slf4j.TruthBeanLogger".equals(className)
-                    || "com.truthbean.logger.log4j2.TruthBeanLogger".equals(className))) {
+                    || "com.truthbean.logger.log4j2.TruthBeanLogger".equals(className)
+                    || "org.apache.logging.log4j.spi.AbstractLogger".equals(className))) {
                 caller = locations[nextN++];
                 moduleName = caller.getModuleName();
                 moduleVersion = caller.getModuleVersion();
@@ -71,8 +77,10 @@ public interface ConfigurableLogger extends Logger {
                     || "com.truthbean.logger.juli.JuliLogger".equals(className)
                     || "com.truthbean.logger.jcl.JclLogger".equals(className)
                     || "com.truthbean.logger.jul.JulLoggerImpl".equals(className)
+                    || "com.truthbean.logger.jdk9.JdkSystemLogger".equals(className)
                     || "com.truthbean.logger.slf4j.TruthBeanLogger".equals(className)
-                    || "com.truthbean.logger.log4j2.TruthBeanLogger".equals(className))) {
+                    || "com.truthbean.logger.log4j2.TruthBeanLogger".equals(className)
+                    || "org.apache.logging.log4j.spi.AbstractLogger".equals(className))) {
                 result.setClassName(className);
                 result.setModuleName(moduleName);
                 result.setMethodName(methodName);
