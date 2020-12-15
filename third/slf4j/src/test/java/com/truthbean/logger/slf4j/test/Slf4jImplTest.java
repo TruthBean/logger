@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 public class Slf4jImplTest {
 
     static {
-        com.truthbean.logger.LoggerFactory.getConfig().setLogLevel(Slf4jImplTest.class.getName(), LogLevel.TRACE);
+        // com.truthbean.logger.LoggerFactory.getConfig().setLogLevel(Slf4jImplTest.class.getName(), LogLevel.TRACE);
     }
 
     @Test

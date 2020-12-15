@@ -27,8 +27,8 @@ import java.util.logging.Level;
 public class StdoutBootTest {
 
     static {
-        com.truthbean.logger.LoggerFactory.getConfig().setLogLevel(StdoutBootTest.class.getName(), LogLevel.TRACE);
-        System.setProperty("logging.level.com.truthbean.logger.stdout.boot.test", "trace");
+        // com.truthbean.logger.LoggerFactory.getConfig().setLogLevel(StdoutBootTest.class.getName(), LogLevel.TRACE);
+        // System.setProperty("logging.level.com.truthbean.logger.stdout.boot.test", "trace");
     }
 
     @Test

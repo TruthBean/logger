@@ -1,5 +1,6 @@
 package com.truthbean.logger.test;
 
+import com.truthbean.Logger;
 import com.truthbean.logger.LogLevel;
 import com.truthbean.logger.LoggerFactory;
 import com.truthbean.logger.SystemOutLogger;
@@ -16,7 +17,9 @@ class SystemOutLoggerTest {
         System.setProperty(LoggerFactory.NO_LOGGER, "true");
         System.setProperty(LoggerFactory.STD_OUT, "true");
         System.setProperty("logging.level.com.truthbean.debbie.core.test", "trace");
-        LoggerFactory.getLogger(SystemOutLoggerTest.class).error("error");
+        Logger logger = LoggerFactory.getLogger(SystemOutLoggerTest.class);
+        logger.error("error");
+        logger.info(() -> "Fuck you Java!");
 
         SystemOutLogger.err("error", null);
         SystemOutLogger.getLogger(SystemOutLoggerTest.class).warn("warn");

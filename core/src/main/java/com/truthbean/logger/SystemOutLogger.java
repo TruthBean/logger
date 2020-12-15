@@ -30,7 +30,16 @@ public class SystemOutLogger implements ConfigurableLogger {
     }
 
     public static Logger getLogger(Class<?> tracedClass) {
+        // don't use logger method to void use callback self
         return new SystemOutLogger().setClass(tracedClass).setDefaultLevel(LogLevel.WARN);
+    }
+
+    public static Logger getLogger(LoggerConfig loggerConfig, Class<?> tracedClass) {
+        SystemOutLogger logger = new SystemOutLogger();
+        logger.setClass(tracedClass);
+        logger.setDefaultLevel(LogLevel.WARN);
+        logger.level = logger.getLevel(loggerConfig);
+        return logger;
     }
 
     public static void err(String message, Throwable e) {
@@ -80,6 +89,11 @@ public class SystemOutLogger implements ConfigurableLogger {
     @Override
     public LogLevel getLevel() {
         var config = LoggerFactory.getConfig();
+        var level = config.getLevel(getLoggerName());
+        return level.orElseGet(() -> Objects.requireNonNullElse(getDefaultLevel(), LogLevel.ERROR));
+    }
+
+    public LogLevel getLevel(LoggerConfig config) {
         var level = config.getLevel(getLoggerName());
         return level.orElseGet(() -> Objects.requireNonNullElse(getDefaultLevel(), LogLevel.ERROR));
     }

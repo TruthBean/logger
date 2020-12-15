@@ -11,6 +11,10 @@
 
     <artifactId>slf4j-impl</artifactId>
 
+    <name>slf4j-impl</name>
+    <description>slf4j impl by the truthbean logger framework</description>
+    <url>http://www.truthbean.com/logger</url>
+
     <properties>
         <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
@@ -34,6 +38,7 @@
             <groupId>com.truthbean.logger</groupId>
             <artifactId>stdout-adapter</artifactId>
             <version>0.4.0-SNAPSHOT</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
