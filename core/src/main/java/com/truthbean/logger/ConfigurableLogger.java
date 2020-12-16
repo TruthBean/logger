@@ -63,6 +63,9 @@ public interface ConfigurableLogger extends Logger {
                     || "com.truthbean.logger.jdk9.JdkSystemLogger".equals(className)
                     || "com.truthbean.logger.slf4j.TruthBeanLogger".equals(className)
                     || "com.truthbean.logger.log4j2.TruthBeanLogger".equals(className)
+                    || "com.truthbean.logger.jul.bridge.JulBridgeLoggerHandler".equals(className)
+                    || "java.util.logging.Logger".equals(className)
+                    || "sun.util.logging.internal.LoggingProviderImpl$JULWrapper".equals(className)
                     || "org.apache.logging.log4j.spi.AbstractLogger".equals(className))) {
                 caller = locations[nextN++];
                 moduleName = caller.getModuleName();
@@ -70,6 +73,7 @@ public interface ConfigurableLogger extends Logger {
                 className = caller.getClassName();
                 methodName = caller.getMethodName();
                 lineNumber = caller.getLineNumber();
+
             }
 
             if (!("com.truthbean.Logger".equals(className)
@@ -80,6 +84,9 @@ public interface ConfigurableLogger extends Logger {
                     || "com.truthbean.logger.jdk9.JdkSystemLogger".equals(className)
                     || "com.truthbean.logger.slf4j.TruthBeanLogger".equals(className)
                     || "com.truthbean.logger.log4j2.TruthBeanLogger".equals(className)
+                    || "com.truthbean.logger.jul.bridge.JulBridgeLoggerHandler".equals(className)
+                    || "java.util.logging.Logger".equals(className)
+                    || "sun.util.logging.internal.LoggingProviderImpl$JULWrapper".equals(className)
                     || "org.apache.logging.log4j.spi.AbstractLogger".equals(className))) {
                 result.setClassName(className);
                 result.setModuleName(moduleName);

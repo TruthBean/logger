@@ -29,32 +29,6 @@ public class MessageHelper {
         if (params == null || params.length == 0) {
             return message;
         }
-        /*if ("{}".equals(message) && params[0] != null) {
-            return params[0].toString();
-        }
-        var splits = message.split("\\{}");
-        if (splits.length == 0) {
-            return "";
-        }
-        var result = new StringBuilder(splits[0]);
-        if (params[0] != null) {
-            result.append(params[0]);
-        }
-        if (splits.length > 1) {
-            var min = Math.min(splits.length, params.length);
-            for (int i = 1; i < min; i++) {
-                result.append(splits[i]);
-                if (params[i] != null) {
-                    result.append(params[i]);
-                }
-            }
-            if (splits.length > params.length) {
-                for (int i = params.length; i < splits.length; i++) {
-                    result.append(splits[i]);
-                }
-            }
-        }
-        return result.toString();*/
 
         var length = message.length();
         char[] chars = new char[length];

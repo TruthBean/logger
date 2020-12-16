@@ -9,6 +9,8 @@
  */
 package com.truthbean.logger.springboot.test;
 
+import com.truthbean.Logger;
+import com.truthbean.logger.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -21,6 +23,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringBootLoggerTest {
 
     public static void main(String[] args) {
+        LOGGER.info("bababababbaa....");
         SpringApplication.run(SpringBootLoggerTest.class, args);
     }
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpringBootLoggerTest.class);
 }

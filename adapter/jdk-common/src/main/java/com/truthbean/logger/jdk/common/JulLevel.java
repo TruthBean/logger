@@ -9,6 +9,8 @@
  */
 package com.truthbean.logger.jdk.common;
 
+import com.truthbean.logger.LogLevel;
+
 import java.util.logging.Level;
 
 /**
@@ -37,5 +39,27 @@ public class JulLevel extends Level {
     public static final Level WARN = Level.WARNING;
     public static final Level INFO = Level.INFO;
     public static final Level DEBUG = Level.FINE;
-    public static final Level TRACE = Level.FINER;
+    public static final Level TRACE = Level.FINEST;
+
+    public static LogLevel toLogLevel(int julLevelValue) {
+        if (julLevelValue <= Level.OFF.intValue() && julLevelValue > Level.SEVERE.intValue()) {
+            return LogLevel.FATAL;
+        } else if (julLevelValue <= Level.SEVERE.intValue() && julLevelValue > Level.WARNING.intValue()) {
+            return LogLevel.ERROR;
+        } else if (julLevelValue <= Level.WARNING.intValue() && julLevelValue > Level.INFO.intValue()) {
+            return LogLevel.WARN;
+        } else if (julLevelValue <= Level.INFO.intValue() && julLevelValue > Level.FINE.intValue()) {
+            return LogLevel.INFO;
+        } else if (julLevelValue <= Level.FINE.intValue() && julLevelValue > Level.FINEST.intValue()) {
+            return LogLevel.DEBUG;
+        } else if (julLevelValue <= Level.FINEST.intValue()) {
+            return LogLevel.TRACE;
+        } else {
+            return LogLevel.OFF;
+        }
+    }
+
+    public LogLevel toLogLevel() {
+        return toLogLevel(intValue());
+    }
 }

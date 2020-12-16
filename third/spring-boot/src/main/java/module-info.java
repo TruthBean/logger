@@ -12,7 +12,7 @@
  * @since 0.4.0
  * Created on 2020-12-02 18:35
  */
-module com.truthbean.logger.spring.boot {
+open module com.truthbean.logger.spring.boot {
     requires spring.boot;
     requires spring.context;
     requires com.truthbean.logger.core;

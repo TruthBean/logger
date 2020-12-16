@@ -209,6 +209,12 @@
                 <artifactId>stdout-boot</artifactId>
                 <version>${logger.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.truthbean.logger</groupId>
+                <artifactId>jul-bridge</artifactId>
+                <version>${logger.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

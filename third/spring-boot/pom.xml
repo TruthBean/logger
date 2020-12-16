@@ -16,26 +16,30 @@
     <url>http://www.truthbean.com/logger</url>
 
     <properties>
+        <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <spring.version>5.2.12.RELEASE</spring.version>
+        <spring-boot.version>2.3.7.RELEASE</spring-boot.version>
+        <logger.version>0.4.0-SNAPSHOT</logger.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.truthbean.logger</groupId>
             <artifactId>logger-core</artifactId>
-            <version>0.4.0-SNAPSHOT</version>
+            <version>${logger.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.truthbean.logger</groupId>
             <artifactId>jcl-impl</artifactId>
-            <version>0.4.0-SNAPSHOT</version>
+            <version>${logger.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>5.2.11.RELEASE</version>
+            <version>${spring.version}</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
@@ -47,7 +51,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <version>2.3.6.RELEASE</version>
+            <version>${spring-boot.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
@@ -59,26 +63,34 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
-            <version>2.3.6.RELEASE</version>
+            <version>${spring-boot.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
-            <version>2.3.6.RELEASE</version>
+            <version>${spring-boot.version}</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.3.6.RELEASE</version>
+            <version>${spring-boot.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-juli</artifactId>
+            <version>9.0.40</version>
+            <scope>test</scope>
+        </dependency>
+
         <!--<dependency>
             <groupId>com.truthbean.logger</groupId>
             <artifactId>slf4j-boot</artifactId>
-            <version>0.4.0-SNAPSHOT</version>
+            <version>${logger.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
@@ -89,26 +101,14 @@
         </dependency>-->
         <!--<dependency>
             <groupId>com.truthbean.logger</groupId>
-            <artifactId>slf4j-boot</artifactId>
-            <version>0.4.0-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>-->
-        <!--<dependency>
-            <groupId>com.truthbean.logger</groupId>
-            <artifactId>stdout-adapter</artifactId>
-            <version>0.4.0-SNAPSHOT</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.truthbean.logger</groupId>
-            <artifactId>juli-impl</artifactId>
-            <version>0.4.0-SNAPSHOT</version>
+            <artifactId>log4j2-boot</artifactId>
+            <version>${logger.version}</version>
             <scope>test</scope>
         </dependency>-->
         <dependency>
             <groupId>com.truthbean.logger</groupId>
             <artifactId>stdout-boot</artifactId>
-            <version>0.4.0-SNAPSHOT</version>
+            <version>${logger.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

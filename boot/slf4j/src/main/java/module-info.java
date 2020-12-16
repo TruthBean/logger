@@ -17,10 +17,10 @@ module com.truthbean.logger.slf4j.boot {
     requires transitive org.slf4j;
     requires transitive java.logging;
 
-    requires transitive org.apache.commons.logging;
-    requires transitive jul.to.slf4j;
-    requires transitive org.apache.log4j;
+    requires static jul.to.slf4j;
+    requires static org.apache.log4j;
     requires transitive logback.classic;
+    requires static org.apache.commons.logging;
 
     provides com.truthbean.logger.LoggerInitiation with com.truthbean.logger.slf4j.boot.Slf4jBootInitiation;
 }

@@ -16,4 +16,8 @@ package com.truthbean.logger;
  */
 public interface LoggerInitiation {
     void init();
+
+    void flush();
+
+    void destroy();
 }

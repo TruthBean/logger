@@ -10,6 +10,7 @@
 package com.truthbean.logger.stdout.boot;
 
 import com.truthbean.logger.LoggerInitiation;
+import com.truthbean.logger.jul.bridge.JulBridgeLoggerHandler;
 
 /**
  * @author TruthBean/Rogar·Q
@@ -19,6 +20,15 @@ import com.truthbean.logger.LoggerInitiation;
 public class StdoutBootInitiation implements LoggerInitiation {
     @Override
     public void init() {
+        JulBridgeLoggerHandler.install();
+    }
 
+    @Override
+    public void flush() {
+    }
+
+    @Override
+    public void destroy() {
+        JulBridgeLoggerHandler.uninstall();
     }
 }

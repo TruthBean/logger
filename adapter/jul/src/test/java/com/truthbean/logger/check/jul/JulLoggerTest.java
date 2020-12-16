@@ -37,7 +37,7 @@ public class JulLoggerTest extends Logging {
         var logger = java.lang.System.getLogger(JulLoggerTest.class.getName());
         System.out.println(logger);
         Instant begin = Instant.now();
-        final int count = 10000;
+        final int count = 1;
         for (int i = 0; i < count; i++) {
             logger.log(System.Logger.Level.TRACE, "trace");
             logger.log(System.Logger.Level.DEBUG, "debug");

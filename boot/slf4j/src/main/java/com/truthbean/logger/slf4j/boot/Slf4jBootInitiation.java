@@ -12,9 +12,9 @@ package com.truthbean.logger.slf4j.boot;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
 import com.truthbean.logger.LogLevel;
+import com.truthbean.logger.LoggerConfig;
 import com.truthbean.logger.LoggerFactory;
 import com.truthbean.logger.LoggerInitiation;
-import org.slf4j.Logger;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.slf4j.impl.StaticLoggerBinder;
 
@@ -29,6 +29,12 @@ public class Slf4jBootInitiation implements LoggerInitiation {
         SLF4JBridgeHandler.removeHandlersForRootLogger();
         SLF4JBridgeHandler.install();
 
+        var config = LoggerFactory.getConfig().getLoggers();
+        config.forEach(this::setLogLevel);
+    }
+
+    @Override
+    public void flush() {
         var config = LoggerFactory.getConfig().getLoggers();
         config.forEach(this::setLogLevel);
     }
@@ -54,6 +60,9 @@ public class Slf4jBootInitiation implements LoggerInitiation {
                 case TRACE:
                     level = Level.TRACE;
                     break;
+                case OFF:
+                    level = Level.OFF;
+                    break;
             }
             logger.setLevel(level);
         }
@@ -65,8 +74,8 @@ public class Slf4jBootInitiation implements LoggerInitiation {
     }
 
     private String getLoggerName(String name) {
-        if (name != null && !name.isBlank() || Logger.ROOT_LOGGER_NAME.equalsIgnoreCase(name)) {
-            return "ROOT";
+        if (name != null && !name.isBlank() || LoggerConfig.U_ROOT.equalsIgnoreCase(name)) {
+            return LoggerConfig.U_ROOT;
         }
         return name;
     }
@@ -74,5 +83,10 @@ public class Slf4jBootInitiation implements LoggerInitiation {
     private LoggerContext getLoggerContext() {
         var factory = StaticLoggerBinder.getSingleton().getLoggerFactory();
         return (LoggerContext) factory;
+    }
+
+    @Override
+    public void destroy() {
+        SLF4JBridgeHandler.uninstall();
     }
 }

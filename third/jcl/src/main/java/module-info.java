@@ -19,6 +19,7 @@ module com.truthbean.logger.jcl {
 
     opens com.truthbean.logger.jcl;
     opens org.apache.commons.logging;
+    opens org.apache.commons.logging.impl;
 
     provides org.apache.commons.logging.LogFactory with com.truthbean.logger.jcl.LogFactoryImpl;
 }

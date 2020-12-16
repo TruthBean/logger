@@ -12,11 +12,11 @@
  * @since 0.4.0
  * Created on 2020-12-02 18:39
  */
-module com.truthbean.logger.spring.boot.starter.test {
+open module com.truthbean.logger.spring.boot.starter.test {
     requires spring.boot;
     requires spring.boot.autoconfigure;
     requires com.truthbean.logger.core;
-    requires com.truthbean.logger.stdout;
+    requires com.truthbean.logger.stdout.boot;
     requires com.truthbean.logger.jcl;
     requires com.truthbean.logger.spring.boot;
 }

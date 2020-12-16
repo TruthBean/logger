@@ -20,9 +20,12 @@ import java.util.Optional;
  */
 public interface LoggerConfig {
 
-    public static final String USE_NAME = "com.truthbean.logger.use-name";
-    public static final String FALSE = "false";
-    public static final String TRUE = "true";
+    String USE_NAME = "com.truthbean.logger.use-name";
+    String FALSE = "false";
+    String TRUE = "true";
+    String LOGGING_LEVEL = "logging.level.";
+    String U_ROOT = "ROOT";
+    String L_ROOT = "root";
 
     default void setLogLevel(String loggerName, LogLevel level) {
     }
@@ -32,7 +35,7 @@ public interface LoggerConfig {
     }
 
     default Map<String, LogLevel> getLoggers() {
-        return new HashMap<>();
+        return new HashMap<>(0);
     }
 
     default Optional<LogLevel> getLevel(String name) {

@@ -15,10 +15,12 @@
 module com.truthbean.logger.log4j2.boot {
     exports com.truthbean.logger.log4j2.boot to org.apache.logging.log4j.core;
     requires transitive com.truthbean.logger.log4j2;
-    requires transitive org.apache.logging.log4j.core;
-    requires transitive org.slf4j;
+    requires static org.apache.logging.log4j;
+    requires static org.apache.logging.log4j.core;
+    requires static org.slf4j;
     requires transitive java.logging;
-    requires transitive org.apache.logging.log4j.jul;
+    requires static org.apache.logging.log4j.jul;
+    requires static org.apache.logging.log4j.jpl;
 
     provides com.truthbean.logger.LoggerInitiation with com.truthbean.logger.log4j2.boot.Log4j2BootInitiation;
 }

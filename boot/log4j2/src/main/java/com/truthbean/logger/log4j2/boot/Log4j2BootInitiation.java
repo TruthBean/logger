@@ -44,6 +44,16 @@ public class Log4j2BootInitiation implements LoggerInitiation {
         config.forEach(this::setLogLevel);
     }
 
+    @Override
+    public void flush() {
+        var config = LoggerFactory.getConfig().getLoggers();
+        config.forEach(this::setLogLevel);
+    }
+
+    @Override
+    public void destroy() {
+    }
+
     public void setLogLevel(String loggerName, LogLevel logLevel) {
         var level = Level.ERROR;
         switch (logLevel) {

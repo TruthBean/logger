@@ -21,6 +21,7 @@
         <module>slf4j</module>
         <module>log4j2</module>
         <module>jdk9</module>
+        <module>jul</module>
     </modules>
 
 </project>

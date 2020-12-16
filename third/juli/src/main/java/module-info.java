@@ -14,7 +14,7 @@
  */
 module com.truthbean.logger.juli {
     requires transitive com.truthbean.logger.core;
-    requires static org.apache.tomcat.juli;
+    requires org.apache.tomcat.juli;
 
     opens com.truthbean.logger.juli;
 

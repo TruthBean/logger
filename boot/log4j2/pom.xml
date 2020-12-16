@@ -17,21 +17,34 @@
     <description>log4j2 boot of the truthbean logger framework</description>
     <url>http://www.truthbean.com/logger</url>
 
+    <properties>
+        <java.version>11</java.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <logger.version>0.4.0-SNAPSHOT</logger.version>
+        <log4j.version>2.14.0</log4j.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.truthbean.logger</groupId>
+            <artifactId>logger-core</artifactId>
+            <version>${logger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.truthbean.logger</groupId>
             <artifactId>log4j2-adapter</artifactId>
-            <version>0.4.0-SNAPSHOT</version>
+            <version>${logger.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.14.0</version>
+            <version>${log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.14.0</version>
+            <version>${log4j.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
@@ -47,7 +60,19 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-jul</artifactId>
-            <version>2.14.0</version>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-jpl</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-jcl</artifactId>
+            <version>${log4j.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

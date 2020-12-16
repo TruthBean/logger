@@ -23,17 +23,19 @@ import java.util.ServiceLoader;
 public class LoggerFactory {
     public static final String NO_LOGGER = "com.truthbean.logger.no";
     public static final String STD_OUT = "com.truthbean.logger.system-out";
-    private static LoggerConfig config;
+    private volatile static LoggerConfig config;
 
     static {
         try {
             var loggerConfigs = ServiceLoader.load(LoggerConfig.class);
             var loggerConfig = loggerConfigs.findFirst();
-            config = loggerConfig.orElseGet(DefaultLoggerConfig::new);
+            config = loggerConfig.orElseGet(DefaultLoggerConfig::getInstance);
 
             var serviceLoader = ServiceLoader.load(LoggerInitiation.class);
             serviceLoader.forEach(LoggerInitiation::init);
         } catch (Throwable e) {
+            config = DefaultLoggerConfig.getInstance();
+
             var logger = getLogger();
             if (ConfigurableLogger.class.isAssignableFrom(logger.getClass())) {
                 ((ConfigurableLogger) logger)
@@ -45,16 +47,26 @@ public class LoggerFactory {
             } else {
                 logger.error("", e);
             }
-
-            config = new DefaultLoggerConfig();
         }
     }
 
     public LoggerFactory() {
     }
 
-    public static LoggerConfig getConfig() {
+    public static synchronized LoggerConfig getConfig() {
         return config;
+    }
+
+    public static void flushConfig() {
+        var serviceLoader = ServiceLoader.load(LoggerInitiation.class);
+        serviceLoader.forEach(LoggerInitiation::flush);
+    }
+
+    public static void destroy() {
+        var serviceLoader = ServiceLoader.load(LoggerInitiation.class);
+        serviceLoader.forEach(LoggerInitiation::destroy);
+        System.runFinalization();
+        System.gc();
     }
 
     public static Logger getLogger(LogLevel defaultLevel, Class<?> clazz) {

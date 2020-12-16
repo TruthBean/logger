@@ -17,13 +17,19 @@
 
     <properties>
         <slf4j.version>1.7.30</slf4j.version>
+        <logger.version>0.4.0-SNAPSHOT</logger.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.truthbean.logger</groupId>
+            <artifactId>logger-core</artifactId>
+            <version>${logger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.truthbean.logger</groupId>
             <artifactId>slf4j-adapter</artifactId>
-            <version>0.4.0-SNAPSHOT</version>
+            <version>${logger.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

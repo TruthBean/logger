@@ -9,18 +9,13 @@
  */
 package com.truthbean.logger.jdk.common;
 
-import com.truthbean.logger.LogLevel;
-import com.truthbean.logger.LoggerFactory;
-import com.truthbean.logger.LoggerInitiation;
-import com.truthbean.logger.SystemOutLogger;
+import com.truthbean.logger.*;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Level;
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
+import java.util.logging.*;
 
 /**
  * @author TruthBean/Rogar·Q
@@ -32,8 +27,9 @@ public class JulBootInitiation implements LoggerInitiation {
     static {
         var handlers = java.util.logging.Logger.getGlobal().getParent().getHandlers();
         for (var handler : handlers) {
+            handler.setLevel(Level.ALL);
+            handler.setFilter(new LogLevelFilter());
             if (handler instanceof ConsoleHandler) {
-                handler.setLevel(Level.ALL);
                 handler.setFormatter(new TruthBeanJulFormatter());
             }
         }
@@ -46,8 +42,15 @@ public class JulBootInitiation implements LoggerInitiation {
         config.forEach(this::setLogLevel);
     }
 
+    @Override
+    public void flush() {
+        loadConfiguration();
+        var config = LoggerFactory.getConfig().getLoggers();
+        config.forEach(this::setLogLevel);
+    }
+
     public void setLogLevel(String loggerName, LogLevel logLevel) {
-        if (loggerName == null || "ROOT".equalsIgnoreCase(loggerName)) {
+        if (loggerName == null || LoggerConfig.U_ROOT.equalsIgnoreCase(loggerName)) {
             loggerName = "";
         }
         var logger = Logger.getLogger(loggerName);
@@ -79,11 +82,17 @@ public class JulBootInitiation implements LoggerInitiation {
         }
     }
 
+    @Override
+    public void destroy() {
+    }
+
     private void loadConfiguration() {
         try {
             URL resource = Thread.currentThread().getContextClassLoader().getResource("logging.properties");
             if (resource != null) {
-                LogManager.getLogManager().readConfiguration(new FileInputStream(resource.getPath()));
+                try (InputStream inputStream = new FileInputStream(resource.getPath())) {
+                    LogManager.getLogManager().readConfiguration(inputStream);
+                }
             }
         } catch (IOException e) {
             SystemOutLogger.err("", e);

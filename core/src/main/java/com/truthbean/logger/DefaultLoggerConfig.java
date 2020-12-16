@@ -24,8 +24,21 @@ public class DefaultLoggerConfig implements LoggerConfig {
 
     private final ConcurrentMap<String, LogLevel> levelMap = new ConcurrentHashMap<>();
 
-    public DefaultLoggerConfig() {
+    private static volatile DefaultLoggerConfig config;
+
+    private DefaultLoggerConfig() {
         Runtime.getRuntime().addShutdownHook(new Thread(levelMap::clear));
+    }
+
+    public static DefaultLoggerConfig getInstance() {
+        if (config == null) {
+            synchronized (DefaultLoggerConfig.class) {
+                if (config == null) {
+                    config = new DefaultLoggerConfig();
+                }
+            }
+        }
+        return config;
     }
 
     @Override
@@ -46,7 +59,7 @@ public class DefaultLoggerConfig implements LoggerConfig {
         var properties = System.getProperties();
         properties.forEach((key, value) -> {
             var name = (String) key;
-            if (name.startsWith("logging.level.")) {
+            if (name.startsWith(LoggerConfig.LOGGING_LEVEL)) {
                 var level = (String) value;
                 var l = LogLevel.of(level);
                 l.ifPresent(logLevel -> map.put(name.substring(14), logLevel));
@@ -55,7 +68,7 @@ public class DefaultLoggerConfig implements LoggerConfig {
         if (!map.isEmpty()) {
             levelMap.putAll(map);
         }
-        return map;
+        return new HashMap<>(levelMap);
     }
 
     @Override
@@ -85,11 +98,11 @@ public class DefaultLoggerConfig implements LoggerConfig {
                 return Optional.of(result);
             }
         }
-        if (levelMap.containsKey("ROOT")) {
-            LogLevel level = levelMap.get("ROOT");
+        if (levelMap.containsKey(LoggerConfig.U_ROOT)) {
+            LogLevel level = levelMap.get(LoggerConfig.U_ROOT);
             return Optional.ofNullable(level);
-        } else if (levelMap.containsKey("root")) {
-            LogLevel level = levelMap.get("root");
+        } else if (levelMap.containsKey(LoggerConfig.L_ROOT)) {
+            LogLevel level = levelMap.get(LoggerConfig.L_ROOT);
             return Optional.ofNullable(level);
         }
         return Optional.empty();

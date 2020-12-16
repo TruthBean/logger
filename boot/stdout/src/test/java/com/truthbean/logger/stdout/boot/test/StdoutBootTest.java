@@ -15,8 +15,11 @@ import com.truthbean.logger.LoggerFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.logging.log4j.LogManager;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 
 /**
@@ -27,8 +30,8 @@ import java.util.logging.Level;
 public class StdoutBootTest {
 
     static {
-        // com.truthbean.logger.LoggerFactory.getConfig().setLogLevel(StdoutBootTest.class.getName(), LogLevel.TRACE);
-        // System.setProperty("logging.level.com.truthbean.logger.stdout.boot.test", "trace");
+        com.truthbean.logger.LoggerFactory.getConfig().setLogLevel(StdoutBootTest.class.getName(), LogLevel.TRACE);
+        LoggerFactory.flushConfig();
     }
 
     @Test
@@ -46,7 +49,14 @@ public class StdoutBootTest {
 
     @Test
     public void testJul() {
+        java.util.logging.Logger rootLogger = java.util.logging.LogManager.getLogManager().getLogger("");
+        java.util.logging.Handler[] handlers = rootLogger.getHandlers();
+        for (Handler handler : handlers) {
+            System.out.println(handler);
+            System.out.println(handler.getLevel());
+        }
         java.util.logging.Logger logger = java.util.logging.Logger.getLogger(StdoutBootTest.class.getName());
+        System.out.println(logger.getLevel());
         logger.log(Level.FINE, "jul");
     }
 
