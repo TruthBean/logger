@@ -16,6 +16,9 @@ module com.truthbean.logger.slf4j.impl {
     requires transitive com.truthbean.logger.core;
     requires org.slf4j;
 
+    exports com.truthbean.logger.slf4j;
+    exports org.slf4j.impl;
+
     opens com.truthbean.logger.slf4j;
     opens org.slf4j.impl;
 }

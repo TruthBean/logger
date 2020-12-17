@@ -9,6 +9,8 @@
  */
 package com.truthbean.logger.springboot;
 
+import com.truthbean.logger.ConfigurableLogger;
+import com.truthbean.logger.LoggerConfig;
 import com.truthbean.logger.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -29,6 +31,10 @@ public class TruthBeanLoggerProperties {
 
     private boolean systemOut;
 
+    private boolean useName;
+
+    private boolean locationTime;
+
     public boolean isNo() {
         return no;
     }
@@ -38,12 +44,30 @@ public class TruthBeanLoggerProperties {
         System.setProperty(LoggerFactory.NO_LOGGER, String.valueOf(no));
     }
 
-    public boolean getSystemOut() {
+    public boolean isSystemOut() {
         return systemOut;
     }
 
     public void setSystemOut(boolean systemOut) {
         this.systemOut = systemOut;
         System.setProperty(LoggerFactory.STD_OUT, String.valueOf(no));
+    }
+
+    public boolean isUseName() {
+        return useName;
+    }
+
+    public void setUseName(boolean useName) {
+        this.useName = useName;
+        System.setProperty(LoggerConfig.USE_NAME, String.valueOf(useName));
+    }
+
+    public boolean isLocationTime() {
+        return locationTime;
+    }
+
+    public void setLocationTime(boolean locationTime) {
+        System.setProperty(ConfigurableLogger.LOCATION_TIME, String.valueOf(locationTime));
+        this.locationTime = locationTime;
     }
 }

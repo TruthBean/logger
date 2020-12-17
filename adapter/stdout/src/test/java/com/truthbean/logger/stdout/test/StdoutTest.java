@@ -24,7 +24,7 @@ class StdoutTest {
 
     static {
         System.setProperty("logging.level.com.truthbean", "info");
-        System.setProperty(LoggerConfig.USE_NAME, "true");
+        System.setProperty(LoggerConfig.USE_NAME, "false");
     }
 
     private final TestService service = new TestService(LOGGER);

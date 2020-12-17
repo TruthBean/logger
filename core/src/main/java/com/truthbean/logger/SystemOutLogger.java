@@ -636,7 +636,7 @@ public class SystemOutLogger implements ConfigurableLogger {
     public void logging(LogLevel level, Throwable ex, String message, Object... params) {
         LoggerLocation location;
         if (!useName) {
-            location = ConfigurableLogger.getLoggerMethod(getLoggerName(), 3);
+            location = ConfigurableLogger.getLoggerMethod(getLoggerName());
         } else {
             location = new LoggerLocation();
             location.setLoggerName(getLoggerName());

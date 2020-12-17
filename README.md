@@ -112,6 +112,38 @@ logger adapter
     </dependencies>
 ```
 
+### log4j2的注意事项
+如果使用spring-boot，首先应该排除springboot中自带的logback日志，引入log4j2的日志
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter</artifactId>
+    <exclusions>
+        <exclusion>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+        </exclusion>
+    </exclusions>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-log4j2</artifactId>
+</dependency>
+```
+其次在编写的过程中，尽量使用log4j2-api中的接口（log4j2-core是log4j2-api的官方实现，性能比logback、log4j、jul都要高很多），而不是其他门面日志系统（log4j2自身也是门面模式）；
+同时，日志的message尽量不能相同，不然很难排查问题，失去了日志的原有功能点。
+```java
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
+...
+
+private static final Logger LOGGER = LogManager.getLogger(XXXX.class);
+```
+log4j2.xml配置文件中，不允许显示行号。使用%c或者%c{36}或者%logger或者%logger{36}，注意是小写的c，大写的C将使用堆栈快照获取日志的位置信息
+`官方文档显示的信息，显示日志调用的位置信息，同步logger将花费1.3到5倍的时间，异步logger将花费30到100倍的时间`
+https://logging.apache.org/log4j/2.x/manual/layouts.html#LocationInformation
+
 ### 注意
 JDK要求最低11
 

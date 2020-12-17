@@ -33,6 +33,12 @@
             </dependency>
 
             <dependency>
+                <groupId>com.truthbean.logger</groupId>
+                <artifactId>jdk-common</artifactId>
+                <version>${logger.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-params</artifactId>
                 <version>${junit.version}</version>
@@ -43,12 +49,6 @@
                 <artifactId>junit-jupiter-engine</artifactId>
                 <version>${junit.version}</version>
                 <scope>test</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>com.truthbean.logger</groupId>
-                <artifactId>jdk-adapter</artifactId>
-                <version>${logger.version}</version>
             </dependency>
 
             <dependency>

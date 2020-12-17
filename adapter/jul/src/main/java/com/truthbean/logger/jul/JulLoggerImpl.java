@@ -136,7 +136,7 @@ public class JulLoggerImpl implements BaseLogger {
     private void logging(Level level, Throwable ex, String message, Object... params) {
         LoggerLocation location;
         if (!useName) {
-            location = ConfigurableLogger.getLoggerMethod(getLoggerName(), 5);
+            location = ConfigurableLogger.getLoggerMethod(getLoggerName());
         } else {
             location = new LoggerLocation();
             location.setLoggerName(getLoggerName());

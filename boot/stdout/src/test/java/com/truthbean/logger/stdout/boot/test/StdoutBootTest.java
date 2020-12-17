@@ -10,6 +10,7 @@
 package com.truthbean.logger.stdout.boot.test;
 
 import com.truthbean.Logger;
+import com.truthbean.logger.ConfigurableLogger;
 import com.truthbean.logger.LogLevel;
 import com.truthbean.logger.LoggerFactory;
 import org.apache.commons.logging.Log;
@@ -32,6 +33,7 @@ public class StdoutBootTest {
     static {
         com.truthbean.logger.LoggerFactory.getConfig().setLogLevel(StdoutBootTest.class.getName(), LogLevel.TRACE);
         LoggerFactory.flushConfig();
+        System.setProperty(ConfigurableLogger.LOCATION_TIME, "true");
     }
 
     @Test
