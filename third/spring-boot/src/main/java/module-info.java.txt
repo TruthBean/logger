@@ -10,13 +10,15 @@
 /**
  * @author TruthBean/Rogar·Q
  * @since 0.4.0
- * Created on 2020-12-02 18:39
+ * Created on 2020-12-02 18:35
  */
-open module com.truthbean.logger.spring.boot.starter.test {
-    requires spring.boot;
-    requires spring.boot.autoconfigure;
-    requires com.truthbean.logger.core;
-    requires com.truthbean.logger.stdout.boot;
-    requires com.truthbean.logger.jcl;
-    requires com.truthbean.logger.spring.boot;
+open module com.truthbean.logger.spring.boot {
+    requires static spring.boot;
+    requires static spring.context;
+    requires transitive com.truthbean.logger.core;
+    requires transitive com.truthbean.logger.jcl;
+    requires transitive com.truthbean.logger.stdout.boot;
+    requires static spring.core;
+    requires static spring.boot.starter;
+    requires static spring.boot.autoconfigure;
 }

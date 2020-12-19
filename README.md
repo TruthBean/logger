@@ -46,7 +46,7 @@ logger adapter
         <!-- log4j2 adapter -->
         <dependency>
           <groupId>com.truthbean.logger</groupId>
-          <artifactId>log4j2-adapter</artifactId>
+          <artifactId>logger-to-log4j2</artifactId>
           <version>0.4.0-SNAPSHOT</version>
         </dependency>
     
@@ -54,7 +54,7 @@ logger adapter
         <!-- slf4j adapter -->
         <dependency>
           <groupId>com.truthbean.logger</groupId>
-          <artifactId>slf4j-adapter</artifactId>
+          <artifactId>logger-to-slf4j</artifactId>
           <version>0.4.0-SNAPSHOT</version>
         </dependency>
     
@@ -69,21 +69,21 @@ logger adapter
         <!-- jul adapter -->
         <dependency>
           <groupId>com.truthbean.logger</groupId>
-          <artifactId>jul-adapter</artifactId>
+          <artifactId>logger-to-jul</artifactId>
           <version>0.4.0-SNAPSHOT</version>
         </dependency>
     
         <!-- stdout adapter -->
         <dependency>
           <groupId>com.truthbean.logger</groupId>
-          <artifactId>stdout-adapter</artifactId>
+          <artifactId>logger-stdout</artifactId>
           <version>0.4.0-SNAPSHOT</version>
         </dependency>
         
         <!-- kotlin支持 -->
         <dependency>
               <groupId>com.truthbean.logger</groupId>
-              <artifactId>kotlin-adapter</artifactId>
+              <artifactId>logger-kotlin</artifactId>
               <version>0.4.0-SNAPSHOT</version>
             </dependency>
     
@@ -105,7 +105,14 @@ logger adapter
         <!-- tomcat juli -->
         <dependency>
             <groupId>com.truthbean.logger</groupId>
-            <artifactId>juli-impl</artifactId>
+            <artifactId>juli-bridge</artifactId>
+            <version>0.4.0-SNAPSHOT</version>
+        </dependency>
+    
+        <!-- spring boot starter -->
+        <dependency>
+            <groupId>com.truthbean.logger</groupId>
+            <artifactId>logger-spring-boot-starter</artifactId>
             <version>0.4.0-SNAPSHOT</version>
         </dependency>
 

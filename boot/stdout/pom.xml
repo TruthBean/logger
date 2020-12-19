@@ -35,42 +35,42 @@
         </dependency>
         <dependency>
             <groupId>com.truthbean.logger</groupId>
-            <artifactId>jdk9-impl</artifactId>
+            <artifactId>jdk9-system-logger</artifactId>
             <version>${logger.version}</version>
         </dependency>
         <dependency>
             <groupId>com.truthbean.logger</groupId>
-            <artifactId>stdout-adapter</artifactId>
+            <artifactId>logger-stdout</artifactId>
             <version>${logger.version}</version>
         </dependency>
         <dependency>
             <groupId>com.truthbean.logger</groupId>
-            <artifactId>jcl-impl</artifactId>
+            <artifactId>logger-jcl</artifactId>
             <version>${logger.version}</version>
         </dependency>
         <dependency>
             <groupId>com.truthbean.logger</groupId>
-            <artifactId>jul-bridge</artifactId>
+            <artifactId>jul-to-logger</artifactId>
             <version>${logger.version}</version>
         </dependency>
         <dependency>
             <groupId>com.truthbean.logger</groupId>
-            <artifactId>juli-impl</artifactId>
+            <artifactId>juli-bridge</artifactId>
             <version>${logger.version}</version>
         </dependency>
         <dependency>
             <groupId>com.truthbean.logger</groupId>
-            <artifactId>kotlin-adapter</artifactId>
+            <artifactId>logger-kotlin</artifactId>
             <version>${logger.version}</version>
         </dependency>
         <dependency>
             <groupId>com.truthbean.logger</groupId>
-            <artifactId>slf4j-impl</artifactId>
+            <artifactId>slf4j-bridge</artifactId>
             <version>${logger.version}</version>
         </dependency>
         <dependency>
             <groupId>com.truthbean.logger</groupId>
-            <artifactId>log4j2-impl</artifactId>
+            <artifactId>log4j2-bridge</artifactId>
             <version>${logger.version}</version>
         </dependency>
 

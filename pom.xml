@@ -17,8 +17,8 @@
 
     <packaging>pom</packaging>
 
-    <name>logger-adapter-parent</name>
-    <description>truthbean logger adapter framework</description>
+    <name>logger-parent</name>
+    <description>truthbean logger framework</description>
     <url>http://www.truthbean.com/logger</url>
 
     <properties>

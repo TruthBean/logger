@@ -3,16 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>logger-adapter</artifactId>
+        <artifactId>logger-impls</artifactId>
         <groupId>com.truthbean.logger</groupId>
         <version>0.4.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>jul-adapter</artifactId>
+    <artifactId>logger-to-jul</artifactId>
 
-    <name>jul-adapter</name>
-    <description>jul adapter of the truthbean logger framework</description>
+    <name>logger-to-jul</name>
+    <description>the truthbean logger framework implement by jul</description>
     <url>http://www.truthbean.com/logger</url>
 
     <dependencies>

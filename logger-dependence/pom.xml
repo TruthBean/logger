@@ -22,6 +22,9 @@
         <log4j2.version>2.14.0</log4j2.version>
         <slf4j.version>1.7.30</slf4j.version>
         <junit.version>5.7.0</junit.version>
+        <logback.version>1.2.3</logback.version>
+        <tomcat.version>9.0.40</tomcat.version>
+        <spring.boot.version>2.3.7.RELEASE</spring.boot.version>
     </properties>
 
     <dependencyManagement>
@@ -53,19 +56,19 @@
 
             <dependency>
                 <groupId>com.truthbean.logger</groupId>
-                <artifactId>jul-adapter</artifactId>
+                <artifactId>logger-to-jul</artifactId>
                 <version>${logger.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.truthbean.logger</groupId>
-                <artifactId>stdout-adapter</artifactId>
+                <artifactId>logger-stdout</artifactId>
                 <version>${logger.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.truthbean.logger</groupId>
-                <artifactId>kotlin-adapter</artifactId>
+                <artifactId>logger-kotlin</artifactId>
                 <version>${logger.version}</version>
             </dependency>
             <dependency>
@@ -94,7 +97,7 @@
 
             <dependency>
                 <groupId>com.truthbean.logger</groupId>
-                <artifactId>log4j2-adapter</artifactId>
+                <artifactId>logger-to-log4j2</artifactId>
                 <version>${logger.version}</version>
             </dependency>
             <dependency>
@@ -128,7 +131,7 @@
             </dependency>
             <dependency>
                 <groupId>com.truthbean.logger</groupId>
-                <artifactId>slf4j-adapter</artifactId>
+                <artifactId>logger-to-slf4j</artifactId>
                 <version>${logger.version}</version>
             </dependency>
             <dependency>
@@ -139,7 +142,7 @@
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>1.2.3</version>
+                <version>${logback.version}</version>
                 <exclusions>
                     <exclusion>
                         <groupId>org.slf4j</groupId>
@@ -170,7 +173,7 @@
 
             <dependency>
                 <groupId>com.truthbean.logger</groupId>
-                <artifactId>juli-impl</artifactId>
+                <artifactId>juli-bridge</artifactId>
                 <version>${logger.version}</version>
             </dependency>
 
@@ -182,25 +185,25 @@
 
             <dependency>
                 <groupId>com.truthbean.logger</groupId>
-                <artifactId>jcl-impl</artifactId>
+                <artifactId>logger-jcl</artifactId>
                 <version>${logger.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.truthbean.logger</groupId>
-                <artifactId>slf4j-impl</artifactId>
+                <artifactId>slf4j-bridge</artifactId>
                 <version>${logger.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.truthbean.logger</groupId>
-                <artifactId>log4j2-impl</artifactId>
+                <artifactId>log4j2-bridge</artifactId>
                 <version>${logger.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.truthbean.logger</groupId>
-                <artifactId>jdk9-impl</artifactId>
+                <artifactId>jdk9-system-logger</artifactId>
                 <version>${logger.version}</version>
             </dependency>
 
@@ -212,8 +215,20 @@
 
             <dependency>
                 <groupId>com.truthbean.logger</groupId>
-                <artifactId>jul-bridge</artifactId>
+                <artifactId>jul-to-logger</artifactId>
                 <version>${logger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-juli</artifactId>
+                <version>${tomcat.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

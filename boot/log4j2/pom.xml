@@ -33,7 +33,7 @@
         </dependency>
         <dependency>
             <groupId>com.truthbean.logger</groupId>
-            <artifactId>log4j2-adapter</artifactId>
+            <artifactId>logger-to-log4j2</artifactId>
             <version>${logger.version}</version>
         </dependency>
         <dependency>

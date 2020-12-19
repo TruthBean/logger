@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>log4j2-impl</artifactId>
+    <artifactId>log4j2-bridge</artifactId>
 
-    <name>log4j2-impl</name>
+    <name>log4j2-bridge</name>
     <description>log4j2 impl by the truthbean logger framework</description>
     <url>http://www.truthbean.com/logger</url>
 
@@ -36,7 +36,7 @@
 
         <dependency>
             <groupId>com.truthbean.logger</groupId>
-            <artifactId>stdout-adapter</artifactId>
+            <artifactId>logger-stdout</artifactId>
             <version>0.4.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>

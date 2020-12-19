@@ -11,16 +11,10 @@ package com.truthbean.logger.springboot;
 
 import com.truthbean.logger.LogLevel;
 import com.truthbean.logger.LoggerFactory;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.context.ConfigurationWarningsApplicationContextInitializer;
 import org.springframework.boot.logging.LoggingSystem;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.core.io.support.SpringFactoriesLoader;
-
-import java.util.Map;
-import java.util.Set;
+import org.springframework.lang.NonNull;
 
 /**
  * @author TruthBean/Rogar·Q
@@ -43,7 +37,7 @@ public class TruthBeanLoggerInitializer implements ApplicationContextInitializer
     }
 
     @Override
-    public void initialize(ConfigurableApplicationContext applicationContext) {
+    public void initialize(@NonNull ConfigurableApplicationContext applicationContext) {
         // do nothing
     }
 }

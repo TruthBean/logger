@@ -28,7 +28,7 @@
         </dependency>
         <dependency>
             <groupId>com.truthbean.logger</groupId>
-            <artifactId>slf4j-adapter</artifactId>
+            <artifactId>logger-to-slf4j</artifactId>
             <version>${logger.version}</version>
         </dependency>
         <dependency>
