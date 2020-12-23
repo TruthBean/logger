@@ -6,7 +6,7 @@
 
     <groupId>com.truthbean.logger</groupId>
     <artifactId>logger-parent</artifactId>
-    <version>0.4.0-SNAPSHOT</version>
+    <version>0.4.0-RELEASE</version>
     <modules>
         <module>core</module>
         <module>adapter</module>
@@ -31,7 +31,7 @@
         <maven.compiler.target>11</maven.compiler.target>
 
         <junit.version>5.7.0</junit.version>
-        <logger.version>0.4.0-SNAPSHOT</logger.version>
+        <logger.version>0.4.0-RELEASE</logger.version>
         <log4j2.version>2.14.0</log4j2.version>
         <slf4j.version>1.7.30</slf4j.version>
         <logback.version>1.2.3</logback.version>
