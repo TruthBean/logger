@@ -16,7 +16,9 @@
     <url>http://www.truthbean.com/logger</url>
 
     <properties>
-        <kotlin.version>1.4.20</kotlin.version>
+        <java.version>11</java.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <kotlin.compiler.jvmTarget>11</kotlin.compiler.jvmTarget>
     </properties>
 
@@ -24,7 +26,7 @@
         <dependency>
             <groupId>com.truthbean.logger</groupId>
             <artifactId>logger-core</artifactId>
-            <version>0.4.0-SNAPSHOT</version>
+            <version>${logger.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -56,7 +58,7 @@
         <dependency>
             <groupId>com.truthbean.logger</groupId>
             <artifactId>logger-stdout</artifactId>
-            <version>${project.version}</version>
+            <version>${logger.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -92,7 +94,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>${maven.javadoc.version}</version>
                 <configuration>
                     <attach>true</attach>
                     <charset>UTF-8</charset>
@@ -112,7 +114,7 @@
             <plugin>
                 <groupId>org.jetbrains.dokka</groupId>
                 <artifactId>dokka-maven-plugin</artifactId>
-                <version>1.4.10.2</version>
+                <version>${dokka.version}</version>
                 <executions>
                     <execution>
                         <phase>prepare-package</phase>
@@ -134,7 +136,7 @@
                         <plugin>
                             <groupId>org.jetbrains.dokka</groupId>
                             <artifactId>kotlin-as-java-plugin</artifactId>
-                            <version>1.4.10.2</version>
+                            <version>${dokka.version}</version>
                         </plugin>
                     </dokkaPlugins>
                 </configuration>

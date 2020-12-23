@@ -19,7 +19,7 @@
         <dependency>
             <groupId>com.truthbean.logger</groupId>
             <artifactId>jdk-common</artifactId>
-            <version>0.4.0-SNAPSHOT</version>
+            <version>${logger.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.truthbean.logger</groupId>

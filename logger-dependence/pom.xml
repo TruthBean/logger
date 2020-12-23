@@ -16,17 +16,6 @@
     <description>library dependencies in the truthbean logger framework</description>
     <url>http://www.truthbean.com/logger</url>
 
-    <properties>
-        <logger.version>0.4.0-SNAPSHOT</logger.version>
-        <kotlin.version>1.4.20</kotlin.version>
-        <log4j2.version>2.14.0</log4j2.version>
-        <slf4j.version>1.7.30</slf4j.version>
-        <junit.version>5.7.0</junit.version>
-        <logback.version>1.2.3</logback.version>
-        <tomcat.version>9.0.40</tomcat.version>
-        <spring.boot.version>2.3.7.RELEASE</spring.boot.version>
-    </properties>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -222,7 +211,7 @@
             <dependency>
                 <groupId>org.apache.tomcat</groupId>
                 <artifactId>tomcat-juli</artifactId>
-                <version>${tomcat.version}</version>
+                <version>${tomcat-juli.version}</version>
             </dependency>
 
             <dependency>

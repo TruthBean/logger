@@ -16,8 +16,9 @@
     <url>http://www.truthbean.com/logger</url>
 
     <properties>
-        <slf4j.version>1.7.30</slf4j.version>
-        <logger.version>0.4.0-SNAPSHOT</logger.version>
+        <java.version>11</java.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -39,7 +40,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
+            <version>${logback.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
