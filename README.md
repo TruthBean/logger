@@ -1,6 +1,8 @@
 # logger
 logger adapter
 
+该项目已合并至[https://github.com/truthbean/truthbean-projects](https://github.com/truthbean/truthbean-projects) 不在更新
+
 ## 日志级别
     1. fatal
         导致系统崩溃无法运行的错误
