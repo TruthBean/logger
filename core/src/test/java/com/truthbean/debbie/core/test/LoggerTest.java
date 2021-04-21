@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 TruthBean(Rogar·Q)
+ * Copyright (c) 2021 TruthBean(Rogar·Q)
  * Debbie is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -11,7 +11,7 @@ package com.truthbean.debbie.core.test;
 
 import com.truthbean.Logger;
 import com.truthbean.logger.LogLevel;
-import com.truthbean.logger.LoggerFactory;
+import com.truthbean.LoggerFactory;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -24,7 +24,7 @@ public class LoggerTest {
     private final TestService service = new TestService(LOGGER);
 
     static {
-        System.setProperty(LoggerFactory.NO_LOGGER, "true");
+        System.setProperty(LoggerFactory.NO_LOGGER, "false");
         System.setProperty(LoggerFactory.STD_OUT, "true");
         System.setProperty("logging.level.com.truthbean.debbie.core.test", "trace");
     }

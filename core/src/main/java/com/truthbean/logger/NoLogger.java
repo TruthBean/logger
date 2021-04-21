@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 TruthBean(Rogar·Q)
+ * Copyright (c) 2021 TruthBean(Rogar·Q)
  * Debbie is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -19,6 +19,10 @@ import java.util.function.Supplier;
  * Created on 2020-10-23 12:14
  */
 public class NoLogger implements Logger {
+
+    public NoLogger() {
+    }
+
     @Override
     public boolean isLoggable(LogLevel level) {
         return false;

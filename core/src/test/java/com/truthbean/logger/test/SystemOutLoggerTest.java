@@ -2,7 +2,7 @@ package com.truthbean.logger.test;
 
 import com.truthbean.Logger;
 import com.truthbean.logger.LogLevel;
-import com.truthbean.logger.LoggerFactory;
+import com.truthbean.LoggerFactory;
 import com.truthbean.logger.SystemOutLogger;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +14,7 @@ class SystemOutLoggerTest {
 
     @Test
     void log() {
-        System.setProperty(LoggerFactory.NO_LOGGER, "true");
+        System.setProperty(LoggerFactory.NO_LOGGER, "false");
         System.setProperty(LoggerFactory.STD_OUT, "true");
         System.setProperty("logging.level.com.truthbean.debbie.core.test", "trace");
         Logger logger = LoggerFactory.getLogger(SystemOutLoggerTest.class);

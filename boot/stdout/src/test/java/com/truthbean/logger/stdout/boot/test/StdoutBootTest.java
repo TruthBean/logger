@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 TruthBean(Rogar·Q)
+ * Copyright (c) 2021 TruthBean(Rogar·Q)
  * Debbie is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -12,7 +12,7 @@ package com.truthbean.logger.stdout.boot.test;
 import com.truthbean.Logger;
 import com.truthbean.logger.ConfigurableLogger;
 import com.truthbean.logger.LogLevel;
-import com.truthbean.logger.LoggerFactory;
+import com.truthbean.LoggerFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.logging.log4j.LogManager;
@@ -31,7 +31,7 @@ import java.util.logging.Level;
 public class StdoutBootTest {
 
     static {
-        com.truthbean.logger.LoggerFactory.getConfig().setLogLevel(StdoutBootTest.class.getName(), LogLevel.TRACE);
+        com.truthbean.LoggerFactory.getConfig().setLogLevel(StdoutBootTest.class.getName(), LogLevel.TRACE);
         LoggerFactory.flushConfig();
         System.setProperty(ConfigurableLogger.LOCATION_TIME, "true");
     }

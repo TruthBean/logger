@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 TruthBean(Rogar·Q)
+ * Copyright (c) 2021 TruthBean(Rogar·Q)
  * Debbie is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -63,7 +63,11 @@ public class DefaultBaseLogger implements BaseLogger {
 
     @Override
     public BaseLogger setDefaultLevel(LogLevel level) {
-        this.level = level;
+        if (ConfigurableLogger.isNoLogger()) {
+            this.level = LogLevel.OFF;
+        } else {
+            this.level = level;
+        }
         return this;
     }
 

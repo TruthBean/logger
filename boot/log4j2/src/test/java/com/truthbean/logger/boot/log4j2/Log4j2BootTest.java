@@ -1,4 +1,4 @@
-package com.truthbean.logger.boot.log4j2;
+package com.truthbean.boot.log4j2;
 
 import com.truthbean.logger.LogLevel;
 import org.apache.commons.logging.Log;
@@ -40,6 +40,6 @@ public class Log4j2BootTest {
         log.info("jcl .... ");
     }
 
-    private static final com.truthbean.Logger logger = com.truthbean.logger.LoggerFactory.getLogger(LogLevel.TRACE, Log4j2BootTest.class);
+    private static final com.truthbean.Logger logger = com.truthbean.LoggerFactory.getLogger(LogLevel.TRACE, Log4j2BootTest.class);
 
 }

@@ -4,15 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>logger-parent</artifactId>
-        <groupId>com.truthbean.logger</groupId>
-        <version>0.4.0-RELEASE</version>
+        <groupId>com.truthbean</groupId>
+        <version>0.5.0-RELEASE</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>logger-boot</artifactId>
+    <artifactId>logger-boot-parent</artifactId>
     <packaging>pom</packaging>
 
-    <name>logger-boot</name>
+    <name>logger-boot-parent</name>
     <description>logger boot parent of the truthbean logger framework</description>
     <url>http://www.truthbean.com/logger</url>
 
@@ -21,6 +22,5 @@
         <module>slf4j</module>
         <module>stdout</module>
     </modules>
-
 
 </project>

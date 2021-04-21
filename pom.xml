@@ -4,16 +4,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.truthbean.logger</groupId>
+    <parent>
+        <groupId>com.truthbean</groupId>
+        <artifactId>parent</artifactId>
+        <version>0.5.0-RELEASE</version>
+    </parent>
+
     <artifactId>logger-parent</artifactId>
-    <version>0.4.0-RELEASE</version>
-    <modules>
-        <module>core</module>
-        <module>adapter</module>
-        <module>boot</module>
-        <module>logger-dependence</module>
-        <module>third</module>
-    </modules>
+
+    <properties>
+        <java.version>11</java.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
 
     <packaging>pom</packaging>
 
@@ -21,284 +24,12 @@
     <description>truthbean logger framework</description>
     <url>http://www.truthbean.com/logger</url>
 
-    <properties>
-        <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
-        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-        <class.dir>${project.build.directory}/classes</class.dir>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>11</java.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-
-        <junit.version>5.7.0</junit.version>
-        <logger.version>0.4.0-RELEASE</logger.version>
-        <log4j2.version>2.14.0</log4j2.version>
-        <slf4j.version>1.7.30</slf4j.version>
-        <logback.version>1.2.3</logback.version>
-        <tomcat-juli.version>9.0.40</tomcat-juli.version>
-        <spring.version>5.2.12.RELEASE</spring.version>
-        <spring.boot.version>2.3.7.RELEASE</spring.boot.version>
-
-        <kotlin.version>1.4.20</kotlin.version>
-        <kotlin.compiler.jvmTarget>11</kotlin.compiler.jvmTarget>
-
-        <maven.javadoc.version>3.2.0</maven.javadoc.version>
-        <dokka.version>1.4.10.2</dokka.version>
-        <maven.gpg.version>1.6</maven.gpg.version>
-        <maven.release.version>2.5.3</maven.release.version>
-        <maven.resources.version>3.2.0</maven.resources.version>
-        <maven.jar.version>3.2.0</maven.jar.version>
-        <maven.antrun.version>3.0.0</maven.antrun.version>
-        <maven.assembly.version>3.3.0</maven.assembly.version>
-        <maven.dependencies.version>3.1.2</maven.dependencies.version>
-        <maven.source.version>3.2.1</maven.source.version>
-        <maven.compiler.version>3.8.1</maven.compiler.version>
-        <maven.site.version>3.9.1</maven.site.version>
-        <maven.deploy.version>2.8.2</maven.deploy.version>
-        <maven.install.version>2.5.2</maven.install.version>
-        <maven.surefire.version>2.22.2</maven.surefire.version>
-        <maven.clean.version>3.1.0</maven.clean.version>
-    </properties>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>sonatype-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>sonatype-release</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
-
-    <licenses>
-        <license>
-            <name>Mulan PSL v2</name>
-            <url>https://github.com/truthbean/logger/blob/master/LICENSE</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-
-    <scm>
-        <connection>scm:git:git://github.com/truthbean/logger.git</connection>
-        <url>https://github.com/truthbean/logger</url>
-        <developerConnection>scm:git:ssh://github.com/truthbean/logger.git</developerConnection>
-    </scm>
-    <developers>
-        <developer>
-            <id>truthbean</id>
-            <name>Rogar·Q (TruthBean)</name>
-            <email>truthbean@outlook.com</email>
-            <url>https://github.com/truthbean</url>
-        </developer>
-    </developers>
-    <issueManagement>
-        <system>github</system>
-        <url>https://github.com/truthbean/logger/issues</url>
-    </issueManagement>
-
-    <profiles>
-        <profile>
-            <id>release</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>${maven.gpg.version}</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-release-plugin</artifactId>
-                        <version>${maven.release.version}</version>
-                        <configuration>
-                            <preparationGoals>clean site verify</preparationGoals>
-                            <goals>clean site deploy</goals>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
-
-    <dependencies>
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-    </dependencies>
-
-    <build>
-        <plugins>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>${maven.resources.version}</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                    <outputDirectory>${basedir}/target/classes</outputDirectory>
-                    <includeEmptyDirs>true</includeEmptyDirs>
-                    <resources>
-                        <resource>
-                            <directory>${basedir}/src/main/resources</directory>
-                            <filtering>false</filtering>
-                        </resource>
-                    </resources>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>${maven.jar.version}</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>${maven.antrun.version}</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>${maven.assembly.version}</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>${maven.dependencies.version}</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>${maven.clean.version}</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven.surefire.version}</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
-                <version>${maven.install.version}</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>${maven.deploy.version}</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>${maven.site.version}</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.version}</version>
-                <executions>
-                    <execution>
-                        <id>default-compile</id>
-                        <phase>none</phase>
-                    </execution>
-                    <execution>
-                        <id>default-testCompile</id>
-                        <phase>none</phase>
-                    </execution>
-                    <execution>
-                        <id>java-compile</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>java-test-compile</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <source>11</source>
-                    <target>11</target>
-                    <release>11</release>
-                    <encoding>UTF-8</encoding>
-                    <compilerArguments>
-                        <endorseddirs>${endorsed.dir}</endorseddirs>
-                    </compilerArguments>
-                    <compilerArgs>
-                        <arg>-Xpkginfo:always</arg>
-                    </compilerArgs>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>${maven.source.version}</version>
-                <configuration>
-                    <attach>true</attach>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven.javadoc.version}</version>
-                <configuration>
-                    <attach>true</attach>
-                    <charset>UTF-8</charset>
-                    <encoding>UTF-8</encoding>
-                    <docencoding>UTF-8</docencoding>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-
-    </build>
+    <modules>
+        <module>core</module>
+        <module>impl</module>
+        <module>boot</module>
+        <module>logger-dependence</module>
+        <module>third</module>
+    </modules>
 
 </project>

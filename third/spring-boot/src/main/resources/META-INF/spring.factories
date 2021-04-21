@@ -1,5 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.truthbean.logger.springboot.TruthBeanLoggerAutoConfiguration
+  com.truthbean.springboot.TruthBeanLoggerAutoConfiguration
 
 org.springframework.context.ApplicationContextInitializer=\
-  com.truthbean.logger.springboot.TruthBeanLoggerInitializer
+  com.truthbean.springboot.TruthBeanLoggerInitializer

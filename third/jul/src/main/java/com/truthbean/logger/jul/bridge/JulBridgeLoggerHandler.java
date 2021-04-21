@@ -2,7 +2,7 @@ package com.truthbean.logger.jul.bridge;
 
 import com.truthbean.Logger;
 import com.truthbean.logger.LogLevel;
-import com.truthbean.logger.LoggerFactory;
+import com.truthbean.LoggerFactory;
 import com.truthbean.logger.jdk.common.JulLevel;
 import com.truthbean.logger.jdk.common.LogLevelFilter;
 

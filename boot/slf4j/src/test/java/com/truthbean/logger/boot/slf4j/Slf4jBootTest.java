@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 public class Slf4jBootTest {
 
-    com.truthbean.Logger logger = com.truthbean.logger.LoggerFactory.getLogger(Slf4jBootTest.class);
+    com.truthbean.Logger logger = com.truthbean.LoggerFactory.getLogger(Slf4jBootTest.class);
 
     @Test
     void testLog4j() {

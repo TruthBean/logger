@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 TruthBean(Rogar·Q)
+ * Copyright (c) 2021 TruthBean(Rogar·Q)
  * Debbie is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -10,6 +10,7 @@
 package com.truthbean.logger;
 
 import com.truthbean.Logger;
+import com.truthbean.LoggerFactory;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -35,6 +36,12 @@ public interface ConfigurableLogger extends Logger {
 
     default ConfigurableLogger setUseName(boolean useName) {
         return this;
+    }
+
+    static boolean isNoLogger() {
+        var no = System.getProperty(LoggerFactory.NO_LOGGER, "false");
+        return "true".equalsIgnoreCase(no) || "yes".equalsIgnoreCase(no) || "n".equalsIgnoreCase(no)
+                || "是".equalsIgnoreCase(no) || "好".equalsIgnoreCase(no) || "嗯".equalsIgnoreCase(no) || "面对疾风吧".equalsIgnoreCase(no);
     }
 
     LogLevel getDefaultLevel();
@@ -99,7 +106,7 @@ public interface ConfigurableLogger extends Logger {
                 || "com.truthbean.logger.DefaultBaseLogger".equals(className)
                 || "com.truthbean.logger.ConfigurableLogger".equals(className)
                 || "com.truthbean.logger.SystemOutLogger".equals(className)
-                || "com.truthbean.logger.StdOutImpl".equals(className)
+                || "com.truthbean.logger.stdoutImpl".equals(className)
                 || "com.truthbean.logger.juli.JuliLogger".equals(className)
                 || "com.truthbean.logger.jcl.JclLogger".equals(className)
                 || "com.truthbean.logger.jul.JulLoggerImpl".equals(className)

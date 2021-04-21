@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 TruthBean(Rogar·Q)
+ * Copyright (c) 2021 TruthBean(Rogar·Q)
  * Debbie is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -9,8 +9,7 @@
  */
 package com.truthbean.logger.kt.check
 
-import com.truthbean.logger.LoggerFactory
-import com.truthbean.logger.kt.getLogger
+import com.truthbean.logger.kt.LoggerFactory
 import org.junit.jupiter.api.Test
 
 /**
@@ -20,9 +19,9 @@ import org.junit.jupiter.api.Test
  */
 class KotlinLoggerTest {
     init {
-        System.setProperty("logging.level.com.truthbean.logger.kt.check", "TRACE")
+        System.setProperty("logging.level.com.truthbean.kt.check", "TRACE")
     }
-    private val logger = LoggerFactory().getLogger<KotlinLoggerTest>()
+    private val logger = LoggerFactory.getLogger<KotlinLoggerTest>()
     private val service = TestService(logger)
 
     @Test

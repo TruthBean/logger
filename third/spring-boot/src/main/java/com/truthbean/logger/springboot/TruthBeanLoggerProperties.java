@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 TruthBean(Rogar·Q)
+ * Copyright (c) 2021 TruthBean(Rogar·Q)
  * Debbie is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -11,7 +11,7 @@ package com.truthbean.logger.springboot;
 
 import com.truthbean.logger.ConfigurableLogger;
 import com.truthbean.logger.LoggerConfig;
-import com.truthbean.logger.LoggerFactory;
+import com.truthbean.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
  * Created on 2020-12-02 17:10
  */
 @Component
-@ConfigurationProperties(prefix = "com.truthbean.logger")
+@ConfigurationProperties(prefix = "com.truthbean")
 public class TruthBeanLoggerProperties {
 
     public TruthBeanLoggerProperties() {

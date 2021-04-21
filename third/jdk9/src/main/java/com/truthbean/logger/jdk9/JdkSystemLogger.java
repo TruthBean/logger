@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 TruthBean(Rogar·Q)
+ * Copyright (c) 2021 TruthBean(Rogar·Q)
  * Debbie is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -11,7 +11,7 @@ package com.truthbean.logger.jdk9;
 
 import com.truthbean.Logger;
 import com.truthbean.logger.LogLevel;
-import com.truthbean.logger.LoggerFactory;
+import com.truthbean.LoggerFactory;
 
 import java.util.ResourceBundle;
 import java.util.function.Supplier;
@@ -35,9 +35,11 @@ public class JdkSystemLogger implements System.Logger {
 
     public LogLevel getLevel() {
         var config = LoggerFactory.getConfig();
-        var level = config.getLevel(name);
-        if (level.isPresent()) {
-            return level.get();
+        if (config != null) {
+            var level = config.getLevel(name);
+            if (level.isPresent()) {
+                return level.get();
+            }
         }
         String levelName = System.getProperty("jdk.system.logger.level", "INFO");
         try {
@@ -97,35 +99,35 @@ public class JdkSystemLogger implements System.Logger {
     @Override
     public void log(Level level, String msg) {
         if (isLoggable(level)) {
-            this.logger.log(toLevel(level), msg, null, null);
+            this.logger.log(toLevel(level), msg, null, (Object[]) null);
         }
     }
 
     @Override
     public void log(Level level, Supplier<String> msgSupplier) {
         if (isLoggable(level)) {
-            this.logger.log(toLevel(level), msgSupplier.get(), null, null);
+            this.logger.log(toLevel(level), msgSupplier.get(), null, (Object[]) null);
         }
     }
 
     @Override
     public void log(Level level, Object obj) {
         if (isLoggable(level)) {
-            this.logger.log(toLevel(level), obj, null, null);
+            this.logger.log(toLevel(level), obj, null, (Object[]) null);
         }
     }
 
     @Override
     public void log(Level level, String msg, Throwable thrown) {
         if (isLoggable(level)) {
-            this.logger.log(toLevel(level), msg, thrown, null);
+            this.logger.log(toLevel(level), msg, thrown, (Object[]) null);
         }
     }
 
     @Override
     public void log(Level level, Supplier<String> msgSupplier, Throwable thrown) {
         if (isLoggable(level)) {
-            this.logger.log(toLevel(level), msgSupplier.get(), thrown, null);
+            this.logger.log(toLevel(level), msgSupplier.get(), thrown, (Object[]) null);
         }
     }
 
@@ -139,7 +141,7 @@ public class JdkSystemLogger implements System.Logger {
     @Override
     public void log(Level level, ResourceBundle bundle, String msg, Throwable thrown) {
         if (isLoggable(level)) {
-            this.logger.log(toLevel(level), msg, thrown, null);
+            this.logger.log(toLevel(level), msg, thrown, new Object[]{});
         }
     }
 

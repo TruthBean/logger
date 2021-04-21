@@ -1,7 +1,7 @@
 # logger
 logger adapter
 
-该项目已合并至[https://github.com/truthbean/truthbean-projects](https://github.com/truthbean/truthbean-projects) 不在更新
+项目回归~
 
 ## 日志级别
     1. fatal

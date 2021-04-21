@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 TruthBean(Rogar·Q)
+ * Copyright (c) 2021 TruthBean(Rogar·Q)
  * Debbie is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -11,7 +11,7 @@ package com.truthbean.logger.jul.bridge.test;
 
 import com.truthbean.Logger;
 import com.truthbean.logger.LogLevel;
-import com.truthbean.logger.LoggerFactory;
+import com.truthbean.LoggerFactory;
 import com.truthbean.logger.jul.bridge.JulBridgeLoggerHandler;
 import org.junit.jupiter.api.Test;
 
@@ -26,8 +26,8 @@ public class JulBridgeTest {
 
     static {
         JulBridgeLoggerHandler.install();
-        com.truthbean.logger.LoggerFactory.getConfig().setLogLevel(JulBridgeTest.class.getName(), LogLevel.TRACE);
-        com.truthbean.logger.LoggerFactory.flushConfig();
+        com.truthbean.LoggerFactory.getConfig().setLogLevel(JulBridgeTest.class.getName(), LogLevel.TRACE);
+        com.truthbean.LoggerFactory.flushConfig();
     }
 
     @Test

@@ -3,8 +3,6 @@ package com.truthbean.logger.test.util;
 import com.truthbean.logger.util.MessageHelper;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * @author TruthBean/Rogar·Q
  * @since Created on 2020-12-02 10:33
