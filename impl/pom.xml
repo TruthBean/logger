@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>logger-parent</artifactId>
+        <groupId>com.truthbean</groupId>
+        <version>0.5.0-RELEASE</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>logger-impls</artifactId>
+    <packaging>pom</packaging>
+
+    <name>logger-impls</name>
+    <description>logger implement parent of the truthbean logger framework</description>
+    <url>http://www.truthbean.com/logger</url>
+
+    <modules>
+        <module>log4j2</module>
+        <module>jdk-common</module>
+        <module>jul</module>
+        <module>slf4j</module>
+        <module>stdout</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.truthbean</groupId>
+            <artifactId>logger-core</artifactId>
+            <version>${truthbean.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

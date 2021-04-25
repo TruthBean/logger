@@ -86,7 +86,7 @@ public class JulBridgeLoggerHandler extends Handler {
         LogLevel level = JulLevel.toLogLevel(julLevelValue);
         String i18nMessage = getMessageI18N(record);
         Throwable throwable = record.getThrown();
-        logger.log(level, i18nMessage, i18nMessage, throwable, (Object[]) null);
+        logger.log(level, i18nMessage, throwable, (Object[]) null);
     }
 
     /**
@@ -106,7 +106,7 @@ public class JulBridgeLoggerHandler extends Handler {
         if (bundle != null) {
             try {
                 message = bundle.getString(message);
-            } catch (MissingResourceException e) {
+            } catch (MissingResourceException ignored) {
             }
         }
         Object[] params = record.getParameters();

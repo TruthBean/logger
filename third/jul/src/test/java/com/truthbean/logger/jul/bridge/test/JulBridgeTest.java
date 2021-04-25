@@ -41,6 +41,7 @@ public class JulBridgeTest {
         System.Logger logger = System.getLogger(JulBridgeTest.class.getName());
         System.out.println(logger);
         logger.log(System.Logger.Level.TRACE, "jdk9");
+        logger.log(System.Logger.Level.ERROR, "jdk9", new RuntimeException("2333"));
     }
 
     @Test
