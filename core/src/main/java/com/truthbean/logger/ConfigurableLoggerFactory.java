@@ -18,7 +18,7 @@ import java.util.ServiceLoader;
 
 /**
  * @author TruthBean/Rogar·Q
- * @since 0.5.0
+ * @since 0.5.0-SNAPSHOT
  * Created on 2020-12-26 18:13
  */
 public class ConfigurableLoggerFactory implements LoggerFactory {
@@ -29,12 +29,16 @@ public class ConfigurableLoggerFactory implements LoggerFactory {
         try {
             var loggerConfigs = ServiceLoader.load(LoggerConfig.class);
             var loggerConfig = loggerConfigs.findFirst();
-            config = loggerConfig.orElseGet(DefaultLoggerConfig::getInstance);
+            synchronized (ConfigurableLoggerFactory.class) {
+                config = loggerConfig.orElseGet(DefaultLoggerConfig::getInstance);
+            }
 
             var serviceLoader = ServiceLoader.load(LoggerInitiation.class);
             serviceLoader.forEach(LoggerInitiation::init);
         } catch (Throwable e) {
-            config = DefaultLoggerConfig.getInstance();
+            synchronized (ConfigurableLoggerFactory.class) {
+                config = DefaultLoggerConfig.getInstance();
+            }
 
             var logger = getLogger();
             if (ConfigurableLogger.class.isAssignableFrom(logger.getClass())) {
@@ -126,8 +130,9 @@ public class ConfigurableLoggerFactory implements LoggerFactory {
     }
 
     private static boolean useName() {
-        if (config != null) {
-            return config.useName();
+        final LoggerConfig localConfig = config;
+        if (localConfig != null) {
+            return localConfig.useName();
         } else {
             return true;
         }
@@ -144,7 +149,8 @@ public class ConfigurableLoggerFactory implements LoggerFactory {
 
     private static Logger getLogger() {
         var out = System.getProperty(STD_OUT, "false");
-        var doStdOut = "true".equalsIgnoreCase(out) || "yes".equalsIgnoreCase(out) || "y".equalsIgnoreCase(out) || "ok".equalsIgnoreCase(out)
+        var doStdOut = "true".equalsIgnoreCase(out) || "yes".equalsIgnoreCase(out) || "y".equalsIgnoreCase(out)
+                || "ok".equalsIgnoreCase(out) || "on".equalsIgnoreCase(out)
                 || "是".equalsIgnoreCase(out) || "好".equalsIgnoreCase(out) || "确定".equalsIgnoreCase(out) || "陛下英明".equalsIgnoreCase(out);
 
         var noLog = ConfigurableLogger.isNoLogger();

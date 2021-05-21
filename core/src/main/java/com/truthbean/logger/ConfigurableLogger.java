@@ -40,7 +40,7 @@ public interface ConfigurableLogger extends Logger {
 
     static boolean isNoLogger() {
         var no = System.getProperty(LoggerFactory.NO_LOGGER, "false");
-        return "true".equalsIgnoreCase(no) || "yes".equalsIgnoreCase(no) || "n".equalsIgnoreCase(no)
+        return "true".equalsIgnoreCase(no) || "yes".equalsIgnoreCase(no) || "n".equalsIgnoreCase(no) || "on".equalsIgnoreCase(no)
                 || "是".equalsIgnoreCase(no) || "好".equalsIgnoreCase(no) || "嗯".equalsIgnoreCase(no) || "面对疾风吧".equalsIgnoreCase(no);
     }
 

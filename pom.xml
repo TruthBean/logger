@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.truthbean</groupId>
         <artifactId>parent</artifactId>
-        <version>0.5.0-RELEASE</version>
+        <version>0.5.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>logger-parent</artifactId>
@@ -22,7 +22,7 @@
 
     <name>logger-parent</name>
     <description>truthbean logger framework</description>
-    <url>http://www.truthbean.com/logger</url>
+    <url>https://www.truthbean.com/logger</url>
 
     <modules>
         <module>core</module>
