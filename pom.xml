@@ -28,7 +28,7 @@
         <module>core</module>
         <module>impl</module>
         <module>boot</module>
-        <module>logger-dependence</module>
+        <module>logger-dependencies</module>
         <module>third</module>
     </modules>
 
