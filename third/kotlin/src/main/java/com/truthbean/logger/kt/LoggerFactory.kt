@@ -17,7 +17,7 @@ import kotlin.reflect.KProperty
 
 /**
  * @author TruthBean/Rogar·Q
- * @since 0.5.0-SNAPSHOT
+ * @since 0.5.0-RELEASE
  * Created on 2020-12-28 17:34
  */
 object LoggerFactory : com.truthbean.LoggerFactory {

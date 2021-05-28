@@ -23,8 +23,14 @@ class Slf4jTest {
 
     private final TestService service = new TestService(LOGGER);
 
-    static {
-        System.setProperty("logging.level.com.truthbean", "trace");
+    @Test
+    void testLevel() {
+        LOGGER.fatal("hello");
+        LOGGER.error("hello");
+        LOGGER.warn("hello");
+        LOGGER.info("hello");
+        LOGGER.debug("hello");
+        LOGGER.trace("hello");
     }
 
     @Test

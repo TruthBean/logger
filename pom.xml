@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.truthbean</groupId>
         <artifactId>parent</artifactId>
-        <version>0.5.0-SNAPSHOT</version>
+        <version>0.5.0-RELEASE</version>
     </parent>
 
     <artifactId>logger-parent</artifactId>
