@@ -19,6 +19,7 @@ import com.truthbean.logger.*;
 public interface LoggerFactory {
     String NO_LOGGER = "com.truthbean.no-log";
     String STD_OUT = "com.truthbean.system-out";
+    String COLOR_LOGGER = "com.truthbean.stdout-color";
 
     static LoggerConfig getConfig() {
         return ConfigurableLoggerFactory.getConfig();

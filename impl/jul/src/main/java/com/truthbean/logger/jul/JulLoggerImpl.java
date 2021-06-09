@@ -35,10 +35,12 @@ public class JulLoggerImpl implements BaseLogger {
 
     static {
         var handlers = java.util.logging.Logger.getGlobal().getParent().getHandlers();
+        var colorStr = System.getProperty(LoggerFactory.COLOR_LOGGER, "true");
+        boolean color = Boolean.parseBoolean(colorStr);
         for (var handler : handlers) {
             if (handler instanceof ConsoleHandler) {
                 handler.setLevel(Level.ALL);
-                handler.setFormatter(new TruthBeanJulFormatter());
+                handler.setFormatter(new TruthBeanJulFormatter(color));
             }
         }
     }

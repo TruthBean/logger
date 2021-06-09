@@ -106,6 +106,7 @@ public interface ConfigurableLogger extends Logger {
                 || "com.truthbean.logger.DefaultBaseLogger".equals(className)
                 || "com.truthbean.logger.ConfigurableLogger".equals(className)
                 || "com.truthbean.logger.SystemOutLogger".equals(className)
+                || "com.truthbean.logger.stdout.Console".equals(className)
                 || "com.truthbean.logger.stdoutImpl".equals(className)
                 || "com.truthbean.logger.juli.JuliLogger".equals(className)
                 || "com.truthbean.logger.jcl.JclLogger".equals(className)

@@ -18,7 +18,7 @@ import java.util.ServiceLoader;
 
 /**
  * @author TruthBean/Rogar·Q
- * @since 0.5.0-RELEASE
+ * @since 0.5.0
  * Created on 2020-12-26 18:13
  */
 public class ConfigurableLoggerFactory implements LoggerFactory {

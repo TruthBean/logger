@@ -27,11 +27,13 @@ public class JulBootInitiation implements LoggerInitiation {
 
     static {
         var handlers = java.util.logging.Logger.getGlobal().getParent().getHandlers();
+        var colorStr = System.getProperty(LoggerFactory.COLOR_LOGGER, "true");
+        boolean color = Boolean.parseBoolean(colorStr);
         for (var handler : handlers) {
             handler.setLevel(Level.ALL);
             handler.setFilter(new LogLevelFilter());
             if (handler instanceof ConsoleHandler) {
-                handler.setFormatter(new TruthBeanJulFormatter());
+                handler.setFormatter(new TruthBeanJulFormatter(color));
             }
         }
     }

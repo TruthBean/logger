@@ -9,7 +9,7 @@
  */
 /**
  * @author TruthBean/Rogar·Q
- * @since 0.5.0-RELEASE
+ * @since 0.5.0
  * Created on 2021-04-14 14:37
  */
 open module com.truthbean.logger.kotlin.test {

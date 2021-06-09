@@ -18,33 +18,28 @@ public class MessageHelper {
     private MessageHelper() {
     }
 
-    public static String format(Object message, Object...params) {
+    public static String format(Object message, Object... params) {
         if (message == null) {
             return "null";
         }
         return format(message.toString(), params);
     }
 
-    public static String format(String message, Object...params) {
+    public static String format(String message, Object... params) {
         if (params == null || params.length == 0) {
             return message;
         }
 
-        var length = message.length();
-        char[] chars = new char[length];
-        for (int i = 0; i < length; i++) {
-            chars[i] = message.charAt(i);
-        }
-        int i = 0;
+        char[] chars = message.toCharArray();
         StringBuilder sb = new StringBuilder();
-        for (int j = 0; j < chars.length;) {
+        for (int j = 0, i = 0; j < chars.length; ) {
             var js = chars[j];
-            if ('{' == js && j + 1 < chars.length && '}' == chars[j+1]) {
+            if ('{' == js && j + 1 < chars.length && '}' == chars[j + 1]) {
                 if (i < params.length) {
                     sb.append(params[i]);
                     i++;
                 }
-                j+=2;
+                j += 2;
             } else {
                 sb.append(js);
                 j++;
@@ -60,52 +55,162 @@ public class MessageHelper {
         return message.toString();
     }
 
-    public static StringBuilder buildMessage(String level, String threadName, String location) {
+    public static StringBuilder buildMessage(boolean color, String level, String threadName, String location) {
         var logger = new StringBuilder();
-        logger.append("\33[98;1m").append(DateTimeHelper.nowStr()).append("\033[0m ");
+        if (level == null) {
+            return logger;
+        }
+        if (color) {
+            logger.append("\33[98;1m");
+        }
+        logger.append(DateTimeHelper.nowStr()).append("\033[0m ");
         switch (level) {
             case "OFF":
             case "FATAL":
-                logger.append("\33[31;1m").append("FATAL").append("\033[0m ")
-                        .append("[\33[30;1m").append(threadName).append("\033[0m] ")
-                        .append("\33[31;4m").append(location)
-                        .append("\033[0m \33[97;1m:\033[0m \33[39;1m");
+                if (color) {
+                    logger.append("\33[31;1m");
+                }
+                logger.append("FATAL");
+                if (color) {
+                    logger.append("\033[0m ").append("[\33[30;1m");
+                } else {
+                    logger.append(" ");
+                }
+                logger.append(threadName);
+                if (color) {
+                    logger.append("\033[0m] ").append("\33[31;4m");
+                } else {
+                    logger.append(" ");
+                }
+                logger.append(location);
+                if (color) {
+                    logger.append("\033[0m \33[97;1m:\033[0m \33[39;1m");
+                } else {
+                    logger.append(" : ");
+                }
                 break;
             case "SEVERE":
             case "ERROR":
-                logger.append("\33[91;1m").append("ERROR").append("\033[0m ")
-                        .append("[\33[30;1m").append(threadName).append("\033[0m] ")
-                        .append("\33[91;4m").append(location)
-                        .append("\033[0m \33[97;1m:\033[0m \33[39;1m");
+                if (color) {
+                    logger.append("\33[91;1m");
+                }
+                logger.append("ERROR");
+                if (color) {
+                    logger.append("\033[0m ").append("[\33[30;1m");
+                } else {
+                    logger.append(" ");
+                }
+                logger.append(threadName);
+                if (color) {
+                    logger.append("\033[0m] ").append("\33[91;4m");
+                } else {
+                    logger.append(" ");
+                }
+                logger.append(location);
+                if (color) {
+                    logger.append("\033[0m \33[97;1m:\033[0m \33[39;1m");
+                } else {
+                    logger.append(" : ");
+                }
                 break;
             case "WARNING":
             case "WARN":
-                logger.append("\33[93;1m").append("WARN").append(" \033[0m ")
-                        .append("[\33[30;1m").append(threadName).append("\033[0m] ")
-                        .append("\33[93;4m").append(location)
-                        .append("\033[0m \33[97;1m:\033[0m \33[39;1m");
+                if (color) {
+                    logger.append("\33[93;1m");
+                }
+                logger.append("WARN");
+                if (color) {
+                    logger.append(" \033[0m ").append("[\33[30;1m");
+                } else {
+                    logger.append(" ");
+                }
+                logger.append(threadName);
+                if (color) {
+                    logger.append("\033[0m] ").append("\33[93;4m");
+                } else {
+                    logger.append(" ");
+                }
+                logger.append(location);
+                if (color) {
+                    logger.append("\033[0m \33[97;1m:\033[0m \33[39;1m");
+                } else {
+                    logger.append(" : ");
+                }
                 break;
             case "INFO":
-                logger.append("\33[36;1m").append("INFO").append(" \033[0m ")
-                        .append("[\33[30;1m").append(threadName).append("\033[0m] ")
-                        .append("\33[36;4m").append(location)
-                        .append("\033[0m \33[97;1m:\033[0m \33[39;1m");
+                if (color) {
+                    logger.append("\33[92;1m");
+                }
+
+                logger.append("INFO");
+                if (color) {
+                    logger.append(" \033[0m ").append("[\33[30;1m");
+                } else {
+                    logger.append(" ");
+                }
+                logger.append(threadName);
+                if (color) {
+                    logger.append("\033[0m] ").append("\33[92;4m");
+                } else {
+                    logger.append(" ");
+                }
+                logger.append(location);
+                if (color) {
+                    logger.append("\033[0m \33[97;1m:\033[0m \33[39;1m");
+                } else {
+                    logger.append(" : ");
+                }
                 break;
             case "DEBUG":
             case "CONFIG":
             case "FINE":
-                logger.append("\33[94;1m").append("DEBUG").append("\033[0m ")
-                        .append("[\33[30;1m").append(threadName).append("\033[0m] ")
-                        .append("\33[94;4m").append(location)
-                        .append("\033[0m \33[97;1m:\033[0m \33[39;1m");
+                if (color) {
+                    logger.append("\33[94;1m");
+                }
+
+                logger.append("DEBUG");
+                if (color) {
+                    logger.append("\033[0m ").append("[\33[30;1m");
+                } else {
+                    logger.append(" ");
+                }
+                logger.append(threadName);
+                if (color) {
+                    logger.append("\033[0m] ").append("\33[94;4m");
+                } else {
+                    logger.append(" ");
+                }
+                logger.append(location);
+                if (color) {
+                    logger.append("\033[0m \33[97;1m:\033[0m \33[39;1m");
+                } else {
+                    logger.append(" : ");
+                }
                 break;
             case "TRACE":
             case "FINER":
             case "FINEST":
-                logger.append("\33[35;1m").append("TRACE").append("\033[0m ")
-                        .append("[\33[30;1m").append(threadName).append("\033[0m] ")
-                        .append("\33[35;4m").append(location)
-                        .append("\033[0m \33[97;1m:\033[0m \33[39;1m");
+                if (color) {
+                    logger.append("\33[95;1m");
+                }
+                logger.append("TRACE");
+                if (color) {
+                    logger.append("\033[0m ").append("[\33[30;1m");
+                } else {
+                    logger.append(" ");
+                }
+                logger.append(threadName);
+                if (color) {
+                    logger.append("\033[0m] ").append("\33[95;4m");
+                } else {
+                    logger.append(" ");
+                }
+                logger.append(location);
+                if (color) {
+                    logger.append("\033[0m \33[97;1m:\033[0m \33[39;1m");
+                } else {
+                    logger.append(" : ");
+                }
                 break;
             default:
                 break;

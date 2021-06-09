@@ -26,17 +26,57 @@ public class LoggerTest {
     static {
         System.setProperty(LoggerFactory.NO_LOGGER, "false");
         System.setProperty(LoggerFactory.STD_OUT, "true");
+        System.setProperty(LoggerFactory.COLOR_LOGGER, "true");
         System.setProperty("logging.level.com.truthbean.debbie.core.test", "trace");
     }
 
     @Test
     void testLog() {
-        LOGGER.log(LogLevel.INFO, "info");
+        String message = "很长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长" +
+                "长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长" +
+                "长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长的消息";
+        LOGGER.log(LogLevel.OFF, message);
+        LOGGER.log(LogLevel.OFF, this);
+        LOGGER.log(LogLevel.OFF, () -> message);
+        LOGGER.log(LogLevel.OFF, "{", null, message);
+        LOGGER.log(LogLevel.OFF, this, message);
+
+        LOGGER.log(LogLevel.FATAL, message);
+        LOGGER.log(LogLevel.FATAL, this);
+        LOGGER.log(LogLevel.FATAL, () -> message);
+        LOGGER.log(LogLevel.FATAL, "{", null, message);
+        LOGGER.log(LogLevel.FATAL, this, message);
+
+        LOGGER.log(LogLevel.ERROR, message);
+        LOGGER.log(LogLevel.ERROR, this);
+        LOGGER.log(LogLevel.ERROR, () -> message);
+        LOGGER.log(LogLevel.ERROR, "{", null, message);
+        LOGGER.log(LogLevel.ERROR, this, message);
+
+        LOGGER.log(LogLevel.WARN, message);
+        LOGGER.log(LogLevel.WARN, this);
+        LOGGER.log(LogLevel.WARN, () -> message);
+        LOGGER.log(LogLevel.WARN, "{", null, message);
+        LOGGER.log(LogLevel.WARN, this, message);
+
+        LOGGER.log(LogLevel.INFO, message);
         LOGGER.log(LogLevel.INFO, this);
-        LOGGER.log(LogLevel.INFO, () -> "info");
-        LOGGER.log(LogLevel.INFO, "{", null, "info");
-        LOGGER.log(LogLevel.INFO, this, "info");
-        LOGGER.info(this);
+        LOGGER.log(LogLevel.INFO, () -> message);
+        LOGGER.log(LogLevel.INFO, "{", null, message);
+        LOGGER.log(LogLevel.INFO, this, message);
+
+        LOGGER.log(LogLevel.DEBUG, message);
+        LOGGER.log(LogLevel.DEBUG, this);
+        LOGGER.log(LogLevel.DEBUG, () -> message);
+        LOGGER.log(LogLevel.DEBUG, "{", null, message);
+        LOGGER.log(LogLevel.DEBUG, this, message);
+
+        LOGGER.log(LogLevel.TRACE, message);
+        LOGGER.log(LogLevel.TRACE, this);
+        LOGGER.log(LogLevel.TRACE, () -> message);
+        LOGGER.log(LogLevel.TRACE, "{", null, message);
+        LOGGER.log(LogLevel.TRACE, this, message);
+
     }
 
     @Test

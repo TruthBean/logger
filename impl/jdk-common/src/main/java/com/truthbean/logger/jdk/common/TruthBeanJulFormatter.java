@@ -21,6 +21,11 @@ import java.util.logging.LogRecord;
  * Created on 2020-11-17 13:50
  */
 public class TruthBeanJulFormatter extends Formatter {
+    private final boolean color;
+    public TruthBeanJulFormatter(boolean color) {
+        this.color = color;
+    }
+
     @Override
     public String format(LogRecord record) {
         var level = record.getLevel();
@@ -35,8 +40,11 @@ public class TruthBeanJulFormatter extends Formatter {
         }
 
         var threadName = Thread.currentThread().getName();
-        var logger = MessageHelper.buildMessage(level.getName(), threadName, location);
-        var newMessage = record.getMessage() + "\033[0m";
+        var logger = MessageHelper.buildMessage(color, level.getName(), threadName, location);
+        var newMessage = record.getMessage() ;
+        if (color) {
+            newMessage += "\033[0m";
+        }
         logger.append(newMessage).append("\n");
         return logger.toString();
     }

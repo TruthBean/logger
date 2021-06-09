@@ -1,9 +1,11 @@
 package com.truthbean.logger.test;
 
+import com.truthbean.Console;
 import com.truthbean.Logger;
-import com.truthbean.logger.LogLevel;
 import com.truthbean.LoggerFactory;
+import com.truthbean.logger.LogLevel;
 import com.truthbean.logger.SystemOutLogger;
+import com.truthbean.logger.util.ColorHelper;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -24,6 +26,17 @@ class SystemOutLoggerTest {
         SystemOutLogger.err("error", null);
         SystemOutLogger.getLogger(SystemOutLoggerTest.class).warn("warn");
         new SystemOutLogger().setClass(SystemOutLoggerTest.class).setDefaultLevel(LogLevel.INFO).info("info");
+    }
+
+    @Test
+    void testColor() {
+        var colors = ColorHelper.COLORS;
+        var styles = ColorHelper.STYLES;
+        for (int color : colors) {
+            for (int style : styles) {
+                Console.write(color, style, "m color (color:" + color + " style:" + style + ")");
+            }
+        }
     }
 
 }

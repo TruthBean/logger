@@ -19,11 +19,13 @@ import java.util.Locale;
  * Created on 2020-05-08 21:58
  */
 public class DateTimeHelper {
+
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSS", Locale.CHINA);
+
     private DateTimeHelper() {
     }
 
     public static String nowStr() {
-        var formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSS", Locale.CHINA);
         var localDateTime = LocalDateTime.now();
         return localDateTime.format(formatter);
     }
