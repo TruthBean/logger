@@ -16,6 +16,6 @@ module com.truthbean.logger.jul {
     requires transitive java.logging;
     requires transitive com.truthbean.logger.jdk.common;
 
-    provides com.truthbean.Logger with com.truthbean.logger.jul.JulLoggerImpl;
+    provides com.truthbean.logger.LogFactory with com.truthbean.logger.jul.JulLogFactory;
 
 }

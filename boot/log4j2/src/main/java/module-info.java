@@ -21,6 +21,7 @@ module com.truthbean.logger.log4j2.boot {
     requires transitive java.logging;
     requires static org.apache.logging.log4j.jul;
     requires static org.apache.logging.log4j.jpl;
+    requires static org.apache.logging.log4j.jcl;
 
     provides com.truthbean.logger.LoggerInitiation with com.truthbean.logger.log4j2.boot.Log4j2BootInitiation;
 }

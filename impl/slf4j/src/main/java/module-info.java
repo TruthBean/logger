@@ -17,6 +17,6 @@ module com.truthbean.logger.slf4j {
     requires transitive com.truthbean.logger.core;
     requires static org.slf4j;
 
-    provides com.truthbean.Logger with
-            com.truthbean.logger.slf4j.Slf4jImpl;
+    provides com.truthbean.logger.LogFactory with
+            com.truthbean.logger.slf4j.Slf4jFactory;
 }

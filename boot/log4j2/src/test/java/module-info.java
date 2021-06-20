@@ -16,6 +16,5 @@ open module com.truthbean.logger.log4j2.boot.test {
     requires transitive org.junit.jupiter.api;
     requires static org.slf4j;
 
-    requires static org.apache.logging.log4j.jcl;
     requires commons.logging;
 }

@@ -1,6 +1,18 @@
 [
   {
-    "name" : "com.truthbean.logger.log4j2.Log4j2Impl",
+    "name": "com.truthbean.logger.log4j2.Log4j2Factory",
+    "methods": [
+      { "name": "<init>", "parameterTypes": [] }
+    ],
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicFields" : true
+  },
+  {
+    "name": "com.truthbean.logger.log4j2.Log4j2Impl",
     "methods": [
       { "name": "<init>", "parameterTypes": [] }
     ],

@@ -1,4 +1,4 @@
-package com.truthbean.boot.log4j2;
+package com.truthbean.logger.boot.log4j2;
 
 import com.truthbean.logger.LogLevel;
 import org.apache.commons.logging.Log;

@@ -5,7 +5,7 @@
     <parent>
         <artifactId>logger-third</artifactId>
         <groupId>com.truthbean</groupId>
-        <version>0.5.1-RELEASE</version>
+        <version>0.5.2-RELEASE</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -23,17 +23,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>com.truthbean</groupId>
-            <artifactId>logger-core</artifactId>
-            <version>${truthbean.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.truthbean</groupId>
-            <artifactId>logger-jcl</artifactId>
-            <version>${truthbean.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -87,19 +76,11 @@
             <groupId>com.truthbean</groupId>
             <artifactId>slf4j-boot</artifactId>
             <version>${truthbean.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>jcl-over-slf4j</artifactId>
-                </exclusion>
-            </exclusions>
-            <scope>test</scope>
         </dependency>-->
         <!--<dependency>
             <groupId>com.truthbean</groupId>
             <artifactId>log4j2-boot</artifactId>
             <version>${truthbean.version}</version>
-            <scope>test</scope>
         </dependency>-->
 
         <dependency>
@@ -116,8 +97,6 @@
             <scope>test</scope>
         </dependency>
 
-
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
@@ -131,22 +110,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <!--<build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring.boot.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>-->
 
 </project>

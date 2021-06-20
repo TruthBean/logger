@@ -11,7 +11,6 @@ package com.truthbean.logger.kt
 
 import com.truthbean.Logger
 import com.truthbean.logger.LogLevel
-import com.truthbean.logger.LoggerConfig
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
 
@@ -20,27 +19,11 @@ import kotlin.reflect.KProperty
  * @since 0.5.0
  * Created on 2020-12-28 17:34
  */
-object LoggerFactory : com.truthbean.LoggerFactory {
+object LoggerFactory : com.truthbean.LoggerFactory() {
 
     inline fun <reified T : Any> getLogger(): Logger = com.truthbean.LoggerFactory.getLogger(T::class.java)
 
     inline fun <reified T : Any> LoggerFactory.getLogger(level: LogLevel): Logger = com.truthbean.LoggerFactory.getLogger(level, T::class.java)
-
-    fun getConfig(): LoggerConfig = com.truthbean.LoggerFactory.getConfig()
-
-    fun flushConfig() = com.truthbean.LoggerFactory.flushConfig()
-
-    fun destroy() = com.truthbean.LoggerFactory.destroy()
-
-    fun getLogger(defaultLevel: LogLevel, clazz: Class<Any>): Logger =
-        com.truthbean.LoggerFactory.getLogger(defaultLevel, clazz)
-
-    fun getLogger(clazz: Class<Any>): Logger = com.truthbean.LoggerFactory.getLogger(clazz)
-
-    fun getLogger(defaultLevel: LogLevel, loggerName: String): Logger =
-        com.truthbean.LoggerFactory.getLogger(defaultLevel, loggerName)
-
-    fun getLogger(loggerName: String): Logger = com.truthbean.LoggerFactory.getLogger(loggerName)
 
     /**
      * factory logger by kotlin class

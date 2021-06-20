@@ -16,5 +16,5 @@ module com.truthbean.logger.stdout {
     requires java.base;
     requires transitive com.truthbean.logger.core;
 
-    provides com.truthbean.Logger with com.truthbean.logger.stdout.StdOutImpl;
+    provides com.truthbean.logger.LogFactory with com.truthbean.logger.stdout.StdoutFactory;
 }
