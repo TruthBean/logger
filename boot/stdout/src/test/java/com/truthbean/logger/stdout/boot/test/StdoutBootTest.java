@@ -10,16 +10,14 @@
 package com.truthbean.logger.stdout.boot.test;
 
 import com.truthbean.Logger;
+import com.truthbean.LoggerFactory;
 import com.truthbean.logger.ConfigurableLogger;
 import com.truthbean.logger.LogLevel;
-import com.truthbean.LoggerFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.logging.log4j.LogManager;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 
@@ -33,7 +31,8 @@ public class StdoutBootTest {
     static {
         com.truthbean.LoggerFactory.getConfig().setLogLevel(StdoutBootTest.class.getName(), LogLevel.TRACE);
         LoggerFactory.flushConfig();
-        System.setProperty(ConfigurableLogger.LOCATION_TIME, "true");
+        System.setProperty(ConfigurableLogger.LOCATION_TIME, "false");
+        System.setProperty(LoggerFactory.COLOR_LOGGER, "false");
     }
 
     @Test

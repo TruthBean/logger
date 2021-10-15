@@ -17,8 +17,8 @@ module com.truthbean.logger.stdout.boot {
     requires transitive com.truthbean.logger.jdk.common;
     requires transitive com.truthbean.logger.jdk9;
     requires transitive com.truthbean.logger.jcl;
-    requires static com.truthbean.logger.slf4j.impl;
-    requires static com.truthbean.logger.log4j2.impl;
+    requires transitive com.truthbean.logger.slf4j.impl;
+    requires transitive com.truthbean.logger.log4j2.impl;
 
     requires transitive com.truthbean.logger.stdout;
     requires transitive com.truthbean.logger.jul.bridge;

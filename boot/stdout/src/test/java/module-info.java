@@ -20,7 +20,5 @@ module com.truthbean.logger.stdout.boot.test {
     requires org.apache.tomcat.juli;
     requires org.slf4j;
 
-    // requires transitive com.truthbean.logger.juli;
-
     opens com.truthbean.logger.stdout.boot.test;
 }
