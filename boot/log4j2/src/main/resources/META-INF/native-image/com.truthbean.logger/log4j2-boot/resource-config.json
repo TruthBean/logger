@@ -1,0 +1,37 @@
+{
+  "resources": [
+    {
+      "pattern": "log4j2.truthbean"
+    },
+    {
+      "pattern": "log4j2.xml"
+    },
+    {
+      "pattern": "Log4j-levels.xsd"
+    },
+    {
+      "pattern": "Log4j-events.xsd"
+    },
+    {
+      "pattern": "Log4j-events.dtd"
+    },
+    {
+      "pattern": "Log4j-config.xsd"
+    },
+    {
+      "pattern": "META-INF/org/apache/logging/log4j/core/config/plugins/Log4j2Plugins.dat"
+    },
+    {
+      "pattern": "META-INF/log4j-provider.properties"
+    },
+    {
+      "pattern": "Log4j-charsets.properties"
+    },
+    {
+      "pattern": "log4j2.component.properties"
+    },
+    {
+      "pattern": "log4j2.system.properties"
+    }
+  ]
+}

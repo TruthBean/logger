@@ -35,7 +35,7 @@ public class JulLoggerImpl implements BaseLogger {
 
     static {
         var handlers = java.util.logging.Logger.getGlobal().getParent().getHandlers();
-        var colorStr = System.getProperty(LoggerFactory.COLOR_LOGGER, "true");
+        var colorStr = System.getProperty(LoggerConfig.COLOR_LOGGER, "true");
         boolean color = Boolean.parseBoolean(colorStr);
         for (var handler : handlers) {
             if (handler instanceof ConsoleHandler) {

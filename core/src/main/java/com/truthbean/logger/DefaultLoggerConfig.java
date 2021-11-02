@@ -9,6 +9,8 @@
  */
 package com.truthbean.logger;
 
+import com.truthbean.common.mini.util.AbstractPropertiesUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -20,7 +22,7 @@ import java.util.concurrent.ConcurrentMap;
  * @since 0.4.0
  * Created on 2020-11-17 16:31
  */
-public class DefaultLoggerConfig implements LoggerConfig {
+public class DefaultLoggerConfig implements LoggerConfig, AbstractPropertiesUtils {
 
     private final ConcurrentMap<String, LogLevel> levelMap = new ConcurrentHashMap<>();
 

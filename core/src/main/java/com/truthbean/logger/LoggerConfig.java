@@ -20,6 +20,11 @@ import java.util.Optional;
  */
 public interface LoggerConfig {
 
+    String DISABLE_LOGGER = "com.truthbean.log.disable";
+    String NO_LOGGER = "com.truthbean.log.no";
+    String STD_OUT = "com.truthbean.system-out";
+    String COLOR_LOGGER = "com.truthbean.stdout-color";
+
     String USE_NAME = "com.truthbean.use-name";
     String FALSE = "false";
     String TRUE = "true";

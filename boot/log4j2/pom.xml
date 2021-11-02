@@ -5,7 +5,7 @@
     <parent>
         <artifactId>logger-boot-parent</artifactId>
         <groupId>com.truthbean</groupId>
-        <version>0.5.2-RELEASE</version>
+        <version>0.5.3-RELEASE</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>

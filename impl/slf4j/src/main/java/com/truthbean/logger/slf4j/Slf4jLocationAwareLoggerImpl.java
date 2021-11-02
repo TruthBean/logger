@@ -85,6 +85,8 @@ class Slf4jLocationAwareLoggerImpl implements ConfigurableLogger {
 
     public int getLevel(LogLevel level) {
         switch (level) {
+            case OFF:
+                return Integer.MAX_VALUE;
             case FATAL:
                 return 40;
             case ERROR:
@@ -99,6 +101,8 @@ class Slf4jLocationAwareLoggerImpl implements ConfigurableLogger {
                 return 0;
             default:
                 return 0;
+            case ALL:
+                return Integer.MIN_VALUE;
         }
     }
 
@@ -128,6 +132,8 @@ class Slf4jLocationAwareLoggerImpl implements ConfigurableLogger {
                 return this.log.isTraceEnabled(Slf4jImpl.MARKER) && bool;
             default:
                 return false;
+            case ALL:
+                return true;
         }
     }
 

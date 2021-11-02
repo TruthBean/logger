@@ -77,8 +77,10 @@ public class Log4j2BootInitiation implements LoggerInitiation {
             case TRACE:
                 level = Level.TRACE;
                 break;
+            case ALL:
+                level = Level.ALL;
+                break;
             default:
-                level = Level.ERROR;
                 break;
         }
         var logger = getLogger(loggerName);

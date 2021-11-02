@@ -32,6 +32,8 @@ public class TruthBeanLogger implements LocationAwareLogger, Serializable {
 
     public int getLevel(LogLevel level) {
         switch (level) {
+            case OFF:
+                return Integer.MAX_VALUE;
             case FATAL:
                 return 40;
             case ERROR:
@@ -44,13 +46,17 @@ public class TruthBeanLogger implements LocationAwareLogger, Serializable {
                 return 10;
             case TRACE:
                 return 0;
+            case ALL:
+                return Integer.MAX_VALUE;
             default:
-                return 0;
+                return 40;
         }
     }
 
     public LogLevel getLevel(int level) {
         switch (level) {
+            case Integer.MAX_VALUE:
+                return LogLevel.OFF;
             case ERROR_INT:
                 return LogLevel.ERROR;
             case WARN_INT:
@@ -61,6 +67,8 @@ public class TruthBeanLogger implements LocationAwareLogger, Serializable {
                 return LogLevel.DEBUG;
             case TRACE_INT:
                 return LogLevel.TRACE;
+            case Integer.MIN_VALUE:
+                return LogLevel.ALL;
             default:
                 return LogLevel.FATAL;
         }

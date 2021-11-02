@@ -41,7 +41,7 @@ public class TruthBeanLoggerProperties {
 
     public void setNo(boolean no) {
         this.no = no;
-        System.setProperty(LoggerFactory.NO_LOGGER, String.valueOf(no));
+        System.setProperty(LoggerConfig.NO_LOGGER, String.valueOf(no));
     }
 
     public boolean isSystemOut() {
@@ -50,7 +50,7 @@ public class TruthBeanLoggerProperties {
 
     public void setSystemOut(boolean systemOut) {
         this.systemOut = systemOut;
-        System.setProperty(LoggerFactory.STD_OUT, String.valueOf(no));
+        System.setProperty(LoggerConfig.STD_OUT, String.valueOf(no));
     }
 
     public boolean isUseName() {

@@ -27,7 +27,7 @@ public class JulBootInitiation implements LoggerInitiation {
 
     static {
         var handlers = java.util.logging.Logger.getGlobal().getParent().getHandlers();
-        var colorStr = System.getProperty(LoggerFactory.COLOR_LOGGER, "true");
+        var colorStr = System.getProperty(LoggerConfig.COLOR_LOGGER, "true");
         boolean color = Boolean.parseBoolean(colorStr);
         for (var handler : handlers) {
             handler.setLevel(Level.ALL);
@@ -60,10 +60,11 @@ public class JulBootInitiation implements LoggerInitiation {
         if (logger != null) {
             var level = JulLevel.ERROR;
             switch (logLevel) {
+                case OFF:
+                    level = JulLevel.OFF;
+                    break;
                 case FATAL:
                     level = JulLevel.FATAL;
-                    break;
-                case ERROR:
                     break;
                 case WARN:
                     level = JulLevel.WARN;
@@ -77,8 +78,11 @@ public class JulBootInitiation implements LoggerInitiation {
                 case TRACE:
                     level = JulLevel.TRACE;
                     break;
+                case ALL:
+                    level = JulLevel.ALL;
+                    break;
                 default:
-                    level = JulLevel.ERROR;
+                case ERROR:
                     break;
             }
             logger.setLevel(level);

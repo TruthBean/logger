@@ -12,6 +12,7 @@ package com.truthbean.debbie.core.test;
 import com.truthbean.Logger;
 import com.truthbean.logger.LogLevel;
 import com.truthbean.LoggerFactory;
+import com.truthbean.logger.LoggerConfig;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -24,9 +25,9 @@ public class LoggerTest {
     private final TestService service = new TestService(LOGGER);
 
     static {
-        System.setProperty(LoggerFactory.NO_LOGGER, "false");
-        System.setProperty(LoggerFactory.STD_OUT, "true");
-        System.setProperty(LoggerFactory.COLOR_LOGGER, "true");
+        System.setProperty(LoggerConfig.NO_LOGGER, "false");
+        System.setProperty(LoggerConfig.STD_OUT, "true");
+        System.setProperty(LoggerConfig.COLOR_LOGGER, "true");
         System.setProperty("logging.level.com.truthbean.debbie.core.test", "trace");
     }
 

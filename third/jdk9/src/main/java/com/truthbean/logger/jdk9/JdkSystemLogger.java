@@ -56,6 +56,8 @@ public class JdkSystemLogger implements System.Logger {
 
     private LogLevel toLevel(Level level) {
         switch (level) {
+            case ALL:
+                return LogLevel.ALL;
             case ERROR:
                 return LogLevel.ERROR;
             case WARNING:
@@ -68,11 +70,16 @@ public class JdkSystemLogger implements System.Logger {
                 return LogLevel.TRACE;
             default:
                 return LogLevel.FATAL;
+            case OFF:
+                return LogLevel.OFF;
         }
     }
 
     private Level ofLevel(LogLevel level) {
         switch (level) {
+            case ALL:
+                return Level.ALL;
+            case FATAL:
             case ERROR:
                 return Level.ERROR;
             case WARN:
@@ -83,6 +90,7 @@ public class JdkSystemLogger implements System.Logger {
                 return Level.DEBUG;
             case TRACE:
                 return Level.TRACE;
+            case OFF:
             default:
                 return Level.OFF;
         }

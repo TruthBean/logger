@@ -13,6 +13,7 @@ import com.truthbean.Logger;
 import com.truthbean.LoggerFactory;
 import com.truthbean.logger.ConfigurableLogger;
 import com.truthbean.logger.LogLevel;
+import com.truthbean.logger.LoggerConfig;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.logging.log4j.LogManager;
@@ -32,7 +33,7 @@ public class StdoutBootTest {
         com.truthbean.LoggerFactory.getConfig().setLogLevel(StdoutBootTest.class.getName(), LogLevel.TRACE);
         LoggerFactory.flushConfig();
         System.setProperty(ConfigurableLogger.LOCATION_TIME, "false");
-        System.setProperty(LoggerFactory.COLOR_LOGGER, "false");
+        System.setProperty(LoggerConfig.COLOR_LOGGER, "false");
     }
 
     @Test

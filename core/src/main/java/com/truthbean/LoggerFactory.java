@@ -9,6 +9,7 @@
  */
 package com.truthbean;
 
+import com.truthbean.common.mini.util.AbstractPropertiesUtils;
 import com.truthbean.logger.*;
 import com.truthbean.logger.exception.NoLoggerProviderException;
 
@@ -23,45 +24,48 @@ import java.util.ServiceLoader;
  * Created on 2020-05-08 22:22
  */
 public class LoggerFactory {
-    public static String NO_LOGGER = "com.truthbean.no-log";
-    public static String STD_OUT = "com.truthbean.system-out";
-    public static String COLOR_LOGGER = "com.truthbean.stdout-color";
+    private static final boolean disable = AbstractPropertiesUtils.isSysTrue(LoggerConfig.DISABLE_LOGGER);
 
     private volatile static LoggerConfig config;
     private volatile static LogFactory logFactory;
 
     static {
-        try {
-            var loggerConfigs = ServiceLoader.load(LoggerConfig.class);
-            var loggerConfig = loggerConfigs.findFirst();
-            synchronized (LoggerFactory.class) {
-                config = loggerConfig.orElseGet(DefaultLoggerConfig::getInstance);
-            }
+        if (!disable) {
+            try {
+                var loggerConfigs = ServiceLoader.load(LoggerConfig.class);
+                var loggerConfig = loggerConfigs.findFirst();
+                synchronized (LoggerFactory.class) {
+                    config = loggerConfig.orElseGet(DefaultLoggerConfig::getInstance);
+                }
 
-            var serviceLoader = ServiceLoader.load(LoggerInitiation.class);
-            serviceLoader.forEach(LoggerInitiation::init);
+                var serviceLoader = ServiceLoader.load(LoggerInitiation.class);
+                serviceLoader.forEach(LoggerInitiation::init);
 
-            synchronized (LoggerFactory.class) {
-                logFactory = getLogFactory();
-            }
+                synchronized (LoggerFactory.class) {
+                    logFactory = getLogFactory();
+                }
 
-        } catch (Throwable e) {
-            synchronized (LoggerFactory.class) {
-                config = DefaultLoggerConfig.getInstance();
-                logFactory = getLogFactory();
-            }
+            } catch (Throwable e) {
+                synchronized (LoggerFactory.class) {
+                    config = DefaultLoggerConfig.getInstance();
+                    logFactory = getLogFactory();
+                }
 
-            var logger = getLogger();
-            if (ConfigurableLogger.class.isAssignableFrom(logger.getClass())) {
-                ((ConfigurableLogger) logger)
-                        .setName("com.truthbean.LoggerFactory")
-                        .setDefaultLevel(LogLevel.ERROR)
-                        .setUseName(config.useName())
-                        .logger()
-                        .error("", e);
-            } else {
-                logger.error("", e);
+                var logger = getLogger();
+                if (ConfigurableLogger.class.isAssignableFrom(logger.getClass())) {
+                    ((ConfigurableLogger) logger)
+                            .setName("com.truthbean.LoggerFactory")
+                            .setDefaultLevel(LogLevel.ERROR)
+                            .setUseName(config.useName())
+                            .logger()
+                            .error("", e);
+                } else {
+                    logger.error("", e);
+                }
             }
+        } else {
+            config = new NoLoggerConfig();
+            logFactory = new NoLoggerFactory();
         }
     }
 
@@ -70,71 +74,91 @@ public class LoggerFactory {
     }
 
     public static void flushConfig() {
-        var serviceLoader = ServiceLoader.load(LoggerInitiation.class);
-        serviceLoader.forEach(LoggerInitiation::flush);
+        if (!disable) {
+            var serviceLoader = ServiceLoader.load(LoggerInitiation.class);
+            serviceLoader.forEach(LoggerInitiation::flush);
+        }
     }
 
     public static void destroy() {
-        var serviceLoader = ServiceLoader.load(LoggerInitiation.class);
-        serviceLoader.forEach(LoggerInitiation::destroy);
+        if (!disable) {
+            var serviceLoader = ServiceLoader.load(LoggerInitiation.class);
+            serviceLoader.forEach(LoggerInitiation::destroy);
+        }
         System.runFinalization();
         System.gc();
     }
 
     public static Logger getLogger(LogLevel defaultLevel, Class<?> clazz) {
-        var logger = getLogger();
-        if (logger.getClass() != NoLogger.class) {
-            if (ConfigurableLogger.class.isAssignableFrom(logger.getClass())) {
-                return ((ConfigurableLogger) logger)
-                        .setClass(clazz)
-                        .setDefaultLevel(defaultLevel)
-                        .setUseName(useName())
-                        .logger();
+        if (!disable) {
+            var logger = getLogger();
+            if (logger.getClass() != NoLogger.class) {
+                if (ConfigurableLogger.class.isAssignableFrom(logger.getClass())) {
+                    return ((ConfigurableLogger) logger)
+                            .setClass(clazz)
+                            .setDefaultLevel(defaultLevel)
+                            .setUseName(useName())
+                            .logger();
+                }
             }
+            return logger;
+        } else {
+            return logFactory.factory();
         }
-        return logger;
     }
 
     public static Logger getLogger(Class<?> clazz) {
-        var logger = getLogger();
-        if (logger.getClass() != NoLogger.class) {
-            if (ConfigurableLogger.class.isAssignableFrom(logger.getClass())) {
-                return ((ConfigurableLogger) logger)
-                        .setClass(clazz)
-                        .setDefaultLevel(LogLevel.ERROR)
-                        .setUseName(useName())
-                        .logger();
+        if (!disable) {
+            var logger = getLogger();
+            if (logger.getClass() != NoLogger.class) {
+                if (ConfigurableLogger.class.isAssignableFrom(logger.getClass())) {
+                    return ((ConfigurableLogger) logger)
+                            .setClass(clazz)
+                            .setDefaultLevel(LogLevel.ERROR)
+                            .setUseName(useName())
+                            .logger();
+                }
             }
+            return logger;
+        } else {
+            return logFactory.factory();
         }
-        return logger;
     }
 
     public static Logger getLogger(LogLevel defaultLevel, String loggerName) {
-        var logger = getLogger();
-        if (logger.getClass() != NoLogger.class) {
-            if (ConfigurableLogger.class.isAssignableFrom(logger.getClass())) {
-                return ((ConfigurableLogger) logger)
-                        .setName(loggerName)
-                        .setDefaultLevel(defaultLevel)
-                        .setUseName(useName())
-                        .logger();
+        if (!disable) {
+            var logger = getLogger();
+            if (logger.getClass() != NoLogger.class) {
+                if (ConfigurableLogger.class.isAssignableFrom(logger.getClass())) {
+                    return ((ConfigurableLogger) logger)
+                            .setName(loggerName)
+                            .setDefaultLevel(defaultLevel)
+                            .setUseName(useName())
+                            .logger();
+                }
             }
+            return logger;
+        } else {
+            return logFactory.factory();
         }
-        return logger;
     }
 
     public static Logger getLogger(String loggerName) {
-        var logger = getLogger();
-        if (logger.getClass() != NoLogger.class) {
-            if (ConfigurableLogger.class.isAssignableFrom(logger.getClass())) {
-                return ((ConfigurableLogger) logger)
-                        .setName(loggerName)
-                        .setDefaultLevel(LogLevel.ERROR)
-                        .setUseName(useName())
-                        .logger();
+        if (!disable) {
+            var logger = getLogger();
+            if (logger.getClass() != NoLogger.class) {
+                if (ConfigurableLogger.class.isAssignableFrom(logger.getClass())) {
+                    return ((ConfigurableLogger) logger)
+                            .setName(loggerName)
+                            .setDefaultLevel(LogLevel.ERROR)
+                            .setUseName(useName())
+                            .logger();
+                }
             }
+            return logger;
+        } else {
+            return logFactory.factory();
         }
-        return logger;
     }
 
     private static boolean useName() {
@@ -156,7 +180,7 @@ public class LoggerFactory {
     }
 
     private static Logger getLogger() {
-        var doStdOut = isStdout();
+        var doStdOut = AbstractPropertiesUtils.isSysTrue(LoggerConfig.STD_OUT);
         var noLog = ConfigurableLogger.isNoLogger();
 
         LogFactory factory = logFactory;
@@ -189,7 +213,7 @@ public class LoggerFactory {
     }
 
     private static LogFactory getLogFactory() {
-        var doStdOut = isStdout();
+        var doStdOut = AbstractPropertiesUtils.isSysTrue(LoggerConfig.STD_OUT);
         var noLog = ConfigurableLogger.isNoLogger();
 
         Optional<LogFactory> logFactoryOptional = Optional.empty();
@@ -197,7 +221,7 @@ public class LoggerFactory {
             var serviceLoader = ServiceLoader.load(LogFactory.class);
             logFactoryOptional = serviceLoader.findFirst();
         } catch (Throwable e) {
-            if (doStdOut) {
+            if (AbstractPropertiesUtils.isSysTrue(LoggerConfig.STD_OUT)) {
                 SystemOutLogger.err("load logger error.", e);
             } else if (!noLog) {
                 throw new NoLoggerProviderException("load logger error.", e);
@@ -207,13 +231,6 @@ public class LoggerFactory {
             return null;
         }
         return logFactoryOptional.get();
-    }
-
-    private static boolean isStdout() {
-        var out = System.getProperty(STD_OUT, "false");
-        return "true".equalsIgnoreCase(out) || "yes".equalsIgnoreCase(out) || "y".equalsIgnoreCase(out)
-                || "ok".equalsIgnoreCase(out) || "on".equalsIgnoreCase(out)
-                || "是".equalsIgnoreCase(out) || "好".equalsIgnoreCase(out) || "确定".equalsIgnoreCase(out) || "陛下英明".equalsIgnoreCase(out);
     }
 
     private static final Logger NON_LOGGER = new NoLogger();

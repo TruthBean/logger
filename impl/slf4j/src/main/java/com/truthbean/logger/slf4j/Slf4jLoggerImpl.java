@@ -370,9 +370,12 @@ class Slf4jLoggerImpl implements ConfigurableLogger {
         if (isLoggable(level)) {
             message = MessageHelper.format(message, params);
             switch (level) {
+                case OFF:
+                    break;
                 case FATAL:
                     this.fatal(message, e);
                     break;
+                default:
                 case ERROR:
                     this.error(message, e);
                     break;
@@ -386,9 +389,8 @@ class Slf4jLoggerImpl implements ConfigurableLogger {
                     this.debug(message, e);
                     break;
                 case TRACE:
+                case ALL:
                     this.trace(message, e);
-                    break;
-                default:
                     break;
             }
         }

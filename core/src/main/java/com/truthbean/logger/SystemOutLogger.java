@@ -649,7 +649,7 @@ public class SystemOutLogger implements ConfigurableLogger {
 
         var threadName = Thread.currentThread().getName();
 
-        var colorStr = System.getProperty(LoggerFactory.COLOR_LOGGER, "true");
+        var colorStr = System.getProperty(LoggerConfig.COLOR_LOGGER, "true");
         boolean color = Boolean.parseBoolean(colorStr);
         var logger = MessageHelper.buildMessage(color, level.name(), threadName, location.toString());
         var newMessage = MessageHelper.format(message, params) ;

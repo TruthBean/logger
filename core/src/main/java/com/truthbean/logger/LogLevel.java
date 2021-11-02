@@ -49,7 +49,12 @@ public enum LogLevel {
     /**
      * 用于跟踪数据的变化
      */
-    TRACE;
+    TRACE,
+
+    /**
+     * 所有日志级别
+     */
+    ALL;
 
     public static Optional<LogLevel> of(String level) {
         var values = values();

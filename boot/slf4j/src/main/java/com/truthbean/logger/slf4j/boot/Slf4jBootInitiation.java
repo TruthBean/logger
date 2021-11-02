@@ -60,6 +60,9 @@ public class Slf4jBootInitiation implements LoggerInitiation {
                 case TRACE:
                     level = Level.TRACE;
                     break;
+                case ALL:
+                    level = Level.ALL;
+                    break;
                 case OFF:
                     level = Level.OFF;
                     break;

@@ -11,6 +11,7 @@ package com.truthbean;
 
 import com.truthbean.logger.ConfigurableLogger;
 import com.truthbean.logger.LogLevel;
+import com.truthbean.logger.LoggerConfig;
 import com.truthbean.logger.LoggerLocation;
 import com.truthbean.logger.util.MessageHelper;
 
@@ -97,7 +98,7 @@ public class Console {
     private static void log(LoggerLocation location, LogLevel level, String message, Object... params) {
         var threadName = Thread.currentThread().getName();
 
-        var colorStr = System.getProperty(LoggerFactory.COLOR_LOGGER, "true");
+        var colorStr = System.getProperty(LoggerConfig.COLOR_LOGGER, "true");
         boolean color = Boolean.parseBoolean(colorStr);
         var logger = MessageHelper.buildMessage(color, level.name(), threadName, location.toString());
         var newMessage = MessageHelper.format(message, params);

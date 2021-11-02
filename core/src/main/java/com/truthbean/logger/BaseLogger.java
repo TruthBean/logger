@@ -92,7 +92,6 @@ public interface BaseLogger extends ConfigurableLogger {
         }
     }
 
-
     @Override
     default boolean isTraceEnabled() {
         return isLoggable(LogLevel.TRACE);
