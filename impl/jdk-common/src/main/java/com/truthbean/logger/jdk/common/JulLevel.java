@@ -11,6 +11,7 @@ package com.truthbean.logger.jdk.common;
 
 import com.truthbean.logger.LogLevel;
 
+import java.io.Serial;
 import java.util.logging.Level;
 
 /**
@@ -22,6 +23,7 @@ public class JulLevel extends Level {
     /**
      * serial version
      */
+    @Serial
     private static final long serialVersionUID = -4242942266318231264L;
 
     protected JulLevel(String name, int value) {

@@ -65,8 +65,7 @@ public class MessageHelper {
         }
         logger.append(DateTimeHelper.nowStr()).append("\033[0m ");
         switch (level) {
-            case "OFF":
-            case "FATAL":
+            case "OFF", "FATAL" -> {
                 if (color) {
                     logger.append("\33[31;1m");
                 }
@@ -88,9 +87,8 @@ public class MessageHelper {
                 } else {
                     logger.append(" : ");
                 }
-                break;
-            case "SEVERE":
-            case "ERROR":
+            }
+            case "SEVERE", "ERROR" -> {
                 if (color) {
                     logger.append("\33[91;1m");
                 }
@@ -112,9 +110,8 @@ public class MessageHelper {
                 } else {
                     logger.append(" : ");
                 }
-                break;
-            case "WARNING":
-            case "WARN":
+            }
+            case "WARNING", "WARN" -> {
                 if (color) {
                     logger.append("\33[93;1m");
                 }
@@ -136,12 +133,11 @@ public class MessageHelper {
                 } else {
                     logger.append(" : ");
                 }
-                break;
-            case "INFO":
+            }
+            case "INFO" -> {
                 if (color) {
                     logger.append("\33[92;1m");
                 }
-
                 logger.append("INFO");
                 if (color) {
                     logger.append(" \033[0m ").append("[\33[30;1m");
@@ -160,14 +156,11 @@ public class MessageHelper {
                 } else {
                     logger.append(" : ");
                 }
-                break;
-            case "DEBUG":
-            case "CONFIG":
-            case "FINE":
+            }
+            case "DEBUG", "CONFIG", "FINE" -> {
                 if (color) {
                     logger.append("\33[94;1m");
                 }
-
                 logger.append("DEBUG");
                 if (color) {
                     logger.append("\033[0m ").append("[\33[30;1m");
@@ -186,10 +179,8 @@ public class MessageHelper {
                 } else {
                     logger.append(" : ");
                 }
-                break;
-            case "TRACE":
-            case "FINER":
-            case "FINEST":
+            }
+            case "TRACE", "FINER", "FINEST" -> {
                 if (color) {
                     logger.append("\33[95;1m");
                 }
@@ -211,9 +202,9 @@ public class MessageHelper {
                 } else {
                     logger.append(" : ");
                 }
-                break;
-            default:
-                break;
+            }
+            default -> {
+            }
         }
         return logger;
     }

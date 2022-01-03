@@ -63,8 +63,6 @@ public class Log4j2BootInitiation implements LoggerInitiation {
             case FATAL:
                 level = Level.FATAL;
                 break;
-            case ERROR:
-                break;
             case WARN:
                 level = Level.WARN;
                 break;
@@ -80,6 +78,7 @@ public class Log4j2BootInitiation implements LoggerInitiation {
             case ALL:
                 level = Level.ALL;
                 break;
+            case ERROR:
             default:
                 break;
         }

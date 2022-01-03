@@ -120,53 +120,33 @@ public class Log4j2Impl implements ConfigurableLogger {
     }
 
     public static Optional<Level> toLevel(LogLevel logLevel) {
-        switch (logLevel) {
-            case ALL:
-                return Optional.of(Level.ALL);
-            case FATAL:
-                return Optional.of(Level.FATAL);
-            case ERROR:
-                return Optional.of(Level.ERROR);
-            case WARN:
-                return Optional.of(Level.WARN);
-            case INFO:
-                return Optional.of(Level.INFO);
-            case DEBUG:
-                return Optional.of(Level.DEBUG);
-            case TRACE:
-                return Optional.of(Level.TRACE);
-            case OFF:
-                return Optional.of(Level.OFF);
-            default:
-                return Optional.empty();
-        }
+        return switch (logLevel) {
+            case ALL -> Optional.of(Level.ALL);
+            case FATAL -> Optional.of(Level.FATAL);
+            case ERROR -> Optional.of(Level.ERROR);
+            case WARN -> Optional.of(Level.WARN);
+            case INFO -> Optional.of(Level.INFO);
+            case DEBUG -> Optional.of(Level.DEBUG);
+            case TRACE -> Optional.of(Level.TRACE);
+            case OFF -> Optional.of(Level.OFF);
+        };
     }
 
     public static Optional<LogLevel> fromLevel(Level level) {
         if (level == null) {
             return Optional.empty();
         }
-        switch (level.intLevel()) {
-            case Integer.MIN_VALUE:
-            case 0:
-                return Optional.of(LogLevel.OFF);
-            case 100:
-                return Optional.of(LogLevel.FATAL);
-            case 200:
-                return Optional.of(LogLevel.ERROR);
-            case 300:
-                return Optional.of(LogLevel.WARN);
-            case 400:
-                return Optional.of(LogLevel.INFO);
-            case 500:
-                return Optional.of(LogLevel.DEBUG);
-            case 600:
-                return Optional.of(LogLevel.TRACE);
-            case Integer.MAX_VALUE:
-                return Optional.of(LogLevel.ALL);
-            default:
-                return Optional.empty();
-        }
+        return switch (level.intLevel()) {
+            case Integer.MIN_VALUE, 0 -> Optional.of(LogLevel.OFF);
+            case 100 -> Optional.of(LogLevel.FATAL);
+            case 200 -> Optional.of(LogLevel.ERROR);
+            case 300 -> Optional.of(LogLevel.WARN);
+            case 400 -> Optional.of(LogLevel.INFO);
+            case 500 -> Optional.of(LogLevel.DEBUG);
+            case 600 -> Optional.of(LogLevel.TRACE);
+            case Integer.MAX_VALUE -> Optional.of(LogLevel.ALL);
+            default -> Optional.empty();
+        };
     }
 
     @Override

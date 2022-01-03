@@ -54,16 +54,13 @@ public class TruthBeanLoggerSystem extends AbstractLoggingSystem {
     protected void loadDefaults(LoggingInitializationContext initializationContext, LogFile logFile) {
         Environment environment = initializationContext.getEnvironment();
 
-        if (environment instanceof ConfigurableEnvironment) {
-            ConfigurableEnvironment configurableEnvironment = (ConfigurableEnvironment) environment;
+        if (environment instanceof ConfigurableEnvironment configurableEnvironment) {
             configurableEnvironment.getPropertySources().forEach(propertySource -> {
                 Object source = propertySource.getSource();
-                if (source instanceof Map) {
-                    Map map = (Map) source;
+                if (source instanceof Map map) {
                     Set set = map.keySet();
                     for (Object o : set) {
-                        if (o instanceof String) {
-                            String name = (String) o;
+                        if (o instanceof String name) {
                             if (name.startsWith("logging.level")) {
                                 String loggerName = name.substring(14);
                                 String level = map.get(name).toString();

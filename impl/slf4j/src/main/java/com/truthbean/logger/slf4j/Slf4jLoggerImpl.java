@@ -86,30 +86,15 @@ class Slf4jLoggerImpl implements ConfigurableLogger {
     @Override
     public boolean isLoggable(LogLevel level) {
         var bool = this.level.compareTo(level) >= 0;
-        boolean result;
-        switch (level) {
-            case FATAL:
-                result = bool;
-                break;
-            case ERROR:
-                result = isErrorEnabled();
-                break;
-            case WARN:
-                result = this.logger.isWarnEnabled(Slf4jImpl.MARKER);
-                break;
-            case INFO:
-                result = this.logger.isInfoEnabled(Slf4jImpl.MARKER);
-                break;
-            case DEBUG:
-                result = this.logger.isDebugEnabled(Slf4jImpl.MARKER);
-                break;
-            case TRACE:
-                result = this.logger.isTraceEnabled(Slf4jImpl.MARKER);
-                break;
-            default:
-                result = false;
-                break;
-        }
+        boolean result = switch (level) {
+            case FATAL -> bool;
+            case ERROR -> isErrorEnabled();
+            case WARN -> this.logger.isWarnEnabled(Slf4jImpl.MARKER);
+            case INFO -> this.logger.isInfoEnabled(Slf4jImpl.MARKER);
+            case DEBUG -> this.logger.isDebugEnabled(Slf4jImpl.MARKER);
+            case TRACE -> this.logger.isTraceEnabled(Slf4jImpl.MARKER);
+            default -> false;
+        };
         return result && bool;
     }
 
@@ -117,26 +102,14 @@ class Slf4jLoggerImpl implements ConfigurableLogger {
     public void log(LogLevel level, Object message) {
         if (isLoggable(level)) {
             switch (level) {
-                case FATAL:
-                    this.fatal(message);
-                    break;
-                case ERROR:
-                    this.error(message);
-                    break;
-                case WARN:
-                    this.warn(message);
-                    break;
-                case INFO:
-                    this.info(message);
-                    break;
-                case DEBUG:
-                    this.debug(message);
-                    break;
-                case TRACE:
-                    this.trace(message);
-                    break;
-                default:
-                    break;
+                case FATAL -> this.fatal(message);
+                case ERROR -> this.error(message);
+                case WARN -> this.warn(message);
+                case INFO -> this.info(message);
+                case DEBUG -> this.debug(message);
+                case TRACE -> this.trace(message);
+                default -> {
+                }
             }
         }
     }
@@ -145,26 +118,14 @@ class Slf4jLoggerImpl implements ConfigurableLogger {
     public void log(LogLevel level, String message) {
         if (isLoggable(level)) {
             switch (level) {
-                case FATAL:
-                    this.fatal(message);
-                    break;
-                case ERROR:
-                    this.error(message);
-                    break;
-                case WARN:
-                    this.warn(message);
-                    break;
-                case INFO:
-                    this.info(message);
-                    break;
-                case DEBUG:
-                    this.debug(message);
-                    break;
-                case TRACE:
-                    this.trace(message);
-                    break;
-                default:
-                    break;
+                case FATAL -> this.fatal(message);
+                case ERROR -> this.error(message);
+                case WARN -> this.warn(message);
+                case INFO -> this.info(message);
+                case DEBUG -> this.debug(message);
+                case TRACE -> this.trace(message);
+                default -> {
+                }
             }
         }
     }
@@ -173,26 +134,14 @@ class Slf4jLoggerImpl implements ConfigurableLogger {
     public void log(LogLevel level, Supplier<String> supplier) {
         if (isLoggable(level)) {
             switch (level) {
-                case FATAL:
-                    this.fatal(supplier);
-                    break;
-                case ERROR:
-                    this.error(supplier);
-                    break;
-                case WARN:
-                    this.warn(supplier);
-                    break;
-                case INFO:
-                    this.info(supplier);
-                    break;
-                case DEBUG:
-                    this.debug(supplier);
-                    break;
-                case TRACE:
-                    this.trace(supplier);
-                    break;
-                default:
-                    break;
+                case FATAL -> this.fatal(supplier);
+                case ERROR -> this.error(supplier);
+                case WARN -> this.warn(supplier);
+                case INFO -> this.info(supplier);
+                case DEBUG -> this.debug(supplier);
+                case TRACE -> this.trace(supplier);
+                default -> {
+                }
             }
         }
     }
@@ -201,26 +150,14 @@ class Slf4jLoggerImpl implements ConfigurableLogger {
     public void log(LogLevel level, Object message, Object... params) {
         if (isLoggable(level)) {
             switch (level) {
-                case FATAL:
-                    this.fatal(message, params);
-                    break;
-                case ERROR:
-                    this.error(message, params);
-                    break;
-                case WARN:
-                    this.warn(message, params);
-                    break;
-                case INFO:
-                    this.info(message, params);
-                    break;
-                case DEBUG:
-                    this.debug(message, params);
-                    break;
-                case TRACE:
-                    this.trace(message, params);
-                    break;
-                default:
-                    break;
+                case FATAL -> this.fatal(message, params);
+                case ERROR -> this.error(message, params);
+                case WARN -> this.warn(message, params);
+                case INFO -> this.info(message, params);
+                case DEBUG -> this.debug(message, params);
+                case TRACE -> this.trace(message, params);
+                default -> {
+                }
             }
         }
     }
@@ -229,26 +166,14 @@ class Slf4jLoggerImpl implements ConfigurableLogger {
     public void log(LogLevel level, String message, Object... params) {
         if (isLoggable(level)) {
             switch (level) {
-                case FATAL:
-                    this.fatal(message, params);
-                    break;
-                case ERROR:
-                    this.error(message, params);
-                    break;
-                case WARN:
-                    this.warn(message, params);
-                    break;
-                case INFO:
-                    this.info(message, params);
-                    break;
-                case DEBUG:
-                    this.debug(message, params);
-                    break;
-                case TRACE:
-                    this.trace(message, params);
-                    break;
-                default:
-                    break;
+                case FATAL -> this.fatal(message, params);
+                case ERROR -> this.error(message, params);
+                case WARN -> this.warn(message, params);
+                case INFO -> this.info(message, params);
+                case DEBUG -> this.debug(message, params);
+                case TRACE -> this.trace(message, params);
+                default -> {
+                }
             }
         }
     }
@@ -257,26 +182,14 @@ class Slf4jLoggerImpl implements ConfigurableLogger {
     public void log(LogLevel level, Object message, Throwable e) {
         if (isLoggable(level)) {
             switch (level) {
-                case FATAL:
-                    this.fatal(message, e);
-                    break;
-                case ERROR:
-                    this.error(message, e);
-                    break;
-                case WARN:
-                    this.warn(message, e);
-                    break;
-                case INFO:
-                    this.info(message, e);
-                    break;
-                case DEBUG:
-                    this.debug(message, e);
-                    break;
-                case TRACE:
-                    this.trace(message, e);
-                    break;
-                default:
-                    break;
+                case FATAL -> this.fatal(message, e);
+                case ERROR -> this.error(message, e);
+                case WARN -> this.warn(message, e);
+                case INFO -> this.info(message, e);
+                case DEBUG -> this.debug(message, e);
+                case TRACE -> this.trace(message, e);
+                default -> {
+                }
             }
         }
     }
@@ -285,26 +198,14 @@ class Slf4jLoggerImpl implements ConfigurableLogger {
     public void log(LogLevel level, String message, Throwable e) {
         if (isLoggable(level)) {
             switch (level) {
-                case FATAL:
-                    this.fatal(message, e);
-                    break;
-                case ERROR:
-                    this.error(message, e);
-                    break;
-                case WARN:
-                    this.warn(message, e);
-                    break;
-                case INFO:
-                    this.info(message, e);
-                    break;
-                case DEBUG:
-                    this.debug(message, e);
-                    break;
-                case TRACE:
-                    this.trace(message, e);
-                    break;
-                default:
-                    break;
+                case FATAL -> this.fatal(message, e);
+                case ERROR -> this.error(message, e);
+                case WARN -> this.warn(message, e);
+                case INFO -> this.info(message, e);
+                case DEBUG -> this.debug(message, e);
+                case TRACE -> this.trace(message, e);
+                default -> {
+                }
             }
         }
     }
@@ -313,26 +214,14 @@ class Slf4jLoggerImpl implements ConfigurableLogger {
     public void log(LogLevel level, Supplier<String> supplier, Throwable e) {
         if (isLoggable(level)) {
             switch (level) {
-                case FATAL:
-                    this.fatal(supplier, e);
-                    break;
-                case ERROR:
-                    this.error(supplier, e);
-                    break;
-                case WARN:
-                    this.warn(supplier, e);
-                    break;
-                case INFO:
-                    this.info(supplier, e);
-                    break;
-                case DEBUG:
-                    this.debug(supplier, e);
-                    break;
-                case TRACE:
-                    this.trace(supplier, e);
-                    break;
-                default:
-                    break;
+                case FATAL -> this.fatal(supplier, e);
+                case ERROR -> this.error(supplier, e);
+                case WARN -> this.warn(supplier, e);
+                case INFO -> this.info(supplier, e);
+                case DEBUG -> this.debug(supplier, e);
+                case TRACE -> this.trace(supplier, e);
+                default -> {
+                }
             }
         }
     }
@@ -341,26 +230,14 @@ class Slf4jLoggerImpl implements ConfigurableLogger {
     public void log(LogLevel level, Object message, Throwable e, Object... params) {
         if (isLoggable(level)) {
             switch (level) {
-                case FATAL:
-                    this.fatal(message, e, params);
-                    break;
-                case ERROR:
-                    this.error(message, e, params);
-                    break;
-                case WARN:
-                    this.warn(message, e, params);
-                    break;
-                case INFO:
-                    this.info(message, e, params);
-                    break;
-                case DEBUG:
-                    this.debug(message, e, params);
-                    break;
-                case TRACE:
-                    this.trace(message, e, params);
-                    break;
-                default:
-                    break;
+                case FATAL -> this.fatal(message, e, params);
+                case ERROR -> this.error(message, e, params);
+                case WARN -> this.warn(message, e, params);
+                case INFO -> this.info(message, e, params);
+                case DEBUG -> this.debug(message, e, params);
+                case TRACE -> this.trace(message, e, params);
+                default -> {
+                }
             }
         }
     }

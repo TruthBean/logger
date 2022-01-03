@@ -9,6 +9,7 @@
  */
 package com.truthbean.logger;
 
+import java.io.Serializable;
 import java.util.Optional;
 
 /**
@@ -16,7 +17,7 @@ import java.util.Optional;
  * @since 0.4.0
  * Created on 2020-11-17 14:28
  */
-public enum LogLevel {
+public enum LogLevel implements Serializable {
     /**
      * 关闭所有日志
      */

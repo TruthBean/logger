@@ -11,11 +11,13 @@ package com.truthbean.logger;
 
 import com.truthbean.common.mini.util.AbstractPropertiesUtils;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * @author TruthBean/Rogar·Q
@@ -24,7 +26,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class DefaultLoggerConfig implements LoggerConfig, AbstractPropertiesUtils {
 
-    private final ConcurrentMap<String, LogLevel> levelMap = new ConcurrentHashMap<>();
+    private final ConcurrentMap<String, LogLevel> levelMap = new ConcurrentSkipListMap<>(Comparator.reverseOrder());
 
     private static volatile DefaultLoggerConfig config;
 

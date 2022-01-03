@@ -87,22 +87,15 @@ public class JulLoggerImpl implements BaseLogger {
     }
 
     public Optional<Level> toLevel(LogLevel level) {
-        switch (level) {
-            case FATAL:
-                return Optional.of(JulLevel.FATAL);
-            case ERROR:
-                return Optional.of(JulLevel.ERROR);
-            case WARN:
-                return Optional.of(JulLevel.WARN);
-            case INFO:
-                return Optional.of(JulLevel.INFO);
-            case DEBUG:
-                return Optional.of(JulLevel.DEBUG);
-            case TRACE:
-                return Optional.of(JulLevel.TRACE);
-            default:
-                return Optional.empty();
-        }
+        return switch (level) {
+            case FATAL -> Optional.of(JulLevel.FATAL);
+            case ERROR -> Optional.of(JulLevel.ERROR);
+            case WARN -> Optional.of(JulLevel.WARN);
+            case INFO -> Optional.of(JulLevel.INFO);
+            case DEBUG -> Optional.of(JulLevel.DEBUG);
+            case TRACE -> Optional.of(JulLevel.TRACE);
+            default -> Optional.empty();
+        };
     }
 
     @Override

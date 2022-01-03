@@ -84,26 +84,17 @@ class Slf4jLocationAwareLoggerImpl implements ConfigurableLogger {
     }
 
     public int getLevel(LogLevel level) {
-        switch (level) {
-            case OFF:
-                return Integer.MAX_VALUE;
-            case FATAL:
-                return 40;
-            case ERROR:
-                return 40;
-            case WARN:
-                return 30;
-            case INFO:
-                return 20;
-            case DEBUG:
-                return 10;
-            case TRACE:
-                return 0;
-            default:
-                return 0;
-            case ALL:
-                return Integer.MIN_VALUE;
-        }
+        return switch (level) {
+            case OFF -> Integer.MAX_VALUE;
+            case FATAL -> 40;
+            case ERROR -> 40;
+            case WARN -> 30;
+            case INFO -> 20;
+            case DEBUG -> 10;
+            case TRACE -> 0;
+            default -> 0;
+            case ALL -> Integer.MIN_VALUE;
+        };
     }
 
     @Override
@@ -115,26 +106,17 @@ class Slf4jLocationAwareLoggerImpl implements ConfigurableLogger {
     @Override
     public boolean isLoggable(LogLevel level) {
         var bool = this.level.compareTo(level) >= 0;
-        switch (level) {
-            case OFF:
-                return false;
-            case FATAL:
-                return bool;
-            case ERROR:
-                return isErrorEnabled() && bool;
-            case WARN:
-                return this.log.isWarnEnabled(Slf4jImpl.MARKER) && bool;
-            case INFO:
-                return this.log.isInfoEnabled(Slf4jImpl.MARKER) && bool;
-            case DEBUG:
-                return this.log.isDebugEnabled(Slf4jImpl.MARKER) && bool;
-            case TRACE:
-                return this.log.isTraceEnabled(Slf4jImpl.MARKER) && bool;
-            default:
-                return false;
-            case ALL:
-                return true;
-        }
+        return switch (level) {
+            case OFF -> false;
+            case FATAL -> bool;
+            case ERROR -> isErrorEnabled() && bool;
+            case WARN -> this.log.isWarnEnabled(Slf4jImpl.MARKER) && bool;
+            case INFO -> this.log.isInfoEnabled(Slf4jImpl.MARKER) && bool;
+            case DEBUG -> this.log.isDebugEnabled(Slf4jImpl.MARKER) && bool;
+            case TRACE -> this.log.isTraceEnabled(Slf4jImpl.MARKER) && bool;
+            default -> false;
+            case ALL -> true;
+        };
     }
 
     @Override

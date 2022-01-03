@@ -9,6 +9,8 @@
  */
 package com.truthbean.logger.exception;
 
+import java.io.Serial;
+
 /**
  * @author TruthBean/Rogar·Q
  * @since 0.0.1
@@ -18,6 +20,7 @@ public class NoLoggerProviderException extends RuntimeException {
     /**
      *
      */
+    @Serial
     private static final long serialVersionUID = 6336490689226858998L;
 
     public NoLoggerProviderException() {
