@@ -1,5 +1,16 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.truthbean.logger.springboot.TruthBeanLoggerAutoConfiguration
+org.springframework.boot.BootstrapRegistryInitializer=\
+  com.truthbean.logger.springboot.TruthBeanLoggerBootstrapRegistryInitializer
 
 org.springframework.context.ApplicationContextInitializer=\
   com.truthbean.logger.springboot.TruthBeanLoggerInitializer
+
+# Application Listeners
+org.springframework.context.ApplicationListener=\
+  com.truthbean.logger.springboot.ExitCodeEventListener
+
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.truthbean.logger.springboot.TruthBeanLoggerAutoConfiguration
+
+# Logging Systems
+org.springframework.boot.logging.LoggingSystemFactory=\
+  com.truthbean.logger.springboot.TruthBeanLoggingSystemFactory

@@ -36,12 +36,13 @@ class SystemOutLoggerTest {
     }
 
     @Test
-    void testColor() {
+    void testColor() throws InterruptedException {
         var colors = ColorHelper.COLORS;
         var styles = ColorHelper.STYLES;
         for (int color : colors) {
             for (int style : styles) {
-                Console.write(color, style, "m color (color:" + color + " style:" + style + ")");
+                Console.write(color, style, "\rm color (color:" + color + " style:" + style + ")");
+                Thread.sleep(100);
             }
         }
     }
