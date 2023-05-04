@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 TruthBean(Rogar·Q)
+ * Copyright (c) 2023 TruthBean(Rogar·Q)
  * Debbie is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -40,22 +40,26 @@ public class JulLevel extends Level {
     public static final Level ERROR = Level.SEVERE;
     public static final Level WARN = Level.WARNING;
     public static final Level INFO = Level.INFO;
-    public static final Level DEBUG = Level.FINE;
+    public static final Level DEBUG = Level.CONFIG;
     public static final Level TRACE = Level.FINEST;
 
     public static LogLevel toLogLevel(int julLevelValue) {
-        if (julLevelValue <= Level.OFF.intValue() && julLevelValue > Level.SEVERE.intValue()) {
+        if (julLevelValue == Level.OFF.intValue()) {
+            return LogLevel.OFF;
+        } else if (julLevelValue < Level.OFF.intValue() && julLevelValue > Level.SEVERE.intValue()) {
             return LogLevel.FATAL;
         } else if (julLevelValue <= Level.SEVERE.intValue() && julLevelValue > Level.WARNING.intValue()) {
             return LogLevel.ERROR;
         } else if (julLevelValue <= Level.WARNING.intValue() && julLevelValue > Level.INFO.intValue()) {
             return LogLevel.WARN;
-        } else if (julLevelValue <= Level.INFO.intValue() && julLevelValue > Level.FINE.intValue()) {
+        } else if (julLevelValue <= Level.INFO.intValue() && julLevelValue > Level.CONFIG.intValue()) {
             return LogLevel.INFO;
-        } else if (julLevelValue <= Level.FINE.intValue() && julLevelValue > Level.FINEST.intValue()) {
+        } else if (julLevelValue <= Level.CONFIG.intValue() && julLevelValue > Level.FINE.intValue()) {
             return LogLevel.DEBUG;
-        } else if (julLevelValue <= Level.FINEST.intValue()) {
+        } else if (julLevelValue <= Level.FINE.intValue() && julLevelValue >= Level.FINEST.intValue()) {
             return LogLevel.TRACE;
+        } else if (julLevelValue < Level.FINEST.intValue() && julLevelValue >= Level.ALL.intValue()) {
+            return LogLevel.ALL;
         } else {
             return LogLevel.OFF;
         }

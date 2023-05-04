@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 TruthBean(Rogar·Q)
+ * Copyright (c) 2023 TruthBean(Rogar·Q)
  * Debbie is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -30,24 +30,84 @@ public class Console {
         System.out.println("\33[" + color + ";" + style + "m" + message + "\033[0m");
     }
 
+    public static void fatal(Object message) {
+        String msg;
+        if (message != null) {
+            msg = message.toString();
+        } else {
+            msg = "null";
+        }
+        log(LogLevel.FATAL, msg);
+    }
+
     public static void fatal(String message, Object... params) {
         log(LogLevel.FATAL, message, params);
+    }
+
+    public static void error(Object message) {
+        String msg;
+        if (message != null) {
+            msg = message.toString();
+        } else {
+            msg = "null";
+        }
+        log(LogLevel.ERROR, msg);
     }
 
     public static void error(String message, Object... params) {
         log(LogLevel.ERROR, message, params);
     }
 
+    public static void warn(Object message) {
+        String msg;
+        if (message != null) {
+            msg = message.toString();
+        } else {
+            msg = "null";
+        }
+        log(LogLevel.WARN, msg);
+    }
+
     public static void warn(String message, Object... params) {
         log(LogLevel.WARN, message, params);
+    }
+
+    public static void info(Object message) {
+        String msg;
+        if (message != null) {
+            msg = message.toString();
+        } else {
+            msg = "null";
+        }
+        log(LogLevel.INFO, msg);
     }
 
     public static void info(String message, Object... params) {
         log(LogLevel.INFO, message, params);
     }
 
+    public static void debug(Object message) {
+        String msg;
+        if (message != null) {
+            msg = message.toString();
+        } else {
+            msg = "null";
+        }
+        log(LogLevel.DEBUG, msg);
+    }
+
     public static void debug(String message, Object... params) {
         log(LogLevel.DEBUG, message, params);
+    }
+
+    public static void trace(Object message) {
+        String msg;
+        if (message != null) {
+            msg = message.toString();
+        } else {
+            msg = "null";
+        }
+        log(LogLevel.TRACE, msg);
     }
 
     public static void trace(String message, Object... params) {

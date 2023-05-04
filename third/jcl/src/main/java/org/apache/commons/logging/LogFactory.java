@@ -19,7 +19,7 @@ package org.apache.commons.logging;
 
 import com.truthbean.Logger;
 import com.truthbean.LoggerFactory;
-import com.truthbean.common.mini.util.ClassHelper;
+import com.truthbean.core.util.ClassHelper;
 import com.truthbean.logger.jcl.JclLogger;
 import com.truthbean.logger.jcl.LogFactoryImpl;
 

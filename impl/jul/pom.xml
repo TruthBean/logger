@@ -3,28 +3,28 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>logger-impls</artifactId>
         <groupId>com.truthbean</groupId>
-        <version>0.5.4-RELEASE</version>
+        <artifactId>truthbean-logger-impls</artifactId>
+        <version>0.5.5-RELEASE</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>logger-to-jul</artifactId>
+    <artifactId>truthbean-logger-to-jul</artifactId>
 
-    <name>logger-to-jul</name>
+    <name>truthbean-logger-to-jul</name>
     <description>the truthbean logger framework implement by jul</description>
     <url>http://www.truthbean.com/logger</url>
 
     <dependencies>
         <dependency>
             <groupId>com.truthbean</groupId>
-            <artifactId>jdk-common</artifactId>
+            <artifactId>truthbean-jdk-common</artifactId>
             <version>${truthbean.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.truthbean</groupId>
-                    <artifactId>logger-core</artifactId>
+                    <artifactId>truthbean-logger-core</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 TruthBean(Rogar·Q)
+ * Copyright (c) 2023 TruthBean(Rogar·Q)
  * Debbie is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -157,7 +157,7 @@ public class MessageHelper {
                     logger.append(" : ");
                 }
             }
-            case "DEBUG", "CONFIG", "FINE" -> {
+            case "DEBUG", "CONFIG" -> {
                 if (color) {
                     logger.append("\33[94;1m");
                 }
@@ -180,7 +180,7 @@ public class MessageHelper {
                     logger.append(" : ");
                 }
             }
-            case "TRACE", "FINER", "FINEST" -> {
+            case "FINE", "TRACE", "FINER", "FINEST" -> {
                 if (color) {
                     logger.append("\33[95;1m");
                 }
@@ -193,6 +193,29 @@ public class MessageHelper {
                 logger.append(threadName);
                 if (color) {
                     logger.append("\033[0m] ").append("\33[95;4m");
+                } else {
+                    logger.append(" ");
+                }
+                logger.append(location);
+                if (color) {
+                    logger.append("\033[0m \33[97;1m:\033[0m \33[39;1m");
+                } else {
+                    logger.append(" : ");
+                }
+            }
+            case "ALL" -> {
+                if (color) {
+                    logger.append("\33[98;1m");
+                }
+                logger.append("ALL  ");
+                if (color) {
+                    logger.append("\033[0m ").append("[\33[30;1m");
+                } else {
+                    logger.append(" ");
+                }
+                logger.append(threadName);
+                if (color) {
+                    logger.append("\033[0m] ").append("\33[98;4m");
                 } else {
                     logger.append(" ");
                 }

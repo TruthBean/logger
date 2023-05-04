@@ -1,0 +1,63 @@
+{
+  "groups": [
+    {
+      "name": "truthbean.log",
+      "type": "com.truthbean.logger.TruthBeanLoggerProperties",
+      "sourceType": "com.truthbean.logger.springboot.TruthBeanLoggerProperties"
+    },
+    {
+      "name": "logging",
+      "type": "com.truthbean.logger.springboot.LoggerLevelSpringProperties",
+      "sourceType": "com.truthbean.logger.springboot.LoggerLevelSpringProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "truthbean.log.disable",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.truthbean.logger.TruthBeanLoggerProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "truthbean.log.location-time",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.truthbean.logger.TruthBeanLoggerProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "truthbean.log.no",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.truthbean.logger.TruthBeanLoggerProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "truthbean.log.stdout-color",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.truthbean.logger.TruthBeanLoggerProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "truthbean.log.system-out",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.truthbean.logger.TruthBeanLoggerProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "truthbean.log.use-name",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.truthbean.logger.TruthBeanLoggerProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "logging.level",
+      "type": "java.util.Map<java.lang.String,com.truthbean.logger.LogLevel>",
+      "sourceType": "com.truthbean.logger.LoggerLevelSpringProperties"
+    },
+    {
+      "name": "logging.level.root",
+      "type": "com.truthbean.logger.LogLevel",
+      "sourceType": "com.truthbean.logger.LoggerLevelSpringProperties"
+    }
+  ],
+  "hints": []
+}

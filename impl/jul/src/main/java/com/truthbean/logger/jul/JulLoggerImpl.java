@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 TruthBean(Rogar·Q)
+ * Copyright (c) 2023 TruthBean(Rogar·Q)
  * Debbie is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -88,12 +88,14 @@ public class JulLoggerImpl implements BaseLogger {
 
     public Optional<Level> toLevel(LogLevel level) {
         return switch (level) {
+            case OFF -> Optional.of(JulLevel.OFF);
             case FATAL -> Optional.of(JulLevel.FATAL);
             case ERROR -> Optional.of(JulLevel.ERROR);
             case WARN -> Optional.of(JulLevel.WARN);
             case INFO -> Optional.of(JulLevel.INFO);
             case DEBUG -> Optional.of(JulLevel.DEBUG);
             case TRACE -> Optional.of(JulLevel.TRACE);
+            case ALL -> Optional.of(JulLevel.ALL);
             default -> Optional.empty();
         };
     }

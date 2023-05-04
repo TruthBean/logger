@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 TruthBean(Rogar·Q)
+ * Copyright (c) 2023 TruthBean(Rogar·Q)
  * Debbie is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -18,9 +18,10 @@ module com.truthbean.logger.slf4j.boot {
     requires transitive java.logging;
 
     requires static jul.to.slf4j;
-    requires static org.apache.log4j;
-    requires transitive logback.classic;
+    // requires static org.apache.log4j;
+    requires ch.qos.logback.classic;
     requires static org.apache.commons.logging;
+    //requires com.truthbean.logger.slf4j.impl;
 
     provides com.truthbean.logger.LoggerInitiation with com.truthbean.logger.slf4j.boot.Slf4jBootInitiation;
 }

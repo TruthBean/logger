@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 TruthBean(Rogar·Q)
+ * Copyright (c) 2023 TruthBean(Rogar·Q)
  * Debbie is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -11,12 +11,12 @@ package com.truthbean.logger.slf4j.boot;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
+import ch.qos.logback.classic.spi.LogbackServiceProvider;
 import com.truthbean.logger.LogLevel;
 import com.truthbean.logger.LoggerConfig;
 import com.truthbean.LoggerFactory;
 import com.truthbean.logger.LoggerInitiation;
 import org.slf4j.bridge.SLF4JBridgeHandler;
-import org.slf4j.impl.StaticLoggerBinder;
 
 /**
  * @author TruthBean/Rogar·Q
@@ -84,8 +84,9 @@ public class Slf4jBootInitiation implements LoggerInitiation {
     }
 
     private LoggerContext getLoggerContext() {
-        var factory = StaticLoggerBinder.getSingleton().getLoggerFactory();
-        return (LoggerContext) factory;
+        var slf4jServiceProvider = new LogbackServiceProvider();
+        slf4jServiceProvider.initialize();
+        return (LoggerContext) slf4jServiceProvider.getLoggerFactory();
     }
 
     @Override

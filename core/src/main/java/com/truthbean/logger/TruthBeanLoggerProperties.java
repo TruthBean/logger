@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 TruthBean(Rogar·Q)
+ * Copyright (c) 2023 TruthBean(Rogar·Q)
  * Debbie is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -7,32 +7,38 @@
  * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
  * See the Mulan PSL v2 for more details.
  */
-package com.truthbean.logger.springboot;
-
-import com.truthbean.logger.ConfigurableLogger;
-import com.truthbean.logger.LoggerConfig;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+package com.truthbean.logger;
 
 /**
  * @author TruthBean/Rogar·Q
  * @since 0.4.0
  * Created on 2020-12-02 17:10
  */
-@Component
-@ConfigurationProperties(prefix = "com.truthbean")
 public class TruthBeanLoggerProperties {
 
     public TruthBeanLoggerProperties() {
     }
 
+    private boolean disable;
+
     private boolean no;
 
     private boolean systemOut;
 
+    private boolean stdoutColor;
+
     private boolean useName;
 
     private boolean locationTime;
+
+    public boolean isDisable() {
+        return disable;
+    }
+
+    public void setDisable(boolean disable) {
+        this.disable = disable;
+        System.setProperty(LoggerConfig.DISABLE_LOGGER, String.valueOf(disable));
+    }
 
     public boolean isNo() {
         return no;
@@ -50,6 +56,15 @@ public class TruthBeanLoggerProperties {
     public void setSystemOut(boolean systemOut) {
         this.systemOut = systemOut;
         System.setProperty(LoggerConfig.STD_OUT, String.valueOf(no));
+    }
+
+    public boolean isStdoutColor() {
+        return stdoutColor;
+    }
+
+    public void setStdoutColor(boolean stdoutColor) {
+        this.stdoutColor = stdoutColor;
+        System.setProperty(LoggerConfig.STD_OUT, String.valueOf(stdoutColor));
     }
 
     public boolean isUseName() {

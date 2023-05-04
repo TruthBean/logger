@@ -3,16 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>logger-boot-parent</artifactId>
         <groupId>com.truthbean</groupId>
-        <version>0.5.4-RELEASE</version>
+        <artifactId>truthbean-logger-boot-parent</artifactId>
+        <version>0.5.5-RELEASE</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>stdout-boot</artifactId>
+    <artifactId>truthbean-stdout-boot</artifactId>
 
-    <name>stdout-boot</name>
+    <name>truthbean-stdout-boot</name>
     <description>stdout boot of the truthbean logger framework</description>
     <url>http://www.truthbean.com/logger</url>
 
@@ -20,52 +20,53 @@
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.release>17</maven.compiler.release>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.truthbean</groupId>
-            <artifactId>logger-core</artifactId>
+            <artifactId>truthbean-logger-core</artifactId>
             <version>${truthbean.version}</version>
         </dependency>
         <dependency>
             <groupId>com.truthbean</groupId>
-            <artifactId>jdk-common</artifactId>
+            <artifactId>truthbean-jdk-common</artifactId>
             <version>${truthbean.version}</version>
         </dependency>
         <dependency>
             <groupId>com.truthbean</groupId>
-            <artifactId>jdk9-system-logger</artifactId>
+            <artifactId>truthbean-jdk9-system-logger</artifactId>
             <version>${truthbean.version}</version>
         </dependency>
         <dependency>
             <groupId>com.truthbean</groupId>
-            <artifactId>logger-stdout</artifactId>
+            <artifactId>truthbean-logger-stdout</artifactId>
             <version>${truthbean.version}</version>
         </dependency>
         <dependency>
             <groupId>com.truthbean</groupId>
-            <artifactId>logger-jcl</artifactId>
+            <artifactId>truthbean-logger-jcl</artifactId>
             <version>${truthbean.version}</version>
         </dependency>
         <dependency>
             <groupId>com.truthbean</groupId>
-            <artifactId>jul-to-logger</artifactId>
+            <artifactId>truthbean-jul-to-logger</artifactId>
             <version>${truthbean.version}</version>
         </dependency>
         <dependency>
             <groupId>com.truthbean</groupId>
-            <artifactId>logger-kotlin</artifactId>
+            <artifactId>truthbean-logger-kotlin</artifactId>
             <version>${truthbean.version}</version>
         </dependency>
         <dependency>
             <groupId>com.truthbean</groupId>
-            <artifactId>slf4j-bridge</artifactId>
+            <artifactId>truthbean-slf4j-bridge</artifactId>
             <version>${truthbean.version}</version>
         </dependency>
         <dependency>
             <groupId>com.truthbean</groupId>
-            <artifactId>log4j2-bridge</artifactId>
+            <artifactId>truthbean-log4j2-bridge</artifactId>
             <version>${truthbean.version}</version>
         </dependency>
 

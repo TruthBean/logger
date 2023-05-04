@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 TruthBean(Rogar·Q)
+ * Copyright (c) 2023 TruthBean(Rogar·Q)
  * Debbie is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -11,6 +11,7 @@ package com.truthbean.logger.slf4j;
 
 import org.slf4j.spi.MDCAdapter;
 
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -52,5 +53,25 @@ public class LoggerMDCAdapter implements MDCAdapter {
     @Override
     public void setContextMap(Map<String, String> contextMap) {
         map.putAll(contextMap);
+    }
+
+    @Override
+    public void pushByKey(String key, String value) {
+        map.put(key, value);
+    }
+
+    @Override
+    public String popByKey(String key) {
+        return map.remove(key);
+    }
+
+    @Override
+    public Deque<String> getCopyOfDequeByKey(String key) {
+        return null;
+    }
+
+    @Override
+    public void clearDequeByKey(String key) {
+
     }
 }

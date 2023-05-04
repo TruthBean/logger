@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 TruthBean(Rogar·Q)
+ * Copyright (c) 2023 TruthBean(Rogar·Q)
  * Debbie is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -107,7 +107,8 @@ public interface ConfigurableLogger extends Logger {
                 || "com.truthbean.logger.ConfigurableLogger".equals(className)
                 || "com.truthbean.logger.SystemOutLogger".equals(className)
                 || "com.truthbean.logger.stdout.Console".equals(className)
-                || "com.truthbean.logger.stdoutImpl".equals(className)
+                || "com.truthbean.Console".equals(className)
+                || "com.truthbean.logger.StdOutImpl".equals(className)
                 || "com.truthbean.logger.juli.JuliLogger".equals(className)
                 || "com.truthbean.logger.jcl.JclLogger".equals(className)
                 || "com.truthbean.logger.jul.JulLoggerImpl".equals(className)

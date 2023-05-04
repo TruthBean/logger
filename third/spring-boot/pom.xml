@@ -3,16 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>logger-third</artifactId>
         <groupId>com.truthbean</groupId>
-        <version>0.5.4-RELEASE</version>
+        <artifactId>truthbean-logger-third</artifactId>
+        <version>0.5.5-RELEASE</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>logger-spring-boot-starter</artifactId>
+    <artifactId>truthbean-logger-spring-boot-starter</artifactId>
 
-    <name>logger-spring-boot-starter</name>
+    <name>truthbean-logger-spring-boot-starter</name>
     <description>spring boot logger implement by the truthbean logger framework</description>
     <url>http://www.truthbean.com/logger</url>
 
@@ -20,6 +20,7 @@
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.release>17</maven.compiler.release>
     </properties>
 
     <dependencies>
@@ -53,12 +54,6 @@
             <version>${spring.boot.version}</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <version>${spring.boot.version}</version>
-            <scope>provided</scope>
-        </dependency>
 
         <dependency>
             <groupId>org.apache.tomcat</groupId>
@@ -68,7 +63,7 @@
 
         <dependency>
             <groupId>com.truthbean</groupId>
-            <artifactId>stdout-boot</artifactId>
+            <artifactId>truthbean-stdout-boot</artifactId>
             <version>${truthbean.version}</version>
         </dependency>
 
@@ -87,13 +82,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>${spring.boot.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-            <version>1.3.2</version>
             <scope>test</scope>
         </dependency>
 

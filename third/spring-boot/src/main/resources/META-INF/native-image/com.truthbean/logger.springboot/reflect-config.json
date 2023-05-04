@@ -1,5 +1,29 @@
 [
   {
+    "name" : "com.truthbean.logger.TruthBeanLoggerProperties",
+    "methods": [
+      { "name": "<init>", "parameterTypes": [] }
+    ],
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicFields" : true
+  },
+  {
+    "name" : "com.truthbean.logger.springboot.TruthBeanLoggerSpringProperties",
+    "methods": [
+      { "name": "<init>", "parameterTypes": [] }
+    ],
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicFields" : true
+  },
+  {
     "name" : "com.truthbean.logger.springboot.TruthBeanLoggerSystem",
     "methods": [
       { "name": "<init>", "parameterTypes": [] }

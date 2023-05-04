@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 TruthBean(Rogar·Q)
+ * Copyright (c) 2023 TruthBean(Rogar·Q)
  * Debbie is licensed under Mulan PSL v2.
  * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
@@ -20,17 +20,41 @@ import java.util.Optional;
  */
 public interface LoggerConfig {
 
-    String DISABLE_LOGGER = "com.truthbean.log.disable";
-    String NO_LOGGER = "com.truthbean.log.no";
-    String STD_OUT = "com.truthbean.system-out";
-    String COLOR_LOGGER = "com.truthbean.stdout-color";
+    String DISABLE_LOGGER = "truthbean.log.disable";
+    String NO_LOGGER = "truthbean.log.no";
+    String STD_OUT = "truthbean.log.system-out";
+    String COLOR_LOGGER = "truthbean.log.stdout-color";
 
-    String USE_NAME = "com.truthbean.use-name";
+    String USE_NAME = "truthbean.log.use-name";
     String FALSE = "false";
     String TRUE = "true";
     String LOGGING_LEVEL = "logging.level.";
     String U_ROOT = "ROOT";
     String L_ROOT = "root";
+
+    static void disableLogger() {
+        System.setProperty(NO_LOGGER, TRUE);
+    }
+
+    static void enableLogger() {
+        System.setProperty(NO_LOGGER, FALSE);
+    }
+
+    static void noStdout() {
+        System.setProperty(STD_OUT, FALSE);
+    }
+
+    static void stdout() {
+        System.setProperty(STD_OUT, TRUE);
+    }
+
+    static void noStdoutColor() {
+        System.setProperty(COLOR_LOGGER, FALSE);
+    }
+
+    static void useStdoutColor() {
+        System.setProperty(COLOR_LOGGER, TRUE);
+    }
 
     default void setLogLevel(String loggerName, LogLevel level) {
     }

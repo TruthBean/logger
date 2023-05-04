@@ -3,17 +3,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>logger-parent</artifactId>
+        <artifactId>truthbean-logger-parent</artifactId>
         <groupId>com.truthbean</groupId>
-        <version>0.5.4-RELEASE</version>
+        <version>0.5.5-RELEASE</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
 
-    <artifactId>logger-dependencies</artifactId>
+    <artifactId>truthbean-logger-dependencies</artifactId>
 
-    <name>logger-dependencies</name>
+    <name>truthbean-logger-dependencies</name>
     <description>library dependencies in the truthbean logger framework</description>
     <url>http://www.truthbean.com/logger</url>
 
@@ -21,7 +21,7 @@
         <dependencies>
             <dependency>
                 <groupId>com.truthbean</groupId>
-                <artifactId>logger-core</artifactId>
+                <artifactId>truthbean-logger-core</artifactId>
                 <version>${truthbean.version}</version>
             </dependency>
 
