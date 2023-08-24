@@ -43,5 +43,11 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.truthbean</groupId>
+            <artifactId>truthbean-logger-core</artifactId>
+            <version>0.5.5-RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

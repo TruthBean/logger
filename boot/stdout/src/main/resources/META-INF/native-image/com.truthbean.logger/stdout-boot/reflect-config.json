@@ -4,11 +4,18 @@
     "methods": [
       { "name": "<init>", "parameterTypes": [] }
     ],
+    "queriedMethods": [
+      { "name": "<init>", "parameterTypes": [] }
+    ],
     "allDeclaredConstructors" : true,
     "allPublicConstructors" : true,
     "allDeclaredMethods" : true,
     "allPublicMethods" : true,
     "allDeclaredFields" : true,
-    "allPublicFields" : true
+    "allPublicFields" : true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicMethods": true,
+    "queryAllPublicConstructors": true
   }
 ]

@@ -18,4 +18,5 @@ open module com.truthbean.logger.slf4j.boot.test {
     requires org.apache.commons.logging;
     requires log4j;
     // requires org.apache.log4j;
+    requires jul.to.slf4j;
 }

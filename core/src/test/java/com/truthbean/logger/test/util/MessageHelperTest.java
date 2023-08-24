@@ -12,7 +12,7 @@ class MessageHelperTest {
     @Test
     void format() {
         String format= "}中{}文}中{}文}中{}{中{}}中{}中{中中{}}{";
-        Object[] args = new Object[]{"123"};
+        Object[] args = new Object[]{"123", "", null, "1"};
         var sb = MessageHelper.format(format, args);
         System.out.println(sb.toString());
     }

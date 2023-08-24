@@ -9,7 +9,11 @@
     "allDeclaredMethods" : true,
     "allPublicMethods" : true,
     "allDeclaredFields" : true,
-    "allPublicFields" : true
+    "allPublicFields" : true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicMethods": true,
+    "queryAllPublicConstructors": true
   },
   {
     "name": "com.truthbean.logger.log4j2.TruthBeanLoggerContextFactory",
@@ -21,7 +25,11 @@
     "allDeclaredMethods" : true,
     "allPublicMethods" : true,
     "allDeclaredFields" : true,
-    "allPublicFields" : true
+    "allPublicFields" : true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicMethods": true,
+    "queryAllPublicConstructors": true
   },
   {
     "name": "org.apache.logging.log4j.message.DefaultFlowMessageFactory",
@@ -33,7 +41,11 @@
     "allDeclaredMethods" : true,
     "allPublicMethods" : true,
     "allDeclaredFields" : true,
-    "allPublicFields" : true
+    "allPublicFields" : true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicMethods": true,
+    "queryAllPublicConstructors": true
   },
   {
     "name": "org.apache.logging.log4j.message.ParameterizedMessageFactory",
@@ -45,6 +57,10 @@
     "allDeclaredMethods" : true,
     "allPublicMethods" : true,
     "allDeclaredFields" : true,
-    "allPublicFields" : true
+    "allPublicFields" : true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicMethods": true,
+    "queryAllPublicConstructors": true
   }
 ]

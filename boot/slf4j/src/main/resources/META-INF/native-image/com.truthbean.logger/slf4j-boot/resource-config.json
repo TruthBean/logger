@@ -1,7 +1,9 @@
 {
-  "resources": [
-    {
-      "pattern": "logback.xml"
-    }
-  ]
+  "resources": {
+    "includes": [
+      {
+        "pattern": "logback.xml"
+      }
+    ]
+  }
 }

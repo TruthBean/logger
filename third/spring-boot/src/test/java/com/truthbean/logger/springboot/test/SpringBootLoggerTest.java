@@ -23,6 +23,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringBootLoggerTest {
 
     public static void main(String[] args) {
+        Thread.currentThread().setName("TruthBean-SpringBoot-Logger");
         LOGGER.info("bababababbaa....");
         SpringApplication.run(SpringBootLoggerTest.class, args);
     }

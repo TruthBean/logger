@@ -18,10 +18,9 @@ module com.truthbean.logger.slf4j.boot {
     requires transitive java.logging;
 
     requires static jul.to.slf4j;
-    // requires static org.apache.log4j;
+    requires static org.apache.logging.log4j;
     requires ch.qos.logback.classic;
     requires static org.apache.commons.logging;
-    //requires com.truthbean.logger.slf4j.impl;
 
     provides com.truthbean.logger.LoggerInitiation with com.truthbean.logger.slf4j.boot.Slf4jBootInitiation;
 }

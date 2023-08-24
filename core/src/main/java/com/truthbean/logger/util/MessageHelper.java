@@ -38,6 +38,8 @@ public class MessageHelper {
                 if (i < params.length) {
                     sb.append(params[i]);
                     i++;
+                } else {
+                    sb.append("{}");
                 }
                 j += 2;
             } else {

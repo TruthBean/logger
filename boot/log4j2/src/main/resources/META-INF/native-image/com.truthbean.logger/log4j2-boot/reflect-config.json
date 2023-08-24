@@ -10,7 +10,11 @@
     "allDeclaredMethods" : true,
     "allPublicMethods" : true,
     "allDeclaredFields" : true,
-    "allPublicFields" : true
+    "allPublicFields" : true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicMethods": true,
+    "queryAllPublicConstructors": true
   },
   {
     "name" : "com.truthbean.logger.log4j2.boot.Log4j2BootInitiation",
@@ -22,7 +26,11 @@
     "allDeclaredMethods" : true,
     "allPublicMethods" : true,
     "allDeclaredFields" : true,
-    "allPublicFields" : true
+    "allPublicFields" : true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicMethods": true,
+    "queryAllPublicConstructors": true
   },
   {
     "name": "org.apache.logging.log4j.jul.LogManager",
@@ -34,7 +42,11 @@
     "allDeclaredMethods" : true,
     "allPublicMethods" : true,
     "allDeclaredFields" : true,
-    "allPublicFields" : true
+    "allPublicFields" : true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicMethods": true,
+    "queryAllPublicConstructors": true
   },
   {
     "name": "org.apache.logging.log4j.core.config.plugins.processor.PluginProcessor",
@@ -46,7 +58,11 @@
     "allDeclaredMethods" : true,
     "allPublicMethods" : true,
     "allDeclaredFields" : true,
-    "allPublicFields" : true
+    "allPublicFields" : true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicMethods": true,
+    "queryAllPublicConstructors": true
   },
   {
     "name": "org.apache.logging.log4j.core.impl.ThreadContextDataProvider",
@@ -58,7 +74,11 @@
     "allDeclaredMethods" : true,
     "allPublicMethods" : true,
     "allDeclaredFields" : true,
-    "allPublicFields" : true
+    "allPublicFields" : true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicMethods": true,
+    "queryAllPublicConstructors": true
   },
   {
     "name": "org.apache.logging.log4j.core.impl.ThreadContextDataProvider",
@@ -70,7 +90,11 @@
     "allDeclaredMethods" : true,
     "allPublicMethods" : true,
     "allDeclaredFields" : true,
-    "allPublicFields" : true
+    "allPublicFields" : true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicMethods": true,
+    "queryAllPublicConstructors": true
   },
   {
     "name": "org.apache.logging.log4j.core.message.ExtendedThreadInfoFactory",
@@ -82,7 +106,11 @@
     "allDeclaredMethods" : true,
     "allPublicMethods" : true,
     "allDeclaredFields" : true,
-    "allPublicFields" : true
+    "allPublicFields" : true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicMethods": true,
+    "queryAllPublicConstructors": true
   },
   {
     "name": "org.apache.logging.log4j.core.impl.Log4jProvider",
@@ -94,7 +122,11 @@
     "allDeclaredMethods" : true,
     "allPublicMethods" : true,
     "allDeclaredFields" : true,
-    "allPublicFields" : true
+    "allPublicFields" : true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicMethods": true,
+    "queryAllPublicConstructors": true
   },
   {
     "name": "org.apache.logging.log4j.util.EnvironmentPropertySource",
@@ -106,7 +138,11 @@
     "allDeclaredMethods" : true,
     "allPublicMethods" : true,
     "allDeclaredFields" : true,
-    "allPublicFields" : true
+    "allPublicFields" : true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicMethods": true,
+    "queryAllPublicConstructors": true
   },
   {
     "name": "org.apache.logging.log4j.util.SystemPropertiesPropertySource",
@@ -118,7 +154,11 @@
     "allDeclaredMethods" : true,
     "allPublicMethods" : true,
     "allDeclaredFields" : true,
-    "allPublicFields" : true
+    "allPublicFields" : true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicMethods": true,
+    "queryAllPublicConstructors": true
   },
   {
     "name": "org.apache.logging.log4j.jcl.LogFactoryImpl",
@@ -130,7 +170,11 @@
     "allDeclaredMethods" : true,
     "allPublicMethods" : true,
     "allDeclaredFields" : true,
-    "allPublicFields" : true
+    "allPublicFields" : true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicMethods": true,
+    "queryAllPublicConstructors": true
   },
   {
     "name": "org.apache.logging.log4j.jpl.Log4jSystemLoggerFinder",
@@ -142,6 +186,10 @@
     "allDeclaredMethods" : true,
     "allPublicMethods" : true,
     "allDeclaredFields" : true,
-    "allPublicFields" : true
+    "allPublicFields" : true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicMethods": true,
+    "queryAllPublicConstructors": true
   }
 ]

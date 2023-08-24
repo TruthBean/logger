@@ -13,7 +13,12 @@
 open module com.truthbean.logger.log4j2.boot.test {
     requires com.truthbean.logger.log4j2.boot;
     requires transitive org.junit.jupiter.api;
-    requires static org.slf4j;
 
     requires commons.logging;
+
+    requires org.apache.logging.log4j.core;
+    requires static org.apache.logging.log4j.jul;
+    requires static org.apache.logging.log4j.jpl;
+    requires static org.apache.logging.log4j.jcl;
+    requires com.truthbean.logger.core;
 }

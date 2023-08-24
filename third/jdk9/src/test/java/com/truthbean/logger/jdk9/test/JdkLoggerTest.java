@@ -57,6 +57,11 @@ public class JdkLoggerTest {
         logger.log(LogLevel.INFO, "{", null, "info");
         logger.log(LogLevel.INFO, this, "info");
         logger.info(this);
+        jdk9Logger.log(System.Logger.Level.INFO, "info");
+        jdk9Logger.log(System.Logger.Level.INFO, this);
+        jdk9Logger.log(System.Logger.Level.INFO, () -> "info");
+        jdk9Logger.log(System.Logger.Level.INFO, "{", null, "info");
+        jdk9Logger.log(System.Logger.Level.INFO, this);
     }
 
     @Test
@@ -67,6 +72,11 @@ public class JdkLoggerTest {
         logger.info(this, 123);
         logger.info(this);
         logger.info("msg({}),({}),特{}朗普", 1, "444", "吹牛");
+        jdk9Logger.log(System.Logger.Level.INFO, "msg");
+        jdk9Logger.log(System.Logger.Level.INFO, () -> "msg");
+        jdk9Logger.log(System.Logger.Level.INFO, "msg{}", 123);
+        jdk9Logger.log(System.Logger.Level.INFO, this);
+        jdk9Logger.log(System.Logger.Level.INFO, "msg({}),({}),特{}朗普", 1, "444", "吹牛");
     }
 
     @Test
@@ -79,6 +89,13 @@ public class JdkLoggerTest {
         logger.debug(this, 123);
         logger.debug(this);
         logger.debug("msg({}),({}),特{}朗普", 1, "444", "吹牛");
+        jdk9Logger.log(System.Logger.Level.DEBUG, "debug");
+        jdk9Logger.log(System.Logger.Level.DEBUG, "debug{},{},{}", 55, "7777", this);
+        jdk9Logger.log(System.Logger.Level.DEBUG, "msg");
+        jdk9Logger.log(System.Logger.Level.DEBUG, () -> "msg");
+        jdk9Logger.log(System.Logger.Level.DEBUG, "msg{}", 123);
+        jdk9Logger.log(System.Logger.Level.DEBUG, this);
+        jdk9Logger.log(System.Logger.Level.DEBUG, "msg({}),({}),特{}朗普", 1, "444", "吹牛");
     }
 
     @Test
@@ -92,6 +109,14 @@ public class JdkLoggerTest {
         logger.error(this, 123);
         logger.error(this);
         logger.error("msg({}),({}),特{}朗普", 1, "444", "吹牛");
+        jdk9Logger.log(System.Logger.Level.ERROR, "66666666", new RuntimeException("7777"));
+        jdk9Logger.log(System.Logger.Level.ERROR, "error");
+        jdk9Logger.log(System.Logger.Level.ERROR, "error{},{},{}", 55, "7777", this);
+        jdk9Logger.log(System.Logger.Level.ERROR, "msg");
+        jdk9Logger.log(System.Logger.Level.ERROR, () -> "msg");
+        jdk9Logger.log(System.Logger.Level.ERROR, "msg{}", 123);
+        jdk9Logger.log(System.Logger.Level.ERROR, this);
+        jdk9Logger.log(System.Logger.Level.ERROR, "msg({}),({}),特{}朗普", 1, "444", "吹牛");
     }
 
     @Test
@@ -105,6 +130,14 @@ public class JdkLoggerTest {
         logger.trace(this, 123);
         logger.trace(this);
         logger.trace("msg({}),({}),特{}朗普", 1, "444", "吹牛");
+        jdk9Logger.log(System.Logger.Level.TRACE, "66666666", new RuntimeException("7777"));
+        jdk9Logger.log(System.Logger.Level.TRACE, "trace");
+        jdk9Logger.log(System.Logger.Level.TRACE, "trace{},{trace},{}", 55, "7777", this);
+        jdk9Logger.log(System.Logger.Level.TRACE, "msg");
+        jdk9Logger.log(System.Logger.Level.TRACE, () -> "msg");
+        jdk9Logger.log(System.Logger.Level.TRACE, "msg{}", 123);
+        jdk9Logger.log(System.Logger.Level.TRACE, this);
+        jdk9Logger.log(System.Logger.Level.TRACE, "msg({}),({}),特{}朗普", 1, "444", "吹牛");
     }
 
     @Test
@@ -118,7 +151,16 @@ public class JdkLoggerTest {
         logger.fatal(this, 123);
         logger.fatal(this);
         logger.fatal("msg({}),({}),特{}朗普", 1, "444", "吹牛");
+        jdk9Logger.log(System.Logger.Level.ALL, "66666666", new RuntimeException("7777"));
+        jdk9Logger.log(System.Logger.Level.ALL, "fatal");
+        jdk9Logger.log(System.Logger.Level.ALL, "fatal{},{fatal},{}", 55, "7777", this);
+        jdk9Logger.log(System.Logger.Level.ALL, "msg");
+        jdk9Logger.log(System.Logger.Level.ALL, () -> "msg");
+        jdk9Logger.log(System.Logger.Level.ALL, "msg{}", 123);
+        jdk9Logger.log(System.Logger.Level.ALL, this);
+        jdk9Logger.log(System.Logger.Level.ALL, "msg({}),({}),特{}朗普", 1, "444", "吹牛");
     }
 
     private static final Logger logger = LoggerFactory.getLogger(LogLevel.INFO, JdkLoggerTest.class);
+    private static final System.Logger jdk9Logger = System.getLogger(JdkLoggerTest.class.getName());
 }

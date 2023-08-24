@@ -24,6 +24,12 @@ public class Slf4jBootTest {
     }
 
     @Test
+    void testJdk9() {
+        System.Logger logger = System.getLogger(Slf4jBootTest.class.getName());
+        logger.log(System.Logger.Level.INFO, "jdk9");
+    }
+
+    @Test
     void testJcl() {
         Log log = LogFactory.getLog(Slf4jBootTest.class);
         log.info("jcl");

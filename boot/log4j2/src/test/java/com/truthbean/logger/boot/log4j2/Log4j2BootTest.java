@@ -3,10 +3,10 @@ package com.truthbean.logger.boot.log4j2;
 import com.truthbean.logger.LogLevel;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
-import org.slf4j.LoggerFactory;
 
 public class Log4j2BootTest {
 
@@ -24,8 +24,14 @@ public class Log4j2BootTest {
     }
 
     @Test
+    void testJdk9() {
+        System.Logger logger = System.getLogger(Log4j2BootTest.class.getName());
+        logger.log(System.Logger.Level.ALL, "jdk9");
+    }
+
+    @Test
     void testSlf4j() {
-        org.slf4j.Logger logger = LoggerFactory.getLogger(Log4j2BootTest.class);
+        org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(Log4j2BootTest.class);
         logger.info("slf4j");
     }
 

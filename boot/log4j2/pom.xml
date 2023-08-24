@@ -52,6 +52,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--<dependency>
+            <groupId>com.truthbean</groupId>
+            <artifactId>truthbean-slf4j-bridge</artifactId>
+            <version>${truthbean.version}</version>
+        </dependency>-->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
