@@ -26,7 +26,6 @@ import java.util.function.Supplier;
  */
 class Slf4jLoggerImpl implements ConfigurableLogger {
 
-    private LogLevel level;
     private final String name;
 
     private final org.slf4j.Logger logger;
@@ -57,45 +56,35 @@ class Slf4jLoggerImpl implements ConfigurableLogger {
 
     @Override
     public ConfigurableLogger setDefaultLevel(LogLevel level) {
-        if (ConfigurableLogger.isNoLogger()) {
-            this.level = LogLevel.OFF;
-        } else {
-            this.level = level;
-        }
         return this;
     }
 
     @Override
     public LogLevel getDefaultLevel() {
-        return level;
+        return LogLevel.ERROR;
     }
 
     @Override
     public LogLevel getLevel() {
-        var config = LoggerFactory.getConfig();
-        var level = config.getLevel(getLoggerName());
-        return level.orElseGet(() -> Objects.requireNonNullElse(getDefaultLevel(), LogLevel.ERROR));
+        return LogLevel.ERROR;
     }
 
     @Override
     public Logger logger() {
-        this.level = getLevel();
         return this;
     }
 
     @Override
     public boolean isLoggable(LogLevel level) {
-        var bool = this.level.compareTo(level) >= 0;
-        boolean result = switch (level) {
-            case FATAL -> bool;
-            case ERROR -> isErrorEnabled();
+        return switch (level) {
+            case FATAL -> true;
+            case ERROR -> this.logger.isErrorEnabled(Slf4jImpl.MARKER);
             case WARN -> this.logger.isWarnEnabled(Slf4jImpl.MARKER);
             case INFO -> this.logger.isInfoEnabled(Slf4jImpl.MARKER);
             case DEBUG -> this.logger.isDebugEnabled(Slf4jImpl.MARKER);
             case TRACE -> this.logger.isTraceEnabled(Slf4jImpl.MARKER);
             default -> false;
         };
-        return result && bool;
     }
 
     @Override
@@ -275,7 +264,7 @@ class Slf4jLoggerImpl implements ConfigurableLogger {
 
     @Override
     public boolean isTraceEnabled() {
-        return this.level.compareTo(LogLevel.TRACE) >= 0 && logger.isTraceEnabled(Slf4jImpl.MARKER);
+        return logger.isTraceEnabled(Slf4jImpl.MARKER);
     }
 
     @Override
@@ -350,7 +339,7 @@ class Slf4jLoggerImpl implements ConfigurableLogger {
 
     @Override
     public boolean isDebugEnabled() {
-        return this.level.compareTo(LogLevel.DEBUG) >= 0 && logger.isDebugEnabled(Slf4jImpl.MARKER);
+        return logger.isDebugEnabled(Slf4jImpl.MARKER);
     }
 
     @Override
@@ -425,7 +414,7 @@ class Slf4jLoggerImpl implements ConfigurableLogger {
 
     @Override
     public boolean isInfoEnabled() {
-        return this.level.compareTo(LogLevel.INFO) >= 0 && logger.isInfoEnabled(Slf4jImpl.MARKER);
+        return logger.isInfoEnabled(Slf4jImpl.MARKER);
     }
 
     @Override
@@ -500,7 +489,7 @@ class Slf4jLoggerImpl implements ConfigurableLogger {
 
     @Override
     public boolean isWarnEnabled() {
-        return this.level.compareTo(LogLevel.WARN) >= 0 && logger.isWarnEnabled(Slf4jImpl.MARKER);
+        return logger.isWarnEnabled(Slf4jImpl.MARKER);
     }
 
     @Override
@@ -575,7 +564,7 @@ class Slf4jLoggerImpl implements ConfigurableLogger {
 
     @Override
     public boolean isErrorEnabled() {
-        return this.level.compareTo(LogLevel.ERROR) >= 0 && logger.isErrorEnabled(Slf4jImpl.MARKER);
+        return logger.isErrorEnabled(Slf4jImpl.MARKER);
     }
 
     @Override
@@ -650,7 +639,7 @@ class Slf4jLoggerImpl implements ConfigurableLogger {
 
     @Override
     public boolean isFatalEnabled() {
-        return this.level.compareTo(LogLevel.FATAL) >= 0;
+        return true;
     }
 
     @Override

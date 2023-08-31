@@ -14,6 +14,7 @@ public class Log4j2BootTest {
     void testLog4j2() {
         Logger logger = LogManager.getLogger(Log4j2BootTest.class);
         logger.info("log4j2....");
+        logger.debug("log4j2....");
     }
 
     @Test
@@ -21,29 +22,35 @@ public class Log4j2BootTest {
         // -Djava.util.logging.manager=org.apache.logging.log4j.jul.LogManager
         java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Log4j2BootTest.class.getName());
         logger.info("jul");
+        logger.fine("jul");
     }
 
     @Test
     void testJdk9() {
         System.Logger logger = System.getLogger(Log4j2BootTest.class.getName());
         logger.log(System.Logger.Level.ALL, "jdk9");
+        logger.log(System.Logger.Level.INFO, "jdk9");
+        logger.log(System.Logger.Level.DEBUG, "jdk9");
     }
 
     @Test
     void testSlf4j() {
         org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(Log4j2BootTest.class);
         logger.info("slf4j");
+        logger.debug("slf4j");
     }
 
     @Test
     void testTruthBean() {
         logger.info("truthbean");
+        logger.debug("truthbean");
     }
 
     @Test
     void testJcl() {
         Log log = LogFactory.getLog(Log4j2BootTest.class);
         log.info("jcl .... ");
+        log.debug("jcl .... ");
     }
 
     private static final com.truthbean.Logger logger = com.truthbean.LoggerFactory.getLogger(LogLevel.TRACE, Log4j2BootTest.class);

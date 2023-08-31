@@ -29,8 +29,7 @@ class Slf4jLocationAwareLoggerImpl implements ConfigurableLogger {
     private static final String CALLER_FQCN = Slf4jImpl.class.getName();
 
     private final LocationAwareLogger log;
-    
-    private LogLevel level;
+
     private final String name;
 
     /**
@@ -43,24 +42,17 @@ class Slf4jLocationAwareLoggerImpl implements ConfigurableLogger {
 
     @Override
     public ConfigurableLogger setDefaultLevel(LogLevel level) {
-        if (ConfigurableLogger.isNoLogger()) {
-            this.level = LogLevel.OFF;
-        } else {
-            this.level = level;
-        }
         return this;
     }
 
     @Override
     public LogLevel getDefaultLevel() {
-        return this.level;
+        return LogLevel.ERROR;
     }
 
     @Override
     public LogLevel getLevel() {
-        var config = LoggerFactory.getConfig();
-        var level = config.getLevel(getLoggerName());
-        return level.orElseGet(() -> Objects.requireNonNullElse(getDefaultLevel(), LogLevel.ERROR));
+        return LogLevel.ERROR;
     }
 
     @Override
@@ -99,21 +91,19 @@ class Slf4jLocationAwareLoggerImpl implements ConfigurableLogger {
 
     @Override
     public Logger logger() {
-        this.level = getLevel();
         return this;
     }
 
     @Override
     public boolean isLoggable(LogLevel level) {
-        var bool = this.level.compareTo(level) >= 0;
         return switch (level) {
-            case OFF -> false;
-            case FATAL -> bool;
-            case ERROR -> isErrorEnabled() && bool;
-            case WARN -> this.log.isWarnEnabled(Slf4jImpl.MARKER) && bool;
-            case INFO -> this.log.isInfoEnabled(Slf4jImpl.MARKER) && bool;
-            case DEBUG -> this.log.isDebugEnabled(Slf4jImpl.MARKER) && bool;
-            case TRACE -> this.log.isTraceEnabled(Slf4jImpl.MARKER) && bool;
+            case OFF -> true;
+            case FATAL -> true;
+            case ERROR -> this.log.isErrorEnabled(Slf4jImpl.MARKER);
+            case WARN -> this.log.isWarnEnabled(Slf4jImpl.MARKER);
+            case INFO -> this.log.isInfoEnabled(Slf4jImpl.MARKER);
+            case DEBUG -> this.log.isDebugEnabled(Slf4jImpl.MARKER);
+            case TRACE -> this.log.isTraceEnabled(Slf4jImpl.MARKER);
             default -> false;
             case ALL -> true;
         };
@@ -191,7 +181,7 @@ class Slf4jLocationAwareLoggerImpl implements ConfigurableLogger {
 
     @Override
     public boolean isTraceEnabled() {
-        return this.level.compareTo(LogLevel.TRACE) >= 0 && this.log.isTraceEnabled(Slf4jImpl.MARKER);
+        return this.log.isTraceEnabled(Slf4jImpl.MARKER);
     }
 
     @Override
@@ -266,7 +256,7 @@ class Slf4jLocationAwareLoggerImpl implements ConfigurableLogger {
 
     @Override
     public boolean isDebugEnabled() {
-        return this.level.compareTo(LogLevel.DEBUG) >= 0 && this.log.isDebugEnabled(Slf4jImpl.MARKER);
+        return this.log.isDebugEnabled(Slf4jImpl.MARKER);
     }
 
     @Override
@@ -341,7 +331,7 @@ class Slf4jLocationAwareLoggerImpl implements ConfigurableLogger {
 
     @Override
     public boolean isInfoEnabled() {
-        return this.level.compareTo(LogLevel.INFO) >= 0 && this.log.isInfoEnabled(Slf4jImpl.MARKER);
+        return this.log.isInfoEnabled(Slf4jImpl.MARKER);
     }
 
     @Override
@@ -416,7 +406,7 @@ class Slf4jLocationAwareLoggerImpl implements ConfigurableLogger {
 
     @Override
     public boolean isWarnEnabled() {
-        return this.level.compareTo(LogLevel.WARN) >= 0 && this.log.isWarnEnabled(Slf4jImpl.MARKER);
+        return this.log.isWarnEnabled(Slf4jImpl.MARKER);
     }
 
     @Override
@@ -491,7 +481,7 @@ class Slf4jLocationAwareLoggerImpl implements ConfigurableLogger {
 
     @Override
     public boolean isErrorEnabled() {
-        return this.level.compareTo(LogLevel.ERROR) >= 0 && this.log.isErrorEnabled(Slf4jImpl.MARKER);
+        return this.log.isErrorEnabled(Slf4jImpl.MARKER);
     }
 
     @Override
@@ -566,7 +556,7 @@ class Slf4jLocationAwareLoggerImpl implements ConfigurableLogger {
 
     @Override
     public boolean isFatalEnabled() {
-        return this.level.compareTo(LogLevel.WARN) >= 0;
+        return true;
     }
 
     @Override
