@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<configuration debug="on">
+<configuration status="all">
     <Properties>
-        <Property name="LOG_HOME">target/logs/</Property>
+        <Property name="LOG_PATH">target/logs</Property>
     </Properties>
 
     <Appenders>
-        <Console name="Console" target="SYSTEM_OUT">
+        <Console name="console" target="SYSTEM_OUT">
             <PatternLayout
-                    pattern="%highlight{%d{HH:mm:ss.SSS} %-5level}{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} [%t] %c{36} {%class{36}.%M()/%L} {%logger{36}.%M()/%L}    %highlight{- %msg%xEx%n}{STYLE=Logback}"/>
+                    pattern="%highlight{%d{HH:mm:ss.SSS} %-5level}{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} {%logger{36}.%M()/%L}  %highlight{- %msg%xEx%n}{STYLE=Logback}"/>
         </Console>
 
-        <!-- 运行日志输出文件 -->
-        <RollingRandomAccessFile name="run"
-                                 fileName="${LOG_HOME}/run.log" filePattern="${LOG_HOME}/run.%d{yyyy-MM-dd}-%i.log.gz"
+        <!-- 日志输出文件 -->
+        <RollingRandomAccessFile name="truthbean"
+                                 fileName="${LOG_PATH}/truthbean.log" filePattern="${LOG_PATH}/truthbean.%d{yyyy-MM-dd}-%i.log.gz"
                                  append="true">
             <!--日志格式 -->
             <PatternLayout pattern="%d{yyyy.MM.dd HH:mm:ss z} %-5level %class{36}.%M()/%L - %msg%xEx%n"/>
@@ -25,17 +25,83 @@
             </Policies>
             <!-- 同一天的日志最大扩展个数为5，最多保存7天 -->
             <DefaultRolloverStrategy max="5">
-                <Delete basePath="${LOG_HOME}" maxDepth="1">
-                    <IfFileName glob="run.*.log.gz"/>
+                <Delete basePath="${LOG_PATH}" maxDepth="1">
+                    <IfFileName glob="truthbean.*.log.gz"/>
                     <IfLastModified age="7d"/>
                 </Delete>
             </DefaultRolloverStrategy>
         </RollingRandomAccessFile>
 
-        <!-- 操作日志输出文件 -->
-        <RollingRandomAccessFile name="operation"
-                                 fileName="${LOG_HOME}/operation.log"
-                                 filePattern="${LOG_HOME}/operation.%d{yyyy-MM-dd}-%i.log.gz"
+        <!-- error日志输出文件 -->
+        <RollingRandomAccessFile name="fatal"
+                                 fileName="${LOG_PATH}/truthbean.fatal.log" filePattern="${LOG_PATH}/truthbean.fatal.%d{yyyy-MM-dd}-%i.log.gz"
+                                 append="true">
+            <!--日志格式 -->
+            <PatternLayout pattern="%d{yyyy.MM.dd HH:mm:ss z} %-5level %class{36}.%M()/%L - %msg%xEx%n"/>
+            <Policies>
+                <!-- 对应 filePattern维度(根据filePattern的正则来)，此处为天数 -->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <!-- 文件大小单位为字节，默认不限制 -->
+                <SizeBasedTriggeringPolicy size="1073741824"/>
+            </Policies>
+            <!-- 同一天的日志最大扩展个数为5，最多保存7天 -->
+            <DefaultRolloverStrategy max="5">
+                <Delete basePath="${LOG_PATH}" maxDepth="1">
+                    <IfFileName glob="truthbean.fatal.*.log.gz"/>
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+            <ThresholdFilter level="fatal" onMatch="accept" onMismatch="deny"/>
+        </RollingRandomAccessFile>
+
+        <!-- error日志输出文件 -->
+        <RollingRandomAccessFile name="error"
+                                 fileName="${LOG_PATH}/truthbean.error.log" filePattern="${LOG_PATH}/truthbean.error.%d{yyyy-MM-dd}-%i.log.gz"
+                                 append="true">
+            <!--日志格式 -->
+            <PatternLayout pattern="%d{yyyy.MM.dd HH:mm:ss z} %-5level %class{36}.%M()/%L - %msg%xEx%n"/>
+            <Policies>
+                <!-- 对应 filePattern维度(根据filePattern的正则来)，此处为天数 -->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <!-- 文件大小单位为字节，默认不限制 -->
+                <SizeBasedTriggeringPolicy size="1073741824"/>
+            </Policies>
+            <!-- 同一天的日志最大扩展个数为5，最多保存7天 -->
+            <DefaultRolloverStrategy max="5">
+                <Delete basePath="${LOG_PATH}" maxDepth="1">
+                    <IfFileName glob="truthbean.error.*.log.gz"/>
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+        </RollingRandomAccessFile>
+
+        <!-- warn日志输出文件 -->
+        <RollingRandomAccessFile name="warn"
+                                 fileName="${LOG_PATH}/truthbean.warn.log" filePattern="${LOG_PATH}/truthbean.warn.%d{yyyy-MM-dd}-%i.log.gz"
+                                 append="true">
+            <!--日志格式 -->
+            <PatternLayout pattern="%d{yyyy.MM.dd HH:mm:ss z} %-5level %class{36}.%M()/%L - %msg%xEx%n"/>
+            <Policies>
+                <!-- 对应 filePattern维度(根据filePattern的正则来)，此处为天数 -->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <!-- 文件大小单位为字节，默认不限制 -->
+                <SizeBasedTriggeringPolicy size="1073741824"/>
+            </Policies>
+            <!-- 同一天的日志最大扩展个数为5，最多保存7天 -->
+            <DefaultRolloverStrategy max="5">
+                <Delete basePath="${LOG_PATH}" maxDepth="1">
+                    <IfFileName glob="truthbean.warn.*.log.gz"/>
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+            <ThresholdFilter level="warn" onMatch="accept" onMismatch="deny"/>
+        </RollingRandomAccessFile>
+
+        <!-- info日志输出文件 -->
+        <RollingRandomAccessFile name="info"
+                                 fileName="${LOG_PATH}/truthbean.info.log"
+                                 filePattern="${LOG_PATH}/truthbean.info.%d{yyyy-MM-dd}-%i.log.gz"
                                  append="true">
             <PatternLayout
                     pattern="%d{yyyy.MM.dd HH:mm:ss z} %-5level %class{36}.%M()/%L - %msg%xEx%n"/>
@@ -47,17 +113,84 @@
             </Policies>
             <!-- 同一天的日志最大扩展个数为5，最多保存7天 -->
             <DefaultRolloverStrategy max="5">
-                <Delete basePath="${LOG_HOME}" maxDepth="1">
-                    <IfFileName glob="operation.*.log.gz"/>
+                <Delete basePath="${LOG_PATH}" maxDepth="1">
+                    <IfFileName glob="truthbean.info.*.log.gz"/>
                     <IfLastModified age="7d"/>
                 </Delete>
             </DefaultRolloverStrategy>
+            <ThresholdFilter level="info" onMatch="accept" onMismatch="deny"/>
+        </RollingRandomAccessFile>
+
+        <!-- debug日志输出文件 -->
+        <RollingRandomAccessFile name="debug"
+                                 fileName="${LOG_PATH}/truthbean.debug.log"
+                                 filePattern="${LOG_PATH}/truthbean.debug.%d{yyyy-MM-dd}-%i.log.gz"
+                                 append="true">
+            <PatternLayout
+                    pattern="%d{yyyy.MM.dd HH:mm:ss z} %-5level %class{36}.%M()/%L - %msg%xEx%n"/>
+            <Policies>
+                <!-- 对应 filePattern维度，此处为天数 -->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <!-- 文件大小单位为字节，默认不限制 -->
+                <SizeBasedTriggeringPolicy size="1073741824"/>
+            </Policies>
+            <!-- 同一天的日志最大扩展个数为5，最多保存7天 -->
+            <DefaultRolloverStrategy max="5">
+                <Delete basePath="${LOG_PATH}" maxDepth="1">
+                    <IfFileName glob="truthbean.debug.*.log.gz"/>
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+            <ThresholdFilter level="debug" onMatch="accept" onMismatch="deny"/>
+        </RollingRandomAccessFile>
+
+        <!-- trace日志输出文件 -->
+        <RollingRandomAccessFile name="trace"
+                                 fileName="${LOG_PATH}/truthbean.trace.log"
+                                 filePattern="${LOG_PATH}/truthbean.trace.%d{yyyy-MM-dd}-%i.log.gz"
+                                 append="true">
+            <PatternLayout
+                    pattern="%d{yyyy.MM.dd HH:mm:ss z} %-5level %class{36}.%M()/%L - %msg%xEx%n"/>
+            <Policies>
+                <!-- 对应 filePattern维度，此处为天数 -->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <!-- 文件大小单位为字节，默认不限制 -->
+                <SizeBasedTriggeringPolicy size="1073741824"/>
+            </Policies>
+            <!-- 同一天的日志最大扩展个数为5，最多保存7天 -->
+            <DefaultRolloverStrategy max="5">
+                <Delete basePath="${LOG_PATH}" maxDepth="1">
+                    <IfFileName glob="truthbean.trace.*.log.gz"/>
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+            <ThresholdFilter level="trace" onMatch="accept" onMismatch="deny"/>
         </RollingRandomAccessFile>
 
     </Appenders>
     <Loggers>
-        <Root level="info" additivity="false">
-            <appender-ref ref="Console"/>
+        <Root level="trace" additivity="false">
+            <appender-ref ref="console"/>
+            <appender-ref ref="truthbean"/>
+            <appender-ref ref="error"/>
         </Root>
+        <Logger name="com.truthbean.logger.boot.log4j2.Log4j2BootTest.trace" level="trace" additivity="false">
+            <appender-ref ref="trace"/>
+        </Logger>
+        <Logger name="com.truthbean.logger.boot.log4j2.Log4j2BootTest.debug" level="debug" additivity="false">
+            <appender-ref ref="debug"/>
+        </Logger>
+        <Logger name="com.truthbean.logger.boot.log4j2.Log4j2BootTest.info" level="info" additivity="false">
+            <appender-ref ref="info"/>
+        </Logger>
+        <Logger name="com.truthbean.logger.boot.log4j2.Log4j2BootTest.warn" level="warn" additivity="false">
+            <appender-ref ref="warn"/>
+        </Logger>
+        <Logger name="com.truthbean.logger.boot.log4j2.Log4j2BootTest.error" level="error" additivity="false">
+            <appender-ref ref="error"/>
+        </Logger>
+        <Logger name="com" level="fatal" additivity="false">
+            <appender-ref ref="fatal"/>
+        </Logger>
     </Loggers>
 </configuration>

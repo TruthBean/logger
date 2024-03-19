@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.truthbean</groupId>
         <artifactId>truthbean-logger-third</artifactId>
-        <version>0.5.5-RELEASE</version>
+        <version>0.5.6-RELEASE</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -17,11 +17,11 @@
     <url>http://www.truthbean.com/logger</url>
 
     <properties>
-        <java.version>17</java.version>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <maven.compiler.release>17</maven.compiler.release>
-        <kotlin.compiler.jvmTarget>17</kotlin.compiler.jvmTarget>
+        <java.version>21</java.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.release>21</maven.compiler.release>
+        <kotlin.compiler.jvmTarget>21</kotlin.compiler.jvmTarget>
     </properties>
 
     <dependencies>

@@ -5,7 +5,7 @@
     <parent>
         <artifactId>truthbean-logger-parent</artifactId>
         <groupId>com.truthbean</groupId>
-        <version>0.5.5-RELEASE</version>
+        <version>0.5.6-RELEASE</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -27,25 +27,25 @@
 
             <dependency>
                 <groupId>com.truthbean</groupId>
-                <artifactId>jdk-common</artifactId>
+                <artifactId>truthbean-jdk-common</artifactId>
                 <version>${truthbean.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.truthbean</groupId>
-                <artifactId>logger-to-jul</artifactId>
+                <artifactId>truthbean-logger-to-jul</artifactId>
                 <version>${truthbean.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.truthbean</groupId>
-                <artifactId>logger-stdout</artifactId>
+                <artifactId>truthbean-logger-stdout</artifactId>
                 <version>${truthbean.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.truthbean</groupId>
-                <artifactId>logger-kotlin</artifactId>
+                <artifactId>truthbean-logger-kotlin</artifactId>
                 <version>${truthbean.version}</version>
             </dependency>
             <dependency>
@@ -74,12 +74,12 @@
 
             <dependency>
                 <groupId>com.truthbean</groupId>
-                <artifactId>logger-to-log4j2</artifactId>
+                <artifactId>truthbean-logger-to-log4j2</artifactId>
                 <version>${truthbean.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.truthbean</groupId>
-                <artifactId>log4j2-boot</artifactId>
+                <artifactId>truthbean-log4j2-boot</artifactId>
                 <version>${truthbean.version}</version>
             </dependency>
             <dependency>
@@ -108,12 +108,12 @@
             </dependency>
             <dependency>
                 <groupId>com.truthbean</groupId>
-                <artifactId>logger-to-slf4j</artifactId>
+                <artifactId>truthbean-logger-to-slf4j</artifactId>
                 <version>${truthbean.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.truthbean</groupId>
-                <artifactId>slf4j-boot</artifactId>
+                <artifactId>truthbean-slf4j-boot</artifactId>
                 <version>${truthbean.version}</version>
             </dependency>
             <dependency>
@@ -150,49 +150,49 @@
 
             <dependency>
                 <groupId>com.truthbean</groupId>
-                <artifactId>juli-bridge</artifactId>
+                <artifactId>truthbean-juli-bridge</artifactId>
                 <version>${truthbean.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.truthbean</groupId>
-                <artifactId>logger-spring-boot-starter</artifactId>
+                <artifactId>truthbean-logger-spring-boot-starter</artifactId>
                 <version>${truthbean.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.truthbean</groupId>
-                <artifactId>logger-jcl</artifactId>
+                <artifactId>truthbean-logger-jcl</artifactId>
                 <version>${truthbean.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.truthbean</groupId>
-                <artifactId>slf4j-bridge</artifactId>
+                <artifactId>truthbean-slf4j-bridge</artifactId>
                 <version>${truthbean.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.truthbean</groupId>
-                <artifactId>log4j2-bridge</artifactId>
+                <artifactId>truthbean-log4j2-bridge</artifactId>
                 <version>${truthbean.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.truthbean</groupId>
-                <artifactId>jdk9-system-logger</artifactId>
+                <artifactId>truthbean-jdk9-system-logger</artifactId>
                 <version>${truthbean.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.truthbean</groupId>
-                <artifactId>stdout-boot</artifactId>
+                <artifactId>truthbean-stdout-boot</artifactId>
                 <version>${truthbean.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.truthbean</groupId>
-                <artifactId>jul-to-logger</artifactId>
+                <artifactId>truthbean-jul-to-logger</artifactId>
                 <version>${truthbean.version}</version>
             </dependency>
 

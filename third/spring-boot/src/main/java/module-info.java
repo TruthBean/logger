@@ -16,7 +16,8 @@ open module com.truthbean.spring.boot {
     requires static spring.boot;
     requires static spring.context;
     requires transitive com.truthbean.logger.core;
-    requires transitive com.truthbean.logger.stdout.boot;
+    // requires transitive com.truthbean.logger.stdout.boot;
+    requires transitive com.truthbean.logger.log4j2.boot;
     requires static spring.core;
     requires static spring.boot.starter;
     requires static spring.boot.autoconfigure;

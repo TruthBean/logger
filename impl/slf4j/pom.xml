@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.truthbean</groupId>
         <artifactId>truthbean-logger-impls</artifactId>
-        <version>0.5.5-RELEASE</version>
+        <version>0.5.6-RELEASE</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>

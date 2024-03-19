@@ -14,5 +14,6 @@
  */
 open module com.truthbean.logger.kotlin.test {
     requires com.truthbean.logger.kotlin;
+    requires com.truthbean.logger.stdout;
     requires kotlin.test.junit5;
 }

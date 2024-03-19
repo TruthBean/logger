@@ -13,8 +13,12 @@ public class Log4j2BootTest {
     @Test
     void testLog4j2() {
         Logger logger = LogManager.getLogger(Log4j2BootTest.class);
-        logger.info("log4j2....");
-        logger.debug("log4j2....");
+        logger.fatal("log4j2....");
+        LogManager.getLogger("com.truthbean.logger.boot.log4j2.Log4j2BootTest.error").error("log4j2....");
+        LogManager.getLogger("com.truthbean.logger.boot.log4j2.Log4j2BootTest.warn").warn("log4j2....");
+        LogManager.getLogger("com.truthbean.logger.boot.log4j2.Log4j2BootTest.info").info("log4j2....");
+        LogManager.getLogger("com.truthbean.logger.boot.log4j2.Log4j2BootTest.debug").debug("log4j2....");
+        LogManager.getLogger("com.truthbean.logger.boot.log4j2.Log4j2BootTest.trace").trace("log4j2....");
     }
 
     @Test
