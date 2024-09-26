@@ -16,6 +16,7 @@ module com.truthbean.logger.log4j2 {
     requires java.base;
     requires transitive com.truthbean.logger.core;
     requires transitive org.apache.logging.log4j;
+    requires transitive org.jspecify;
 
     provides com.truthbean.logger.LogFactory with
             com.truthbean.logger.log4j2.Log4j2Factory;

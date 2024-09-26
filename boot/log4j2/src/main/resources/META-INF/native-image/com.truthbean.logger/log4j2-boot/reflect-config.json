@@ -33,6 +33,22 @@
     "queryAllPublicConstructors": true
   },
   {
+    "name": "com.truthbean.logger.log4j2.boot.TruthBeanConfigurationFactory",
+    "methods": [
+      { "name": "<init>", "parameterTypes": [] }
+    ],
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicFields" : true,
+    "queryAllDeclaredMethods": true,
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicMethods": true,
+    "queryAllPublicConstructors": true
+  },
+  {
     "name": "org.apache.logging.log4j.jul.LogManager",
     "methods": [
       { "name": "<init>", "parameterTypes": [] }

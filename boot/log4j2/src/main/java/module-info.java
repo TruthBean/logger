@@ -25,6 +25,8 @@ module com.truthbean.logger.log4j2.boot {
     requires com.truthbean.logger.core;
     // requires static com.truthbean.logger.slf4j.impl;
 
+    requires transitive org.jspecify;
+
     provides com.truthbean.logger.LoggerInitiation with com.truthbean.logger.log4j2.boot.Log4j2BootInitiation;
     // provides System.LoggerFinder with org.apache.logging.log4j.jpl.Log4jSystemLoggerFinder;
 }

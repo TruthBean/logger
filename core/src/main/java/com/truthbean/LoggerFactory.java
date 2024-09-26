@@ -85,7 +85,6 @@ public class LoggerFactory {
             var serviceLoader = ServiceLoader.load(LoggerInitiation.class);
             serviceLoader.forEach(LoggerInitiation::destroy);
         }
-        System.runFinalization();
         System.gc();
     }
 

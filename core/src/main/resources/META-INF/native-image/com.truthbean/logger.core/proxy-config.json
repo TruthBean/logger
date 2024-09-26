@@ -1,0 +1,7 @@
+[
+  [],
+  ["com.truthbean.Logger"],
+  ["com.truthbean.logger.LogFactory"],
+  ["com.truthbean.logger.LoggerConfig"],
+  ["com.truthbean.logger.LoggerInitiation"]
+]

@@ -18,6 +18,8 @@ module com.truthbean.logger.log4j2.impl {
 
     opens com.truthbean.logger.log4j2;
 
+    requires transitive org.jspecify;
+
     provides org.apache.logging.log4j.spi.Provider with
             com.truthbean.logger.log4j2.LoggerProvider;
 }

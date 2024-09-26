@@ -38,6 +38,13 @@
         </dependency>
 
         <dependency>
+            <groupId>org.jspecify</groupId>
+            <artifactId>jspecify</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
             <groupId>com.truthbean</groupId>
             <artifactId>truthbean-logger-stdout</artifactId>
             <version>${truthbean.version}</version>

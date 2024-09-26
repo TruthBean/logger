@@ -17,4 +17,5 @@ open module com.truthbean.logger.log4j2.test {
     requires com.truthbean.logger.log4j2;
 
     requires transitive org.junit.jupiter.api;
+    requires org.jspecify;
 }
