@@ -19,7 +19,8 @@ import org.junit.jupiter.api.Test
  */
 class KotlinLoggerTest {
     init {
-        System.setProperty("logging.level.com.truthbean.kt.check", "TRACE")
+        System.setProperty("logging.level.com.truthbean.logger.kt.check", "TRACE")
+        System.setProperty("truthbean.log.disable", "false")
     }
     private val logger = LoggerFactory.getLogger<KotlinLoggerTest>()
     private val service = TestService(logger)

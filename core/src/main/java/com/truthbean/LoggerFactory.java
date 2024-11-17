@@ -212,7 +212,6 @@ public class LoggerFactory {
     }
 
     private static LogFactory getLogFactory() {
-        var doStdOut = AbstractPropertiesUtils.isSysTrue(LoggerConfig.STD_OUT);
         var noLog = ConfigurableLogger.isNoLogger();
 
         Optional<LogFactory> logFactoryOptional = Optional.empty();
