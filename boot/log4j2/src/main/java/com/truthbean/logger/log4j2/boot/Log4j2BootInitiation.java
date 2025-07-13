@@ -17,6 +17,7 @@ import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.AbstractConfiguration;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 
+import java.util.Optional;
 import java.util.logging.LogManager;
 
 /**
@@ -84,13 +85,13 @@ public class Log4j2BootInitiation implements LoggerInitiation {
         }
         var logger = getLogger(loggerName);
         if (logger == null) {
-            logger = new LoggerConfig(loggerName, level, true);
-            getLoggerContext().getConfiguration().addLogger(loggerName, logger);
+            LoggerConfig loggerConfig = new LoggerConfig(loggerName, level, true);
+            getLoggerContext().ifPresent(e -> e.getConfiguration().addLogger(loggerName, loggerConfig));
         }
         else {
             logger.setLevel(level);
         }
-        getLoggerContext().updateLoggers();
+        getLoggerContext().ifPresent(LoggerContext::updateLoggers);
     }
 
     private LoggerConfig getLogger(String name) {
@@ -99,14 +100,22 @@ public class Log4j2BootInitiation implements LoggerInitiation {
     }
 
     private LoggerConfig findLogger(String name) {
-        var configuration = getLoggerContext().getConfiguration();
-        if (configuration instanceof AbstractConfiguration) {
-            return ((AbstractConfiguration) configuration).getLogger(name);
+        Optional<LoggerContext> contextOptional = getLoggerContext();
+        if (contextOptional.isPresent()) {
+            var configuration = contextOptional.get().getConfiguration();
+            if (configuration instanceof AbstractConfiguration) {
+                return ((AbstractConfiguration) configuration).getLogger(name);
+            }
+            return configuration.getLoggers().get(name);
         }
-        return configuration.getLoggers().get(name);
+        return null;
     }
 
-    private LoggerContext getLoggerContext() {
-        return (LoggerContext) org.apache.logging.log4j.LogManager.getContext(false);
+    private Optional<LoggerContext> getLoggerContext() {
+        org.apache.logging.log4j.spi.LoggerContext context = org.apache.logging.log4j.LogManager.getContext(false);
+        if (context instanceof LoggerContext) {
+            return Optional.of((LoggerContext) context);
+        }
+        return Optional.empty();
     }
 }

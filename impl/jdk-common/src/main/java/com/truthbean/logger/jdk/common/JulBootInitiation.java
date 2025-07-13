@@ -95,7 +95,12 @@ public class JulBootInitiation implements LoggerInitiation {
 
     private void loadConfiguration() {
         try {
-            URL resource = Thread.currentThread().getContextClassLoader().getResource("logging.properties");
+            URL resource = null;
+            if (Thread.currentThread().getContextClassLoader() != null) {
+                resource = Thread.currentThread().getContextClassLoader().getResource("logging.properties");
+            } else {
+                resource = JulBootInitiation.class.getResource("logging.properties");
+            }
             if (resource != null) {
                 try (InputStream inputStream = new FileInputStream(resource.getPath())) {
                     LogManager.getLogManager().readConfiguration(inputStream);

@@ -20,6 +20,6 @@ open module com.truthbean.spring.boot {
     requires transitive com.truthbean.logger.log4j2.boot;
     // requires transitive com.truthbean.logger.slf4j.boot;
     requires static spring.core;
-    requires static spring.boot.starter;
+    // requires static spring.boot.starter;
     requires static spring.boot.autoconfigure;
 }
