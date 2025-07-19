@@ -61,28 +61,34 @@
             <version>${tomcat.version}</version>
         </dependency>
 
-        <!--<dependency>
+        <dependency>
             <groupId>com.truthbean</groupId>
             <artifactId>truthbean-stdout-boot</artifactId>
             <version>${truthbean.version}</version>
-        </dependency>-->
+        </dependency>
 
         <!--<dependency>
             <groupId>com.truthbean</groupId>
             <artifactId>truthbean-slf4j-boot</artifactId>
             <version>${truthbean.version}</version>
         </dependency>-->
-        <dependency>
+        <!--<dependency>
             <groupId>com.truthbean</groupId>
             <artifactId>truthbean-log4j2-boot</artifactId>
             <version>${truthbean.version}</version>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
             <version>${spring.boot.version}</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
