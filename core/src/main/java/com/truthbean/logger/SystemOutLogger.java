@@ -23,6 +23,7 @@ import java.util.function.Supplier;
  */
 public class SystemOutLogger implements ConfigurableLogger {
 
+    private Class<?> tracedClass;
     private String loggerName;
     private LogLevel level;
     private boolean useName;
@@ -52,7 +53,12 @@ public class SystemOutLogger implements ConfigurableLogger {
     @Override
     public ConfigurableLogger setClass(Class<?> tracedClass) {
         this.loggerName = tracedClass.getName();
+        this.tracedClass = tracedClass;
         return this;
+    }
+
+    public String getTracedClassName() {
+        return tracedClass != null ? tracedClass.getName() : null;
     }
 
     @Override
@@ -642,7 +648,7 @@ public class SystemOutLogger implements ConfigurableLogger {
     public void logging(LogLevel level, Throwable ex, String message, Object... params) {
         LoggerLocation location;
         if (!useName) {
-            location = ConfigurableLogger.getLoggerMethod(getLoggerName());
+            location = ConfigurableLogger.getLoggerMethod(getLoggerName(), getTracedClassName());
         } else {
             location = new LoggerLocation();
             location.setLoggerName(getLoggerName());

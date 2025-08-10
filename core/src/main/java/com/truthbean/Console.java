@@ -151,7 +151,7 @@ public class Console {
     }
 
     private static void log(LogLevel level, String message, Object... params) {
-        LoggerLocation location = ConfigurableLogger.getLoggerMethod("");
+        LoggerLocation location = ConfigurableLogger.getLoggerMethod("", null);
         log(location, level, message, params);
     }
 

@@ -14,6 +14,7 @@ import com.truthbean.LoggerFactory;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Objects;
 
 /**
  * @author TruthBean/Rogar·Q
@@ -50,7 +51,7 @@ public interface ConfigurableLogger extends Logger {
 
     Logger logger();
 
-    static LoggerLocation getLoggerMethod(String loggerName) {
+    static LoggerLocation getLoggerMethod(String loggerName, String tracedClass) {
         var start = Instant.now();
         LoggerLocation result = new LoggerLocation();
         result.setLoggerName(loggerName);
@@ -70,7 +71,12 @@ public interface ConfigurableLogger extends Logger {
             var methodName = caller.getMethodName();
             var lineNumber = caller.getLineNumber();
 
-            boolean isLoggerClass = checkLoggerClass(className);
+            boolean isLoggerClass;
+            if (Objects.equals(tracedClass, className)) {
+                isLoggerClass = false;
+            } else {
+                isLoggerClass = checkLoggerClass(className);
+            }
             while (deep > nextN && isLoggerClass) {
                 caller = locations[nextN++];
                 moduleName = caller.getModuleName();
@@ -78,7 +84,12 @@ public interface ConfigurableLogger extends Logger {
                 className = caller.getClassName();
                 methodName = caller.getMethodName();
                 lineNumber = caller.getLineNumber();
-                isLoggerClass = checkLoggerClass(className);
+
+                if (Objects.equals(tracedClass, className)) {
+                    isLoggerClass = false;
+                } else {
+                    isLoggerClass = checkLoggerClass(className);
+                }
             }
 
             if (!isLoggerClass) {
@@ -128,6 +139,8 @@ public interface ConfigurableLogger extends Logger {
                 || "sun.rmi.runtime.Log$LoggerLog".equals(className)
                 || "com.sun.jmx.remote.util.ClassLogger".equals(className)
                 || "jdk.internal.logger.AbstractLoggerWrapper".equals(className)
+                || "jdk.internal.logger.LoggerWrapper".equals(className)
+                || "jdk.internal.logger.LocalizedLoggerWrapper".equals(className)
                 || "jdk.internal.net.http.common.Logger".equals(className)
                 || "jdk.internal.net.http.common.Log".equals(className)
                 || "jdk.internal.net.http.common.DebugLogger".equals(className)
@@ -137,6 +150,7 @@ public interface ConfigurableLogger extends Logger {
                 || className.startsWith("org.apache.ibatis.logging")
                 || className.startsWith("org.jboss.logging")
                 || className.startsWith("com.sun.proxy.$Proxy")
+                || className.startsWith("jdk.proxy")
                 || className.startsWith("org.springframework.core.log")
                 || className.startsWith("com.alibaba.druid.support.logging")
                 || "org.mybatis.logging.Logger".equals(className)

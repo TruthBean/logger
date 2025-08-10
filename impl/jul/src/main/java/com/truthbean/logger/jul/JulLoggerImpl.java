@@ -30,6 +30,7 @@ import java.util.logging.LogRecord;
 public class JulLoggerImpl implements BaseLogger {
     private java.util.logging.Logger logger;
     private String name;
+    private Class<?> tracedClass;
     private LogLevel level;
     private boolean useName;
 
@@ -50,6 +51,7 @@ public class JulLoggerImpl implements BaseLogger {
 
     @Override
     public ConfigurableLogger setClass(Class<?> tracedClass) {
+        this.tracedClass = tracedClass;
         return setName(tracedClass.getName());
     }
 
@@ -74,6 +76,10 @@ public class JulLoggerImpl implements BaseLogger {
     @Override
     public String getLoggerName() {
         return this.name;
+    }
+
+    public String getTracedClassName() {
+        return tracedClass != null ? tracedClass.getName() : null;
     }
 
     @Override
@@ -138,7 +144,7 @@ public class JulLoggerImpl implements BaseLogger {
     private void logging(Level level, Throwable ex, String message, Object... params) {
         LoggerLocation location;
         if (!useName) {
-            location = ConfigurableLogger.getLoggerMethod(getLoggerName());
+            location = ConfigurableLogger.getLoggerMethod(getLoggerName(), getTracedClassName());
         } else {
             location = new LoggerLocation();
             location.setLoggerName(getLoggerName());
