@@ -15,12 +15,27 @@ import com.truthbean.logger.LoggerConfig;
 import com.truthbean.logger.LoggerLocation;
 import com.truthbean.logger.util.MessageHelper;
 
+import java.util.Scanner;
+
 /**
  * @author TruthBean/Rogar·Q
  * @since 0.5.1
  * Created on 2021-06-05 15:07
  */
 public class Console {
+
+    private static volatile Scanner scanner;
+
+    public static String readLine() {
+        if (scanner == null) {
+            synchronized (Console.class) {
+                if (scanner == null) {
+                    scanner = new Scanner(System.in);
+                }
+            }
+        }
+        return scanner.nextLine();
+    }
 
     public static void write(int color, int style, String message) {
         System.out.print("\33[" + color + ";" + style + "m" + message + "\033[0m");
