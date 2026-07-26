@@ -6,11 +6,8 @@ org.springframework.context.ApplicationContextInitializer=\
 
 # Application Listeners
 org.springframework.context.ApplicationListener=\
-  com.truthbean.logger.springboot.ExitCodeEventListener
+  com.truthbean.logger.springboot.ExitCodeEventListener, \
+  com.truthbean.logger.springboot.SpringContextClosedEventListener
 
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.truthbean.logger.springboot.TruthBeanLoggerAutoConfiguration
-
-# Logging Systems
-org.springframework.boot.logging.LoggingSystemFactory=\
-  com.truthbean.logger.springboot.TruthBeanLoggingSystemFactory
+org.springframework.boot.SpringApplicationRunListener=\
+  com.truthbean.logger.springboot.TruthBeanLoggerSpringApplicationRunListener

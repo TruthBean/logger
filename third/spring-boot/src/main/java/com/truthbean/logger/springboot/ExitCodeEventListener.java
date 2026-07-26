@@ -25,5 +25,6 @@ public class ExitCodeEventListener implements ApplicationListener<ExitCodeEvent>
     @Override
     public void onApplicationEvent(@NonNull ExitCodeEvent event) {
         Console.writeLine(ColorHelper.WHITE, ColorHelper.BACKGROUND_GREEN, "System exit(" + event.getExitCode() + ")");
+        Console.info("Spring Boot exited with code: " + event.getExitCode());
     }
 }
