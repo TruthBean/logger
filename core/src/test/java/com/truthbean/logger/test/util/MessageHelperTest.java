@@ -1,5 +1,6 @@
 package com.truthbean.logger.test.util;
 
+import com.truthbean.Console;
 import com.truthbean.logger.util.MessageHelper;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +15,6 @@ class MessageHelperTest {
         String format= "}中{}文}中{}文}中{}{中{}}中{}中{中中{}}{";
         Object[] args = new Object[]{"123", "", null, "1"};
         var sb = MessageHelper.format(format, args);
-        System.out.println(sb.toString());
+        Console.println(sb.toString());
     }
 }

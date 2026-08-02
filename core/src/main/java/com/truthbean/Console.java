@@ -15,6 +15,7 @@ import com.truthbean.logger.LoggerConfig;
 import com.truthbean.logger.LoggerLocation;
 import com.truthbean.logger.util.MessageHelper;
 
+import java.io.PrintStream;
 import java.util.Scanner;
 
 /**
@@ -25,6 +26,11 @@ import java.util.Scanner;
 public class Console {
 
     private static volatile Scanner scanner;
+    private static volatile PrintStream printStream = System.out;
+
+    public static synchronized void setPrintStream(PrintStream outputStream) {
+        Console.printStream = outputStream;
+    }
 
     public static String readLine() {
         if (scanner == null) {
@@ -37,12 +43,20 @@ public class Console {
         return scanner.nextLine();
     }
 
+    public static void print(Object message) {
+        printStream.print(message);
+    }
+
     public static void write(int color, int style, String message) {
-        System.out.print("\33[" + color + ";" + style + "m" + message + "\033[0m");
+        printStream.print("\33[" + color + ";" + style + "m" + message + "\033[0m");
+    }
+
+    public static void println(Object message) {
+        printStream.println(message);
     }
 
     public static void writeLine(int color, int style, String message) {
-        System.out.println("\33[" + color + ";" + style + "m" + message + "\033[0m");
+        printStream.println("\33[" + color + ";" + style + "m" + message + "\033[0m");
     }
 
     public static void fatal(Object message) {
@@ -166,7 +180,7 @@ public class Console {
     }
 
     private static void log(LogLevel level, String message, Object... params) {
-        LoggerLocation location = ConfigurableLogger.getLoggerMethod("", null);
+        LoggerLocation location = ConfigurableLogger.getCallerLocation("", null);
         log(location, level, message, params);
     }
 
@@ -182,6 +196,6 @@ public class Console {
         }
         logger.append(newMessage);
 
-        System.out.println(logger);
+        printStream.println(logger);
     }
 }

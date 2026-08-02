@@ -9,6 +9,7 @@
  */
 package com.truthbean.logger.stdout.test;
 
+import com.truthbean.Console;
 import com.truthbean.Logger;
 import com.truthbean.logger.LogLevel;
 import com.truthbean.logger.LoggerConfig;
@@ -76,10 +77,10 @@ class StdoutTest {
             LOGGER.fatal("color");
         }
         long end = System.currentTimeMillis();
-        System.out.println(end - start);
+        Console.println(end - start);
         for (int i = 0; i < 100; i++) {
-            System.out.println(i);
-            System.out.println("[\033[" + i + ";1mcolor\033[0m] ");
+            Console.println(i);
+            Console.println("[\033[" + i + ";1mcolor\033[0m] ");
         }
     }
 

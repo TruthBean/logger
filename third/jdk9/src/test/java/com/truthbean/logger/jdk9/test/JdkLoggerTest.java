@@ -9,6 +9,7 @@
  */
 package com.truthbean.logger.jdk9.test;
 
+import com.truthbean.Console;
 import com.truthbean.Logger;
 import com.truthbean.logger.LogLevel;
 import com.truthbean.LoggerFactory;
@@ -38,7 +39,7 @@ public class JdkLoggerTest {
             logger.trace(this);
 
             var logger = System.getLogger(JdkLoggerTest.class.getName());
-            System.out.println(logger);
+            Console.println(logger);
             logger.log(System.Logger.Level.TRACE, "trace");
             logger.log(System.Logger.Level.DEBUG, "debug");
             logger.log(System.Logger.Level.INFO, "info");
@@ -46,7 +47,7 @@ public class JdkLoggerTest {
             logger.log(System.Logger.Level.ERROR, "error");
         }
         long end = System.nanoTime();
-        System.out.println(end - start);
+        Console.println(end - start);
     }
 
     @Test

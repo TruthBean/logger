@@ -20,13 +20,13 @@ import java.util.Locale;
  */
 public class DateTimeHelper {
 
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSS", Locale.CHINA);
+    public static final DateTimeFormatter LONG_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSS", Locale.CHINA);
 
     private DateTimeHelper() {
     }
 
     public static String nowStr() {
         var localDateTime = LocalDateTime.now();
-        return localDateTime.format(formatter);
+        return localDateTime.format(LONG_FORMATTER);
     }
 }

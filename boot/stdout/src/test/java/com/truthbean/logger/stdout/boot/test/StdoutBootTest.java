@@ -9,6 +9,7 @@
  */
 package com.truthbean.logger.stdout.boot.test;
 
+import com.truthbean.Console;
 import com.truthbean.Logger;
 import com.truthbean.LoggerFactory;
 import com.truthbean.logger.ConfigurableLogger;
@@ -46,7 +47,7 @@ public class StdoutBootTest {
     @Test
     public void testJdk9() {
         System.Logger logger = System.getLogger(StdoutBootTest.class.getName());
-        System.out.println(logger);
+        Console.println(logger);
         logger.log(System.Logger.Level.ALL, "jdk9 all ");
         logger.log(System.Logger.Level.TRACE, "jdk9 trace");
         logger.log(System.Logger.Level.DEBUG, "jdk9 debug");
@@ -61,11 +62,11 @@ public class StdoutBootTest {
         java.util.logging.Logger rootLogger = java.util.logging.LogManager.getLogManager().getLogger("");
         java.util.logging.Handler[] handlers = rootLogger.getHandlers();
         for (Handler handler : handlers) {
-            System.out.println(handler);
-            System.out.println(handler.getLevel());
+            Console.println(handler);
+            Console.println(handler.getLevel());
         }
         java.util.logging.Logger logger = java.util.logging.Logger.getLogger(StdoutBootTest.class.getName());
-        System.out.println(logger.getLevel());
+        Console.println(logger.getLevel());
         logger.log(Level.OFF, "jul OFF ");
         logger.log(Level.SEVERE, "jul SEVERE");
         logger.log(Level.WARNING, "jul WARNING");

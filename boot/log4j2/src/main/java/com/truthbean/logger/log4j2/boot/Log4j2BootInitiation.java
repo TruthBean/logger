@@ -9,6 +9,7 @@
  */
 package com.truthbean.logger.log4j2.boot;
 
+import com.truthbean.core.util.StringUtils;
 import com.truthbean.logger.LogLevel;
 import com.truthbean.LoggerFactory;
 import com.truthbean.logger.LoggerInitiation;
@@ -28,13 +29,23 @@ import java.util.logging.LogManager;
 public class Log4j2BootInitiation implements LoggerInitiation {
 
     private static final String LOG_MANAGER_CLASS = "org.apache.logging.log4j.jul.LogManager";
+    private static final String LOG_MANAGER_KEY = "java.util.logging.manager";
     static {
-        System.setProperty("java.util.logging.manager", LOG_MANAGER_CLASS);
-        LogManager logManager = LogManager.getLogManager();
-        if (!LOG_MANAGER_CLASS.equals(logManager.getClass().getName())) {
-            try {
-                ClassLoader.getSystemClassLoader().loadClass(LOG_MANAGER_CLASS);
-            } catch (ClassNotFoundException ignored) {
+        String julm = System.getProperty(LOG_MANAGER_KEY);
+        try {
+            System.setProperty(LOG_MANAGER_KEY, LOG_MANAGER_CLASS);
+            LogManager logManager = LogManager.getLogManager();
+            if (!LOG_MANAGER_CLASS.equals(logManager.getClass().getName())) {
+                try {
+                    ClassLoader.getSystemClassLoader().loadClass(LOG_MANAGER_CLASS);
+                } catch (ClassNotFoundException ignored) {
+                }
+            }
+        } catch (NoClassDefFoundError ignored) {
+            if (julm != null) {
+                System.setProperty(LOG_MANAGER_KEY, julm);
+            } else {
+                System.clearProperty("java.util.logging.manager");
             }
         }
     }

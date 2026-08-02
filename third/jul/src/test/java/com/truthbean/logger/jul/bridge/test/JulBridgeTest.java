@@ -9,6 +9,7 @@
  */
 package com.truthbean.logger.jul.bridge.test;
 
+import com.truthbean.Console;
 import com.truthbean.Logger;
 import com.truthbean.logger.LogLevel;
 import com.truthbean.LoggerFactory;
@@ -39,7 +40,7 @@ public class JulBridgeTest {
     @Test
     public void testJdk9() {
         System.Logger logger = System.getLogger(JulBridgeTest.class.getName());
-        System.out.println(logger);
+        Console.println(logger);
         logger.log(System.Logger.Level.TRACE, "jdk9");
         logger.log(System.Logger.Level.ERROR, "jdk9", new RuntimeException("2333"));
     }

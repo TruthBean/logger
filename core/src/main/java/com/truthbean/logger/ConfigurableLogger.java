@@ -10,11 +10,12 @@
 package com.truthbean.logger;
 
 import com.truthbean.Logger;
-import com.truthbean.LoggerFactory;
 
+import java.lang.module.ModuleDescriptor;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author TruthBean/Rogar·Q
@@ -42,7 +43,7 @@ public interface ConfigurableLogger extends Logger {
     static boolean isNoLogger() {
         var no = System.getProperty(LoggerConfig.NO_LOGGER, "false");
         return "true".equalsIgnoreCase(no) || "yes".equalsIgnoreCase(no) || "n".equalsIgnoreCase(no) || "on".equalsIgnoreCase(no)
-                || "是".equalsIgnoreCase(no) || "好".equalsIgnoreCase(no) || "嗯".equalsIgnoreCase(no) || "面对疾风吧".equalsIgnoreCase(no);
+               || "是".equalsIgnoreCase(no) || "好".equalsIgnoreCase(no) || "嗯".equalsIgnoreCase(no) || "面对疾风吧".equalsIgnoreCase(no);
     }
 
     LogLevel getDefaultLevel();
@@ -110,12 +111,58 @@ public interface ConfigurableLogger extends Logger {
         return result;
     }
 
+    StackWalker WALKER = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
+
+    static LoggerLocation getCallerLocation(String loggerName, String tracedClass) {
+        var start = Instant.now();
+        LoggerLocation result = new LoggerLocation();
+        result.setLoggerName(loggerName);
+
+        if (tracedClass != null) {
+            Optional<StackWalker.StackFrame> tracedFrameOptional = WALKER.walk(frames ->
+                    frames.filter(e -> Objects.equals(tracedClass, e.getClassName()))
+                            .findFirst());
+            tracedFrameOptional.ifPresent(stackFrame -> setLoggerLocation(result, stackFrame));
+        } else {
+            Optional<StackWalker.StackFrame> stackFrameOptional = WALKER.walk(frames ->
+                    frames.dropWhile(f -> checkLoggerClass(f.getClassName()))
+                            .findFirst());
+            stackFrameOptional.ifPresent(stackFrame -> setLoggerLocation(result, stackFrame));
+        }
+        String locationTime = System.getProperty(LOCATION_TIME, "false");
+        boolean bool = Boolean.parseBoolean(locationTime);
+        if (bool) {
+            var end = Instant.now();
+            Duration between = Duration.between(start, end);
+            System.err.println("请求日志位置信息花费时间：" + between.toNanos() + "纳秒；约" + between.toMillis() + "毫秒");
+        }
+        return result;
+    }
+
+    private static void setLoggerLocation(LoggerLocation result, StackWalker.StackFrame stackFrame) {
+        result.setClassName(stackFrame.getClassName());
+        Class<?> declaringClass = stackFrame.getDeclaringClass();
+        if (declaringClass != null) {
+            Module module = declaringClass.getModule();
+            if (module != null) {
+                result.setModuleName(module.getName());
+                ModuleDescriptor descriptor = module.getDescriptor();
+                if (descriptor != null) {
+                    result.setModuleVersion(descriptor.version().orElse(ModuleDescriptor.Version.parse("1.0")).toString());
+                }
+            }
+        }
+        result.setMethodName(stackFrame.getMethodName());
+        result.setLineNumber(stackFrame.getLineNumber());
+    }
+
     static boolean checkLoggerClass(String className) {
         return ("java.util.Optional".equals(className)
                 || "com.truthbean.Logger".equals(className)
                 || "com.truthbean.logger.BaseLogger".equals(className)
                 || "com.truthbean.logger.DefaultBaseLogger".equals(className)
                 || "com.truthbean.logger.ConfigurableLogger".equals(className)
+                || "com.truthbean.logger.PrintStreamLogger".equals(className)
                 || "com.truthbean.logger.SystemOutLogger".equals(className)
                 || "com.truthbean.logger.stdout.Console".equals(className)
                 || "com.truthbean.Console".equals(className)

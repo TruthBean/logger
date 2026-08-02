@@ -9,6 +9,7 @@
  */
 package com.truthbean.debbie.core.test;
 
+import com.truthbean.Console;
 import com.truthbean.logger.LogLevel;
 import com.truthbean.logger.NoLogger;
 import com.truthbean.logger.util.MessageHelper;
@@ -28,22 +29,22 @@ public class TestLogger extends NoLogger {
 
     @Override
     public void log(LogLevel level, String message) {
-        System.out.println("level: " + level);
-        System.out.println("message: " + message);
+        Console.println("level: " + level);
+        Console.println("message: " + message);
     }
 
     @Override
     public void log(LogLevel level, String message, Throwable e) {
-        System.out.println("level: " + level);
-        System.out.println("message: " + message);
-        System.out.println(e.getMessage());
+        Console.println("level: " + level);
+        Console.println("message: " + message);
+        Console.println(e.getMessage());
     }
 
     @Override
     public void log(LogLevel level, String message, Throwable e, Object... params) {
-        System.out.println("level: " + level);
-        System.out.println("message: " + MessageHelper.format(message, params));
-        System.out.println(e.getMessage());
+        Console.println("level: " + level);
+        Console.println("message: " + MessageHelper.format(message, params));
+        Console.println(e.getMessage());
     }
 
     @Override
