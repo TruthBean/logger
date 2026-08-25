@@ -28,11 +28,11 @@ public class TruthBeanLoggerVersion extends TruthBeanVersion {
     /**
      * 获取当前 TruthBean 框架的版本号。
      * 优先从 Jar 包 MANIFEST.MF 中读取 Implementation-Version，
-     * 如果无法获取或值为 "null"，则返回默认版本 "0.6.1-RELEASE"。
+     * 如果无法获取或值为 "null"，则返回默认版本 "0.6.3-RELEASE"。
      *
-     * @return 版本号字符串，如 "0.6.1-RELEASE"
+     * @return 版本号字符串，如 "0.6.3-RELEASE"
      */
     public static String getVersion() {
-        return getVersion(TruthBeanLoggerVersion.class, "0.6.2-RELEASE");
+        return getVersion(TruthBeanLoggerVersion.class, "0.6.3-RELEASE");
     }
 }
