@@ -1,8 +1,9 @@
 package com.truthbean.logger.springboot;
 
 import com.truthbean.Console;
-import org.springframework.boot.ConfigurableBootstrapContext;
+import org.jspecify.annotations.NonNull;
 import org.springframework.boot.SpringApplicationRunListener;
+import org.springframework.boot.bootstrap.ConfigurableBootstrapContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 
@@ -14,37 +15,37 @@ import java.time.Duration;
  */
 public class TruthBeanLoggerSpringApplicationRunListener implements SpringApplicationRunListener {
     @Override
-    public void starting(ConfigurableBootstrapContext bootstrapContext) {
+    public void starting(@NonNull ConfigurableBootstrapContext bootstrapContext) {
         Console.info("Spring Boot starting");
     }
 
     @Override
-    public void environmentPrepared(ConfigurableBootstrapContext bootstrapContext, ConfigurableEnvironment environment) {
+    public void environmentPrepared(@NonNull ConfigurableBootstrapContext bootstrapContext, @NonNull ConfigurableEnvironment environment) {
         Console.info("Spring Boot environmentPrepared");
     }
 
     @Override
-    public void contextPrepared(ConfigurableApplicationContext context) {
+    public void contextPrepared(@NonNull ConfigurableApplicationContext context) {
         Console.info("Spring Boot contextPrepared");
     }
 
     @Override
-    public void contextLoaded(ConfigurableApplicationContext context) {
+    public void contextLoaded(@NonNull ConfigurableApplicationContext context) {
         Console.info("Spring Boot contextLoaded");
     }
 
     @Override
-    public void started(ConfigurableApplicationContext context, Duration timeTaken) {
+    public void started(@NonNull ConfigurableApplicationContext context, Duration timeTaken) {
         Console.info("Spring Boot started with time taken: " + formatDuration(timeTaken));
     }
 
     @Override
-    public void ready(ConfigurableApplicationContext context, Duration timeTaken) {
+    public void ready(@NonNull ConfigurableApplicationContext context, Duration timeTaken) {
         Console.info("Spring Boot ready with time taken: " + formatDuration(timeTaken));
     }
 
     @Override
-    public void failed(ConfigurableApplicationContext context, Throwable exception) {
+    public void failed(ConfigurableApplicationContext context, @NonNull Throwable exception) {
         Console.info("Spring Boot failed with exception: " + exception);
     }
 

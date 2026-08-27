@@ -9,12 +9,11 @@
  */
 package com.truthbean.logger.springboot;
 
+import com.truthbean.core.lang.NonNull;
 import com.truthbean.logger.LogLevel;
 import com.truthbean.LoggerFactory;
-import org.springframework.boot.logging.LoggingSystem;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.lang.NonNull;
 
 /**
  * @author TruthBean/Rogar·Q

@@ -13,8 +13,9 @@ import com.truthbean.Console;
 import com.truthbean.LoggerFactory;
 import com.truthbean.TruthBeanLoggerVersion;
 import com.truthbean.logger.LogLevel;
-import org.springframework.boot.BootstrapRegistry;
-import org.springframework.boot.BootstrapRegistryInitializer;
+import org.jspecify.annotations.NonNull;
+import org.springframework.boot.bootstrap.BootstrapRegistry;
+import org.springframework.boot.bootstrap.BootstrapRegistryInitializer;
 import org.springframework.boot.logging.LoggingSystem;
 
 /**
@@ -31,7 +32,7 @@ public class TruthBeanLoggerBootstrapRegistryInitializer implements BootstrapReg
     }
 
     @Override
-    public void initialize(BootstrapRegistry registry) {
+    public void initialize(@NonNull BootstrapRegistry registry) {
         Console.info("Using truthbean-logger-spring-boot-starter " + TruthBeanLoggerVersion.getVersion());
     }
 }

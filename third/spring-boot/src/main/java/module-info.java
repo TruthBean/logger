@@ -22,4 +22,6 @@ open module com.truthbean.spring.boot {
     requires static spring.core;
     // requires static spring.boot.starter;
     requires static spring.boot.autoconfigure;
+
+    provides org.springframework.boot.logging.LoggingSystem with com.truthbean.logger.springboot.TruthBeanLoggerSystem;
 }

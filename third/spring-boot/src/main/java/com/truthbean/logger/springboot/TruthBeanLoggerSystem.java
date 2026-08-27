@@ -36,6 +36,10 @@ public class TruthBeanLoggerSystem extends AbstractLoggingSystem {
         LEVELS.map(LogLevel.OFF, com.truthbean.logger.LogLevel.OFF);
     }
 
+    public TruthBeanLoggerSystem() {
+        super(TruthBeanLoggerSystem.class.getClassLoader());
+    }
+
     public TruthBeanLoggerSystem(ClassLoader classLoader) {
         super(classLoader);
     }

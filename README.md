@@ -30,7 +30,7 @@ logger adapter
             <dependency>
               <groupId>com.truthbean</groupId>
               <artifactId>truthbean-logger-dependencies</artifactId>
-              <version>0.6.3-RELEASE</version>
+              <version>0.7.0-RELEASE</version>
               <scope>import</scope>
               <type>pom</type>
             </dependency>
@@ -42,14 +42,14 @@ logger adapter
         <dependency>
           <groupId>com.truthbean</groupId>
           <artifactId>truthbean-logger-core</artifactId>
-          <version>0.6.3-RELEASE</version>
+          <version>0.7.0-RELEASE</version>
         </dependency>
     
         <!-- log4j2 adapter -->
         <dependency>
           <groupId>com.truthbean</groupId>
           <artifactId>truthbean-logger-to-log4j2</artifactId>
-          <version>0.6.3-RELEASE</version>
+          <version>0.7.0-RELEASE</version>
         </dependency>
     
         或者使用
@@ -57,7 +57,7 @@ logger adapter
         <dependency>
           <groupId>com.truthbean.logger</groupId>
           <artifactId>truthbean-logger-to-slf4j</artifactId>
-          <version>0.6.3-RELEASE</version>
+          <version>0.7.0-RELEASE</version>
         </dependency>
     
         或者在测试的时候使用以下中的一个
@@ -65,28 +65,28 @@ logger adapter
         <dependency>
           <groupId>com.truthbean</groupId>
           <artifactId>truthbean-jdk9-system-logger</artifactId>
-          <version>0.6.3-RELEASE</version>
+          <version>0.7.0-RELEASE</version>
         </dependency>
         
         <!-- jul adapter -->
         <dependency>
           <groupId>com.truthbean</groupId>
           <artifactId>truthbean-logger-to-jul</artifactId>
-          <version>0.6.3-RELEASE</version>
+          <version>0.7.0-RELEASE</version>
         </dependency>
     
         <!-- stdout adapter -->
         <dependency>
           <groupId>com.truthbean</groupId>
           <artifactId>truthbean-logger-stdout</artifactId>
-          <version>0.6.3-RELEASE</version>
+          <version>0.7.0-RELEASE</version>
         </dependency>
         
         <!-- kotlin支持 -->
         <dependency>
               <groupId>com.truthbean</groupId>
               <artifactId>truthbean-logger-kotlin</artifactId>
-              <version>0.6.3-RELEASE</version>
+              <version>0.7.0-RELEASE</version>
             </dependency>
     
         包含依赖的boot
@@ -94,28 +94,28 @@ logger adapter
         <dependency>
           <groupId>com.truthbean</groupId>
           <artifactId>truthbean-log4j2-boot</artifactId>
-          <version>0.6.3-RELEASE</version>
+          <version>0.7.0-RELEASE</version>
         </dependency>
         
         <!-- slf4j boot -->
         <dependency>
           <groupId>com.truthbean</groupId>
           <artifactId>truthbean-slf4j-boot</artifactId>
-          <version>0.6.3-RELEASE</version>
+          <version>0.7.0-RELEASE</version>
         </dependency>
         
         <!-- tomcat juli -->
         <dependency>
             <groupId>com.truthbean</groupId>
             <artifactId>truthbean-juli-bridge</artifactId>
-            <version>0.6.3-RELEASE</version>
+            <version>0.7.0-RELEASE</version>
         </dependency>
     
         <!-- spring boot starter -->
         <dependency>
             <groupId>com.truthbean</groupId>
             <artifactId>truthbean-logger-spring-boot-starter</artifactId>
-            <version>0.6.3-RELEASE</version>
+            <version>0.7.0-RELEASE</version>
         </dependency>
 
     </dependencies>
@@ -154,4 +154,4 @@ log4j2.xml配置文件中，不允许显示行号。使用%c或者%c{36}或者%l
 https://logging.apache.org/log4j/2.x/manual/layouts.html#LocationInformation
 
 ### 注意
-JDK要求最低17
+JDK要求最低25

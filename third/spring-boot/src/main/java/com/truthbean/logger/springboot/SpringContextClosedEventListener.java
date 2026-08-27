@@ -1,6 +1,7 @@
 package com.truthbean.logger.springboot;
 
 import com.truthbean.Console;
+import org.jspecify.annotations.NonNull;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextClosedEvent;
 
@@ -10,7 +11,7 @@ import org.springframework.context.event.ContextClosedEvent;
  */
 public class SpringContextClosedEventListener implements ApplicationListener<ContextClosedEvent> {
     @Override
-    public void onApplicationEvent(ContextClosedEvent event) {
+    public void onApplicationEvent(@NonNull ContextClosedEvent event) {
         Console.info("Spring Context Closed");
     }
 }

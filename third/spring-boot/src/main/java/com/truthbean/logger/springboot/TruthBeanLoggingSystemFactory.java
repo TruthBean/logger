@@ -9,6 +9,7 @@
  */
 package com.truthbean.logger.springboot;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.boot.logging.LoggingSystem;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -21,7 +22,7 @@ import org.springframework.core.annotation.Order;
 @Order(Ordered.LOWEST_PRECEDENCE)
 public class TruthBeanLoggingSystemFactory implements org.springframework.boot.logging.LoggingSystemFactory {
     @Override
-    public LoggingSystem getLoggingSystem(ClassLoader classLoader) {
+    public LoggingSystem getLoggingSystem(@NonNull ClassLoader classLoader) {
         return new TruthBeanLoggerSystem(classLoader);
     }
 }

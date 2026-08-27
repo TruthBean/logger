@@ -10,10 +10,10 @@
 package com.truthbean.logger.springboot;
 
 import com.truthbean.Console;
+import com.truthbean.core.lang.NonNull;
 import com.truthbean.logger.util.ColorHelper;
 import org.springframework.boot.ExitCodeEvent;
 import org.springframework.context.ApplicationListener;
-import org.springframework.lang.NonNull;
 
 /**
  * @author TruthBean
