@@ -10,9 +10,11 @@
 package com.truthbean.logger.springboot;
 
 import com.truthbean.LoggerFactory;
+import org.jspecify.annotations.NonNull;
+import org.springframework.boot.context.properties.source.ConfigurationProperty;
+import org.springframework.boot.context.properties.source.IterableConfigurationPropertySource;
 import org.springframework.boot.logging.*;
-import org.springframework.core.env.ConfigurableEnvironment;
-import org.springframework.core.env.Environment;
+import org.springframework.core.env.*;
 
 import java.util.*;
 
@@ -61,45 +63,74 @@ public class TruthBeanLoggerSystem extends AbstractLoggingSystem {
         if (environment instanceof ConfigurableEnvironment configurableEnvironment) {
             configurableEnvironment.getPropertySources().forEach(propertySource -> {
                 Object source = propertySource.getSource();
-                if (source instanceof Map map) {
-                    Set set = map.keySet();
-                    for (Object o : set) {
-                        if (o instanceof String name) {
-                            if (name.startsWith("logging.level")) {
-                                String loggerName = name.substring(14);
-                                String level = map.get(name).toString();
-                                var l = com.truthbean.logger.LogLevel.of(level);
-                                l.ifPresent(v -> LoggerFactory.getConfig().setLogLevel(loggerName, v));
-                            }
+                if (source instanceof Map<?, ?> map) {
+                    map.forEach((key, value) -> {
+                        if (key instanceof String name && name.startsWith("logging.level")) {
+                            String loggerName = name.substring(14);
+                            String level = value.toString();
+                            var l = com.truthbean.logger.LogLevel.of(level);
+                            l.ifPresent(v -> LoggerFactory.getConfig().setLogLevel(loggerName, v));
                         }
-                    }
+                    });
                 }
+                logLevelConfig(source);
+            });
+        }
+    }
+
+    private void logLevelConfig(Object source) {
+        if (!(source instanceof Iterable<?> iterable)) {
+            return;
+        }
+        for (Object o : iterable) {
+            if (!(o instanceof IterableConfigurationPropertySource iterableConfigurationPropertySource)) {
+                continue;
+            }
+            iterableConfigurationPropertySource.forEach(name -> {
+                ConfigurationProperty configurationProperty = iterableConfigurationPropertySource.getConfigurationProperty(name);
+                if (configurationProperty == null) {
+                    return;
+                }
+                Object value = configurationProperty.getValue();
+                String loggingName = name.toString();
+                if (!loggingName.startsWith("logging.level")) {
+                    return;
+                }
+                String loggerName = loggingName.substring(14);
+                String level = value.toString();
+                var l = com.truthbean.logger.LogLevel.of(level);
+                l.ifPresent(v -> LoggerFactory.getConfig().setLogLevel(loggerName, v));
             });
         }
     }
 
     @Override
-    protected void loadConfiguration(LoggingInitializationContext initializationContext, String location, LogFile logFile) {
+    protected void loadConfiguration(@NonNull LoggingInitializationContext initializationContext, @NonNull String location, LogFile logFile) {
     }
 
     @Override
     public void setLogLevel(String loggerName, LogLevel level) {
+        if (loggerName == null) {
+            LoggerFactory.getConfig().setLogLevel("", LEVELS.convertSystemToNative(level));
+            return;
+        }
+        LoggerFactory.getConfig().setLogLevel(loggerName, LEVELS.convertSystemToNative(level));
     }
 
     @Override
     public List<LoggerConfiguration> getLoggerConfigurations() {
         List<LoggerConfiguration> list = new ArrayList<>();
         LoggerFactory.getConfig().getLoggers().forEach((name, level) -> {
-            LoggerConfiguration configuration = new LoggerConfiguration(name, LogLevel.ERROR, LEVELS.convertNativeToSystem(level));
+            LoggerConfiguration configuration = new LoggerConfiguration(name, LogLevel.ERROR, Objects.requireNonNull(LEVELS.convertNativeToSystem(level)));
             list.add(configuration);
         });
         return list;
     }
 
     @Override
-    public LoggerConfiguration getLoggerConfiguration(String loggerName) {
+    public LoggerConfiguration getLoggerConfiguration(@NonNull String loggerName) {
         var level = LoggerFactory.getConfig().getLevel(loggerName).orElse(com.truthbean.logger.LogLevel.ERROR);
-        return new LoggerConfiguration(loggerName, LogLevel.ERROR, LEVELS.convertNativeToSystem(level));
+        return new LoggerConfiguration(loggerName, LogLevel.ERROR, Objects.requireNonNull(LEVELS.convertNativeToSystem(level)));
     }
 
     @Override

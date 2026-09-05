@@ -2,7 +2,7 @@
 org.springframework.boot.logging.LoggingSystemFactory=\
 com.truthbean.logger.springboot.TruthBeanLoggingSystemFactory
 
-org.springframework.boot.BootstrapRegistryInitializer=\
+org.springframework.boot.bootstrap.BootstrapRegistryInitializer=\
   com.truthbean.logger.springboot.TruthBeanLoggerBootstrapRegistryInitializer
 
 org.springframework.context.ApplicationContextInitializer=\
